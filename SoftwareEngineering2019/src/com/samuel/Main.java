@@ -1,17 +1,9 @@
 package com.samuel;
 
-import com.osreboot.ridhvl.action.HvlAction0;
 import com.osreboot.ridhvl.display.collection.HvlDisplayModeDefault;
 import com.osreboot.ridhvl.painter.HvlCamera2D;
 import com.osreboot.ridhvl.painter.HvlRenderFrame;
-import com.osreboot.ridhvl.painter.HvlRenderFrame.FBOUnsupportedException;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
-
-import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
-import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
-
-import org.lwjgl.input.Keyboard;
-import org.newdawn.slick.Color;
 
 
 public class Main extends HvlTemplateInteg2D{
@@ -33,6 +25,8 @@ public class Main extends HvlTemplateInteg2D{
 	
 	@Override
 	public void initialize() {
+		Game.initGame();
+		/*
 		x1 = x3 = 960;
 		y1 = y3 = 540;
 		x2 = x4 = 960;
@@ -43,6 +37,7 @@ public class Main extends HvlTemplateInteg2D{
 		p2 = new HvlCamera2D(x4, y4, 0f, 0f, HvlCamera2D.ALIGNMENT_CENTER);
 		
 		getTextureLoader().loadResource("back");
+		getTextureLoader().loadResource("level1");
 		
 		try {
 			p1R = new HvlRenderFrame(1920, 1080);
@@ -68,11 +63,13 @@ public class Main extends HvlTemplateInteg2D{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 	}
 	@Override
 	public void update(float delta) {
+		 Game.updateGame(delta);
 		//1
+		/*
 		if(Keyboard.isKeyDown(Keyboard.KEY_D)){
 			x1 -= 400 * delta;	
 		}
@@ -130,7 +127,7 @@ public class Main extends HvlTemplateInteg2D{
 			
 			@Override
 			public void run() {
-				hvlDrawQuadc(x1, y1, 3840, 3840, getTexture(0), new Color(.5f, .5f, .5f)); //background
+				hvlDrawQuadc(x1, y1, 3840, 2160, getTexture(1)); //background
 				hvlDrawQuadc(960, 540, 50, 50, Color.blue);
 				
 				hvlDrawQuadc(x1 + -x2 + 960, y1 + -y2 + 540, 50, 50, Color.pink); //render player 2
@@ -143,7 +140,7 @@ public class Main extends HvlTemplateInteg2D{
 			
 			@Override
 			public void run() {
-				hvlDrawQuadc(x2, y2, 3840, 3840, getTexture(0), new Color(.5f, .5f, .5f)); //background
+				hvlDrawQuadc(x2, y2, 3840, 2160, getTexture(1)); //background
 				hvlDrawQuadc(960, 540, 50, 50, Color.pink);
 				
 				hvlDrawQuadc(x2 + -x1 + 960, y2 + -y1 + 540, 50, 50, Color.blue); //render player 1
@@ -154,7 +151,7 @@ public class Main extends HvlTemplateInteg2D{
 		p3R.doCapture(new HvlAction0() { //player 3 
 			@Override
 			public void run() {
-				hvlDrawQuadc(x3 , y3,3840, 3840, getTexture(0), new Color(.5f, .5f, .5f)); //background
+				hvlDrawQuadc(x3 , y3,3840, 2160, getTexture(1)); //background
 				hvlDrawQuadc(960, 540, 50, 50, Color.green);
 				
 				hvlDrawQuadc(x3 + -x2 + 960, y3 + -y2 + 540, 50, 50, Color.pink); //render player 2
@@ -165,7 +162,7 @@ public class Main extends HvlTemplateInteg2D{
 		p4R.doCapture(new HvlAction0() { //player 4 
 			@Override
 			public void run() {
-				hvlDrawQuadc(x4, y4, 3840, 3840, getTexture(0), new Color(.5f, .5f, .5f)); //background
+				hvlDrawQuadc(x4, y4, 3840, 2160, getTexture(1)); //background
 				hvlDrawQuadc(960, 540, 50, 50, Color.magenta);
 				
 				hvlDrawQuadc(x4 + -x2 + 960, y4 + -y2 + 540, 50, 50, Color.pink); //render player 2
@@ -186,5 +183,7 @@ public class Main extends HvlTemplateInteg2D{
 		//hvlDrawQuadc(x2, y2, 50, 50, Color.pink);
 		//hvlDrawQuadc(x3, y3, 50, 50, Color.green);
 		//hvlDrawQuadc(x4, y4, 50, 50, Color.yellow);
+		 * */
+
 	}
 }
