@@ -14,56 +14,12 @@ public class Main extends HvlTemplateInteg2D{
 	public Main(){
 		super(60, 1920, 1080, "Insert Game Title Here", new HvlDisplayModeDefault());
 	}
-	HvlCamera2D p1, p2, p3, p4;
-	float x1, y1, x2, y2, x3, y3, x4, y4;
-	
-	HvlRenderFrame p1R;
-	HvlRenderFrame p2R;
-	HvlRenderFrame p3R;
-	HvlRenderFrame p4R;
-
 	
 	@Override
 	public void initialize() {
-		Game.initGame();
-		/*
-		x1 = x3 = 960;
-		y1 = y3 = 540;
-		x2 = x4 = 960;
-		y2 = y4 = 540;
-		p1 = new HvlCamera2D(x1, y1, 0f, 0f, HvlCamera2D.ALIGNMENT_CENTER);
-		p2 = new HvlCamera2D(x2, y2, 0f, 0f, HvlCamera2D.ALIGNMENT_CENTER);
-		p2 = new HvlCamera2D(x3, y3, 0f, 0f, HvlCamera2D.ALIGNMENT_CENTER);
-		p2 = new HvlCamera2D(x4, y4, 0f, 0f, HvlCamera2D.ALIGNMENT_CENTER);
-		
-		getTextureLoader().loadResource("back");
 		getTextureLoader().loadResource("level1");
-		
-		try {
-			p1R = new HvlRenderFrame(1920, 1080);
-		} catch (FBOUnsupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			p2R = new HvlRenderFrame(1920, 1080);
-		} catch (FBOUnsupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			p3R = new HvlRenderFrame(1920, 1080);
-		} catch (FBOUnsupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			p4R = new HvlRenderFrame(1920, 1080);
-		} catch (FBOUnsupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
+		getTextureLoader().loadResource("crate");
+		Game.initGame();
 	}
 	@Override
 	public void update(float delta) {
