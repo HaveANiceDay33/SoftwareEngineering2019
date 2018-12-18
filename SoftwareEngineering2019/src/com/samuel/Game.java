@@ -25,7 +25,7 @@ public class Game {
 	static final private float DRAG = 100;
 	static final private float JUMP_POWER = 50;
 	static final private float MOVE_SPEED = 20;
-	static final private float JUMP_TIMER = .1f;
+	static final private float JUMP_TIMER = 1f;
 	static final private int BACK_X = 7680;
 	static final private int BACK_Y = 4320;
 	static float jumpT1, jumpT2, jumpT3, jumpT4 = 0;
@@ -82,8 +82,13 @@ public class Game {
 		
 	}
 	public static void initGame() {
-		x1 = x2 = x3 = x4 = 960; 
+		x1 = x2 = x3 = x4 = 1080; 
 		y1 = y2 = y3 = y4 = 540;
+		
+		vx1 = MOVE_SPEED*2;
+		vx2 = -MOVE_SPEED*2;
+		vx3 = MOVE_SPEED*3;
+		vx4 = -MOVE_SPEED*3;
 		
 		player1 = new Player(0, x1, y1, Color.blue);
 		player2 = new Player(1, x2, y2, Color.green);
@@ -120,18 +125,18 @@ public class Game {
 		y4 += vy4;
 		
 		updateControls(delta);
-		updateBorderCollisions(BACK_Y-2160, -1080, BACK_X/2-1920, -BACK_X/2+1920);
+		updateBorderCollisions(BACK_Y-2160, -540, BACK_X/2-1920, -BACK_X/2+1920);
+		
 		p1R.doCapture(new HvlAction0() { //player 1 
 			
 			@Override
 			public void run() {
 				drawBack(x1, y1, Main.getTexture(Main.LEVEL_ONE_INDEX));
 				player1.update(delta);
-				System.out.println(x1 + "\t" + y1);
+				
 				hvlDrawQuadc(x1 + -x2 + 960, y1 + -y2 + 540, 50, 50, player2.color); //render player 2
 				hvlDrawQuadc(x1 + -x3 + 960, y1 + -y3 + 540, 50, 50, player3.color); //render player 3
 				hvlDrawQuadc(x1 + -x4 + 960, y1 + -y4 + 540, 50, 50, player4.color);//render player 4
-				
 			}
 		});
 		p2R.doCapture(new HvlAction0() { //player 2 

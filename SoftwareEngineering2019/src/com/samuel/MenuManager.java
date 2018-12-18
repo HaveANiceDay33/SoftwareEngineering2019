@@ -12,8 +12,10 @@ import com.osreboot.ridhvl.action.HvlAction1;
 import com.osreboot.ridhvl.menu.HvlComponentDefault;
 import com.osreboot.ridhvl.menu.HvlMenu;
 import com.osreboot.ridhvl.menu.component.HvlArrangerBox;
+import com.osreboot.ridhvl.menu.component.HvlArrangerBox.ArrangementStyle;
 import com.osreboot.ridhvl.menu.component.HvlButton;
 import com.osreboot.ridhvl.menu.component.HvlComponentDrawable;
+import com.osreboot.ridhvl.menu.component.HvlSpacer;
 import com.osreboot.ridhvl.menu.component.collection.HvlLabeledButton;
 
 public class MenuManager {
@@ -22,8 +24,8 @@ public class MenuManager {
 	public static final float BUTTON_WIDTH = 256f, BUTTON_HEIGHT = 96f;
 	
 	public static void initialize() {
-		
-		HvlComponentDefault.setDefault(HvlLabeledButton.class, new HvlLabeledButton.Builder().setWidth(100).setHeight(50).setFont(Main.font).setTextColor(Color.cyan).setTextScale(0.2f).setOnDrawable(new HvlComponentDrawable() {
+		HvlComponentDefault.setDefault(new HvlArrangerBox(Display.getWidth(), Display.getHeight(), HvlArrangerBox.ArrangementStyle.HORIZONTAL));
+		HvlComponentDefault.setDefault(HvlLabeledButton.class, new HvlLabeledButton.Builder().setWidth(BUTTON_WIDTH).setHeight(BUTTON_HEIGHT).setFont(Main.font).setTextColor(Color.cyan).setTextScale(0.2f).setOnDrawable(new HvlComponentDrawable() {
 			@Override
 			public void draw(float delta, float x, float y, float width, float height) {
 				hvlDrawQuad(x,y,width,height,Color.lightGray);	
@@ -45,8 +47,9 @@ public class MenuManager {
 		menu = new HvlMenu();
 		game = new HvlMenu();
 		
-		menu.add(new HvlArrangerBox.Builder().setStyle(HvlArrangerBox.ArrangementStyle.VERTICAL).setWidth(1920).setHeight(1080).setX(0).setY(0).build());
-		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Start").setX(Display.getWidth()/2).setY(Display.getHeight()/2).setClickedCommand(new HvlAction1<HvlButton>(){
+		menu.add(new HvlArrangerBox.Builder().setStyle(ArrangementStyle.VERTICAL).build());
+		menu.getFirstArrangerBox().add(new HvlSpacer(0f, 32f));
+		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Start").setX(Display.getWidth()/2).setY(Display.getHeight()/2 - BUTTON_HEIGHT/2).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
 				Game.initGame();
@@ -71,7 +74,7 @@ public class MenuManager {
 			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 512, 512, Main.getTexture(Main.CRATE_INDEX), new Color(1f, 1f, 1f, alpha));
 		}
 		else if(HvlMenu.getCurrent() == intro2){
-			//UPDATING THE INTRO MENU//
+			//UPDATING THE INTRO 2 MENU//
 			introProgress += delta/4f;
 			if(introProgress >= 1f || (introProgress > 0.25f && Mouse.isButtonDown(0))) {HvlMenu.setCurrent(menu);}
 			float alpha = 1f - (Math.abs(introProgress - 0.5f)*2f);
@@ -83,5 +86,7 @@ public class MenuManager {
 		else if(HvlMenu.getCurrent() == game) {
 			Game.updateGame(delta);
 		}
+		
+		HvlMenu.updateMenus(delta);
 	}
 }
