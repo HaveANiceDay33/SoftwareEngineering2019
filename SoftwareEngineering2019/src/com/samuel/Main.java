@@ -13,7 +13,7 @@ public class Main extends HvlTemplateInteg2D{
 		new Main();
 	}
 	public Main(){
-		super(60, 1920, 1080, "Insert Game Title Here", new HvlDisplayModeDefault());
+		super(60, 1280, 720, "Insert Game Title Here", new HvlDisplayModeDefault());
 	}
 	
 	public static final int LEVEL_ONE_INDEX = 0;
