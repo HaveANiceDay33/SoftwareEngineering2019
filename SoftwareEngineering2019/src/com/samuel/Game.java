@@ -1,10 +1,11 @@
 package com.samuel;
 
-import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
+import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
 import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.opengl.Texture;
 
 import com.osreboot.ridhvl.HvlMath;
 import com.osreboot.ridhvl.action.HvlAction0;
@@ -24,14 +25,16 @@ public class Game {
 	static final private float DRAG = 100;
 	static final private float JUMP_POWER = 50;
 	static final private float MOVE_SPEED = 20;
-	static final private float JUMP_TIMER = 1f;
+	static final private float JUMP_TIMER = .1f;
+	static final private int BACK_X = 7680;
+	static final private int BACK_Y = 4320;
 	static float jumpT1, jumpT2, jumpT3, jumpT4 = 0;
 	
 	public static void updateControls(float delta) {
 		jumpT1 -= delta;
 		jumpT2 -= delta;
 		jumpT3 -= delta;
-		jumpT3 -= delta;
+		jumpT4 -= delta;
 		//player 1 controls
 		if(Keyboard.isKeyDown(Keyboard.KEY_D)){vx1 = -MOVE_SPEED;}
 		if(Keyboard.isKeyDown(Keyboard.KEY_A)){vx1 = MOVE_SPEED;}
@@ -53,26 +56,29 @@ public class Game {
 		if(Keyboard.isKeyDown(Keyboard.KEY_T) && jumpT4 <= 0){vy4 = JUMP_POWER; jumpT4 = JUMP_TIMER;}
 		//if(Keyboard.isKeyDown(Keyboard.KEY_G)){vy4 = -20;}
 	}
-	public static void updateBorderCollisions() {
-		if(y1 < 0) {y1 = 0;} // bottom world border 
-		if(y2 < 0) {y2 = 0;}
-		if(y3 < 0) {y3 = 0;}
-		if(y4 < 0) {y4 = 0;}
+	
+	public static void drawBack(float x, float y, Texture texture) {hvlDrawQuadc(x, y, BACK_X, BACK_Y, texture);}
+	
+	public static void updateBorderCollisions(int top, int bottom, int right, int left) {
+		if(y1 < bottom) {y1 = bottom;} // bottom world border 
+		if(y2 < bottom) {y2 = bottom;}
+		if(y3 < bottom) {y3 = bottom;}
+		if(y4 < bottom) {y4 = bottom;}
 		
-		if(y1 > 1080) {y1 = 1080;}  //top world border 
-		if(y1 > 1080) {y2 = 1080;}
-		if(y1 > 1080) {y3 = 1080;}
-		if(y1 > 1080) {y4 = 1080;}
+		if(y1 > top) {y1 = top;}  //top world border 
+		if(y1 > top) {y2 = top;}
+		if(y1 > top) {y3 = top;}
+		if(y1 > top) {y4 = top;}
 		
-		if(x1 < 0) {x1 = 0;} // left world border 
-		if(x2 < 0) {x2 = 0;}
-		if(x3 < 0) {x3 = 0;}
-		if(x4 < 0) {x4 = 0;}
+		if(x1 < left) {x1 = left;} // left world border 
+		if(x2 < left) {x2 = left;}
+		if(x3 < left) {x3 = left;}
+		if(x4 < left) {x4 = left;}
 		
-		if(x1 > 1920) {x1 = 1920;} // right world border 
-		if(x2 > 1920) {x2 = 1920;}
-		if(x3 > 1920) {x3 = 1920;}
-		if(x4 > 1920) {x4 = 1920;}
+		if(x1 > right) {x1 = right;} // right world border 
+		if(x2 > right) {x2 = right;}
+		if(x3 > right) {x3 = right;}
+		if(x4 > right) {x4 = right;}
 		
 	}
 	public static void initGame() {
@@ -113,15 +119,15 @@ public class Game {
 		y3 += vy3;
 		y4 += vy4;
 		
-		
 		updateControls(delta);
-		updateBorderCollisions();
+		updateBorderCollisions(BACK_Y-2160, -1080, BACK_X/2-1920, -BACK_X/2+1920);
 		p1R.doCapture(new HvlAction0() { //player 1 
 			
 			@Override
 			public void run() {
-				hvlDrawQuadc(x1, y1, 3840, 2160, Main.getTexture(0));
+				drawBack(x1, y1, Main.getTexture(Main.LEVEL_ONE_INDEX));
 				player1.update(delta);
+				System.out.println(x1 + "\t" + y1);
 				hvlDrawQuadc(x1 + -x2 + 960, y1 + -y2 + 540, 50, 50, player2.color); //render player 2
 				hvlDrawQuadc(x1 + -x3 + 960, y1 + -y3 + 540, 50, 50, player3.color); //render player 3
 				hvlDrawQuadc(x1 + -x4 + 960, y1 + -y4 + 540, 50, 50, player4.color);//render player 4
@@ -132,8 +138,9 @@ public class Game {
 			
 			@Override
 			public void run() {
-				hvlDrawQuadc(x2, y2, 3840, 2160, Main.getTexture(0)); //background
+				drawBack(x2, y2, Main.getTexture(Main.LEVEL_ONE_INDEX));
 				player2.update(delta);
+				
 				hvlDrawQuadc(x2 + -x1 + 960, y2 + -y1 + 540, 50, 50, player1.color); //render player 1
 				hvlDrawQuadc(x2 + -x3 + 960, y2 + -y3 + 540, 50, 50, player3.color); //render player 3
 				hvlDrawQuadc(x2 + -x4 + 960, y2 + -y4 + 540, 50, 50, player4.color); //render player 4
@@ -142,7 +149,7 @@ public class Game {
 		p3R.doCapture(new HvlAction0() { //player 3 
 			@Override
 			public void run() {
-				hvlDrawQuadc(x3 , y3,3840, 2160, Main.getTexture(0)); //background
+				drawBack(x3, y3, Main.getTexture(Main.LEVEL_ONE_INDEX));
 				player3.update(delta);
 				
 				hvlDrawQuadc(x3 + -x2 + 960, y3 + -y2 + 540, 50, 50, player2.color); //render player 2
@@ -153,8 +160,8 @@ public class Game {
 		p4R.doCapture(new HvlAction0() { //player 4 
 			@Override
 			public void run() {
-				hvlDrawQuadc(x4, y4, 3840, 2160, Main.getTexture(0)); //background
-				hvlDrawQuadc(960, 540, 50, 50, Color.magenta);
+				drawBack(x4, y4, Main.getTexture(Main.LEVEL_ONE_INDEX));
+				player4.update(delta);
 				
 				hvlDrawQuadc(x4 + -x2 + 960, y4 + -y2 + 540, 50, 50, player2.color); //render player 2
 				hvlDrawQuadc(x4 + -x1 + 960, y4 + -y1 + 540, 50, 50, player1.color); //render player 1
@@ -162,12 +169,12 @@ public class Game {
 			}
 		});
 		
-		hvlDrawQuad(0, 0, 960, 540, p1R);
-		hvlDrawQuad(960, 0, 960, 540, p2R);
-		hvlDrawQuad(0, 540, 960, 540, p3R);
-		hvlDrawQuad(960, 540, 960, 540, p4R);
-		hvlDrawQuad(955, 0, 10, 1080, Color.black);
-		hvlDrawQuad(0, 535, 1920, 10, Color.black);
+		hvlDrawQuad(0, 0, 960, 540, p1R); //drawing player 1's render frame
+		hvlDrawQuad(960, 0, 960, 540, p2R);//drawing player 2's render frame
+		hvlDrawQuad(0, 540, 960, 540, p3R);//drawing player 3's render frame
+		hvlDrawQuad(960, 540, 960, 540, p4R);//drawing player 4's render frame
+		hvlDrawQuad(955, 0, 10, 1080, Color.black);//drawing division lines
+		hvlDrawQuad(0, 535, 1920, 10, Color.black);//drawing division lines
 		
 		
 	}
