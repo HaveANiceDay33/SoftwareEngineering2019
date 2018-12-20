@@ -41,25 +41,23 @@ public class Game {
 		if(Keyboard.isKeyDown(Keyboard.KEY_D)){vx1 = -MOVE_SPEED;}
 		if(Keyboard.isKeyDown(Keyboard.KEY_A)){vx1 = MOVE_SPEED;}
 		if(Keyboard.isKeyDown(Keyboard.KEY_W) && jumpT1 <= 0){vy1 = JUMP_POWER; jumpT1 = JUMP_TIMER;}
-		//if(Keyboard.isKeyDown(Keyboard.KEY_S)){vy1 = -20;}
 		//player 2 controls 
 		if(Keyboard.isKeyDown(Keyboard.KEY_L)){vx2 = -MOVE_SPEED;}
 		if(Keyboard.isKeyDown(Keyboard.KEY_J)){vx2 = MOVE_SPEED;}
 		if(Keyboard.isKeyDown(Keyboard.KEY_I) && jumpT2 <= 0){vy2 = JUMP_POWER; jumpT2 = JUMP_TIMER;}
-		//if(Keyboard.isKeyDown(Keyboard.KEY_K)){vy2 = -20;}
 		//player 3 controls
 		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){vx3 = -MOVE_SPEED;}
 		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){vx3 = MOVE_SPEED;	}
 		if(Keyboard.isKeyDown(Keyboard.KEY_UP) && jumpT3 <= 0){vy3 = JUMP_POWER; jumpT3 = JUMP_TIMER;}
-		//if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){vy3 = -20;}
 		//player 4 controls
  		if(Keyboard.isKeyDown(Keyboard.KEY_H)){vx4 = -MOVE_SPEED;}
 		if(Keyboard.isKeyDown(Keyboard.KEY_F)){vx4 = MOVE_SPEED;}
 		if(Keyboard.isKeyDown(Keyboard.KEY_T) && jumpT4 <= 0){vy4 = JUMP_POWER; jumpT4 = JUMP_TIMER;}
-		//if(Keyboard.isKeyDown(Keyboard.KEY_G)){vy4 = -20;}
 	}
 	
-	public static void drawBack(float x, float y, Texture texture) {hvlDrawQuadc(x, y, BACK_X, BACK_Y, texture);}
+	public static void drawBack(float x, float y, Texture texture) {
+		hvlDrawQuadc(x, y, BACK_X, BACK_Y, texture);
+	}
 	public static void drawUI(Player player) {
 		Main.font.drawWord("Player "+(player.id+1), 20, 20, Color.black, 0.3f);
 	}
@@ -84,7 +82,6 @@ public class Game {
 		if(x2 > right) {x2 = right;}
 		if(x3 > right) {x3 = right;}
 		if(x4 > right) {x4 = right;}
-		
 	}
 	public static void initGame() {
 		x1 = x2 = x3 = x4 = Display.getWidth()/2; 

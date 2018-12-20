@@ -71,14 +71,14 @@ public class MenuManager {
 				HvlMenu.setCurrent(intro2);
 			}
 			float alpha = 1f - (Math.abs(introProgress - 0.5f)*2f);
-			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 512, 512, Main.getTexture(Main.CRATE_INDEX), new Color(1f, 1f, 1f, alpha));
+			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 512, 512, Main.getTexture(4), new Color(1f, 1f, 1f, alpha));
 		}
 		else if(HvlMenu.getCurrent() == intro2){
 			//UPDATING THE INTRO 2 MENU//
 			introProgress += delta/4f;
 			if(introProgress >= 1f || (introProgress > 0.25f && Mouse.isButtonDown(0))) {HvlMenu.setCurrent(menu);}
 			float alpha = 1f - (Math.abs(introProgress - 0.5f)*2f);
-			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 512, 512, Main.getTexture(Main.LEVEL_ONE_INDEX), new Color(1f, 1f, 1f, alpha));
+			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 512, 512, Main.getTexture(Main.CVILLE_INDEX), new Color(1f, 1f, 1f, alpha));
 		}
 		else if(HvlMenu.getCurrent() == menu) {
 			
