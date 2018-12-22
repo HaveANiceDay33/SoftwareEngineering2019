@@ -95,7 +95,9 @@ public class MenuManager {
 			hvlDrawQuadc(Display.getWidth()/2+15, Display.getHeight()/2+170, 688, 86, Main.getTexture(Main.C_TEXT_INDEX), new Color(1f, 1f, 1f, alpha));
 		}
 		else if(HvlMenu.getCurrent() == menu) {
-			
+			if(Controllers.allA == 1) {
+				HvlMenu.setCurrent(game);
+			}
 		}
 		else if(HvlMenu.getCurrent() == game) {
 			Game.updateGame(delta);

@@ -31,7 +31,7 @@ public class Main extends HvlTemplateInteg2D{
 	GEAR_RUN_INDEX = 0;
 	
 	static HvlFontPainter2D font;
-	public static HvlAnimatedTextureUV loadingAnimation, blueRunning;
+	public static HvlAnimatedTextureUV loadingAnimation, blueRunning, blueStanding;
 	@Override
 	public void initialize() {
 		getTextureLoader().loadResource("level1");//0
@@ -52,7 +52,9 @@ public class Main extends HvlTemplateInteg2D{
 		loadingAnimation = new HvlAnimatedTextureUV(getTexture(COG_INDEX), 1024, 26, 0.05f);
 		loadingAnimation.setAutoStop(false);
 		loadingAnimation.setRunning(true);
-		
+		blueStanding = new HvlAnimatedTextureUV(getTexture(BLUE_STILL_INDEX), 256, 26, 0.5f);
+		blueStanding.setAutoStop(true);
+		blueStanding.setRunning(true);
 		blueRunning = new HvlAnimatedTextureUV(getTexture(BLUE_RUNNING), 256, 26, 0.2f);
 		blueRunning.setAutoStop(false);
 		blueRunning.setRunning(true);

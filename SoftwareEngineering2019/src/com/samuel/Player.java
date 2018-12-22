@@ -15,9 +15,7 @@ public class Player {
 	static final private float JUMP_TIMER = 1f;
 	static final private float GRAVITY = 100;
 	static final private float DRAG = 100;
-	static final private float PLAYER_HEIGHT = 168;
-	static final private float PLAYER_WIDTH = 77;
-	static final private float ANIMATED_SIZE = 256;
+	static final private float PLAYER_SIZE = 256;
 	
 	public int id;
 	public float fixedX, fixedY, x, y, vx, vy, x1Cont, aCont;
@@ -49,12 +47,7 @@ public class Player {
 			this.jumpTimer = JUMP_TIMER;
 		}
 		updateBorderCollisions(Game.BACK_Y-2160, -720, Game.BACK_X/2-1920, -Game.BACK_X/2+1920);
-		if(this.vx == 0) {
-			hvlDrawQuadc(this.fixedX, this.fixedY, this.vx <= 0 ? -PLAYER_WIDTH : PLAYER_WIDTH, PLAYER_HEIGHT, Main.getTexture(Main.BLUE_STILL_INDEX));
-		}else {
-			hvlDrawQuadc(this.fixedX, this.fixedY, this.vx <= 0 ? -ANIMATED_SIZE : ANIMATED_SIZE, ANIMATED_SIZE, Main.blueRunning);
-		}
-		
+		hvlDrawQuadc(this.fixedX, this.fixedY, this.vx <= 0 ? -PLAYER_SIZE : PLAYER_SIZE, PLAYER_SIZE, vx == 0 ? Main.blueStanding : Main.blueRunning);
 	}
 	
 	public void updateBorderCollisions(int top, int bottom, int right, int left) {
