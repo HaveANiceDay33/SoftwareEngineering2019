@@ -63,6 +63,7 @@ public class Main extends HvlTemplateInteg2D{
 	}
 	@Override
 	public void update(float delta) {
-		 MenuManager.update(delta);		
+		Controllers.updateButtons(); 
+		MenuManager.update(delta);		
 	}
 }

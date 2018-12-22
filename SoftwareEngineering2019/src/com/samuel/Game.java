@@ -39,10 +39,10 @@ public class Game {
 		x1 = x2 = x3 = x4 = Display.getWidth()/2; 
 		y1 = y2 = y3 = y4 = Display.getHeight()/2;
 		
-		player1 = new Player(0, x1, y1, Color.blue);
-		player2 = new Player(1, x2, y2, Color.green);
-		player3 = new Player(2, x3, y3, Color.yellow);
-		player4 = new Player(3, x4, y4, Color.red);
+		player1 = new Player(0, x1, y1, Main.blueStanding, Main.blueRunning);
+		player2 = new Player(1, x2, y2, Main.blueStanding, Main.blueRunning);
+		player3 = new Player(2, x3, y3, Main.blueStanding, Main.blueRunning);
+		player4 = new Player(3, x4, y4, Main.blueStanding, Main.blueRunning);
 		try {
 			p1R = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
 			p2R = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
@@ -59,9 +59,9 @@ public class Game {
 			public void run() {
 				drawBack(player1.get_x(), player1.get_y(), Main.getTexture(Main.LEVEL_ONE_INDEX));
 				drawUI(player1);
-				hvlDrawQuadc(player1.get_x() + -player2.get_x() + Display.getWidth()/2, player1.get_y() + -player2.get_y() + Display.getHeight()/2, 50, 50, player2.color); //render player 2
-				hvlDrawQuadc(player1.get_x() + -player3.get_x() + Display.getWidth()/2, player1.get_y() + -player3.get_y() + Display.getHeight()/2, 50, 50, player3.color); //render player 3
-				hvlDrawQuadc(player1.get_x() + -player4.get_x() + Display.getWidth()/2, player1.get_y() + -player4.get_y() + Display.getHeight()/2, 50, 50, player4.color);//render player 4
+				hvlDrawQuadc(player1.get_x() + -player2.get_x() + Display.getWidth()/2, player1.get_y() + -player2.get_y() + Display.getHeight()/2, player2.get_width(), Player.PLAYER_SIZE, player2.get_animation()); //render player 2
+				hvlDrawQuadc(player1.get_x() + -player3.get_x() + Display.getWidth()/2, player1.get_y() + -player3.get_y() + Display.getHeight()/2, player3.get_width(), Player.PLAYER_SIZE, player3.get_animation()); //render player 3
+				hvlDrawQuadc(player1.get_x() + -player4.get_x() + Display.getWidth()/2, player1.get_y() + -player4.get_y() + Display.getHeight()/2, player4.get_width(), Player.PLAYER_SIZE, player4.get_animation());//render player 4
 				player1.update(delta);
 			}
 		});
@@ -70,9 +70,9 @@ public class Game {
 			public void run() {
 				drawBack(player2.get_x(), player2.get_y(), Main.getTexture(Main.LEVEL_ONE_INDEX));
 				drawUI(player2);
-				hvlDrawQuadc(player2.get_x() + -player1.get_x() + Display.getWidth()/2, player2.get_y() + -player1.get_y() + Display.getHeight()/2, 50, 50, player1.color); //render player 1
-				hvlDrawQuadc(player2.get_x() + -player3.get_x() + Display.getWidth()/2, player2.get_y() + -player3.get_y() + Display.getHeight()/2, 50, 50, player3.color); //render player 3
-				hvlDrawQuadc(player2.get_x() + -player4.get_x() + Display.getWidth()/2, player2.get_y() + -player4.get_y() + Display.getHeight()/2, 50, 50, player4.color); //render player 4
+				hvlDrawQuadc(player2.get_x() + -player1.get_x() + Display.getWidth()/2, player2.get_y() + -player1.get_y() + Display.getHeight()/2, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1
+				hvlDrawQuadc(player2.get_x() + -player3.get_x() + Display.getWidth()/2, player2.get_y() + -player3.get_y() + Display.getHeight()/2, player3.get_width(), Player.PLAYER_SIZE, player3.get_animation()); //render player 3
+				hvlDrawQuadc(player2.get_x() + -player4.get_x() + Display.getWidth()/2, player2.get_y() + -player4.get_y() + Display.getHeight()/2, player4.get_width(), Player.PLAYER_SIZE, player4.get_animation()); //render player 4
 				player2.update(delta);
 			}
 		});
@@ -81,9 +81,9 @@ public class Game {
 			public void run() {
 				drawBack(player3.get_x(), player3.get_y(), Main.getTexture(Main.LEVEL_ONE_INDEX));
 				drawUI(player3);
-				hvlDrawQuadc(player3.get_x() + -player2.get_x() + Display.getWidth()/2, player3.get_y() + -player2.get_y() + Display.getHeight()/2, 50, 50, player2.color); //render player 2
-				hvlDrawQuadc(player3.get_x() + -player1.get_x() + Display.getWidth()/2, player3.get_y() + -player1.get_y() + Display.getHeight()/2, 50, 50, player1.color); //render player 1
-				hvlDrawQuadc(player3.get_x() + -player4.get_x() + Display.getWidth()/2, player3.get_y() + -player4.get_y() + Display.getHeight()/2, 50, 50, player4.color); //render player 4
+				hvlDrawQuadc(player3.get_x() + -player2.get_x() + Display.getWidth()/2, player3.get_y() + -player2.get_y() + Display.getHeight()/2, player2.get_width(), Player.PLAYER_SIZE, player2.get_animation()); //render player 2
+				hvlDrawQuadc(player3.get_x() + -player1.get_x() + Display.getWidth()/2, player3.get_y() + -player1.get_y() + Display.getHeight()/2, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1
+				hvlDrawQuadc(player3.get_x() + -player4.get_x() + Display.getWidth()/2, player3.get_y() + -player4.get_y() + Display.getHeight()/2, player4.get_width(), Player.PLAYER_SIZE, player4.get_animation()); //render player 4
 				player3.update(delta);
 			}
 		});
@@ -92,9 +92,9 @@ public class Game {
 			public void run() {
 				drawBack(player4.get_x(), player4.get_y(), Main.getTexture(Main.LEVEL_ONE_INDEX));
 				drawUI(player4);
-				hvlDrawQuadc(player4.get_x() + -player2.get_x() + Display.getWidth()/2, player4.get_y() + -player2.get_y() + Display.getHeight()/2, 50, 50, player2.color); //render player 2
-				hvlDrawQuadc(player4.get_x() + -player1.get_x() + Display.getWidth()/2, player4.get_y() + -player1.get_y() + Display.getHeight()/2, 50, 50, player1.color); //render player 1
-				hvlDrawQuadc(player4.get_x() + -player3.get_x() + Display.getWidth()/2, player4.get_y() + -player3.get_y() + Display.getHeight()/2, 50, 50, player3.color); //render player 3
+				hvlDrawQuadc(player4.get_x() + -player2.get_x() + Display.getWidth()/2, player4.get_y() + -player2.get_y() + Display.getHeight()/2, player2.get_width(), Player.PLAYER_SIZE, player2.get_animation()); //render player 2
+				hvlDrawQuadc(player4.get_x() + -player1.get_x() + Display.getWidth()/2, player4.get_y() + -player1.get_y() + Display.getHeight()/2, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1
+				hvlDrawQuadc(player4.get_x() + -player3.get_x() + Display.getWidth()/2, player4.get_y() + -player3.get_y() + Display.getHeight()/2, player3.get_width(), Player.PLAYER_SIZE, player3.get_animation()); //render player 3
 				player4.update(delta);
 			}
 		});

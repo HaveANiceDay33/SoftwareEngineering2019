@@ -31,17 +31,17 @@ public class MenuManager {
 		HvlComponentDefault.setDefault(HvlLabeledButton.class, new HvlLabeledButton.Builder().setWidth(BUTTON_WIDTH).setHeight(BUTTON_HEIGHT).setFont(Main.font).setTextColor(Color.cyan).setTextScale(0.2f).setOnDrawable(new HvlComponentDrawable() {
 			@Override
 			public void draw(float delta, float x, float y, float width, float height) {
-				hvlDrawQuad(x,y,width,height,Color.lightGray);	
+				hvlDrawQuad(x,y,width,height, Main.getTexture(Main.CRATE_INDEX), Color.lightGray);	
 			}
 		}).setOffDrawable(new HvlComponentDrawable() {
 			@Override
 			public void draw(float delta, float x, float y, float width, float height) {
-				hvlDrawQuad(x,y,width,height,Color.darkGray);
+				hvlDrawQuad(x,y,width,height, Main.getTexture(Main.CRATE_INDEX), Color.darkGray);
 			}
 		}).setHoverDrawable(new HvlComponentDrawable() {
 			@Override
 			public void draw(float delta, float x, float y, float width, float height) {
-				hvlDrawQuad(x,y,width,height,Color.gray);
+				hvlDrawQuad(x,y,width,height, Main.getTexture(Main.CRATE_INDEX),Color.gray);
 			}
 		}).build());
 		
@@ -75,7 +75,7 @@ public class MenuManager {
 		if(HvlMenu.getCurrent() == intro){
 			//UPDATING THE INTRO MENU//
 			introProgress += delta/6f;
-			if(introProgress >= 1f || (introProgress > 0.25f && (Mouse.isButtonDown(0) || Controllers.conts.getValue(HvlCPG_Gamepad.BUTTON_A) == 1))) {
+			if(introProgress >= 1f || (introProgress > 0.25f && (Mouse.isButtonDown(0) || Controllers.allA[4] == 1))) {
 				introProgress = 0f;
 				Main.getSound(Main.GEAR_RUN_INDEX).stop();
 				HvlMenu.setCurrent(intro2);
@@ -88,14 +88,15 @@ public class MenuManager {
 		else if(HvlMenu.getCurrent() == intro2){
 			//UPDATING THE INTRO 2 MENU//
 			introProgress += delta/4f;
-			if(introProgress >= 1f || (introProgress > 0.25f && (Mouse.isButtonDown(0) || Controllers.conts.getValue(HvlCPG_Gamepad.BUTTON_A) == 1))) {HvlMenu.setCurrent(menu);}
+			if(introProgress >= 1f || (introProgress > 0.25f && (Mouse.isButtonDown(0) || Controllers.allA[4] == 1))) {HvlMenu.setCurrent(menu);}
 			float alpha = 1f - (Math.abs(introProgress - 0.5f)*2f);
 			
 			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2-70, 512, 342, Main.getTexture(Main.CVILLE_INDEX), new Color(1f, 1f, 1f, alpha));
 			hvlDrawQuadc(Display.getWidth()/2+15, Display.getHeight()/2+170, 688, 86, Main.getTexture(Main.C_TEXT_INDEX), new Color(1f, 1f, 1f, alpha));
 		}
 		else if(HvlMenu.getCurrent() == menu) {
-			if(Controllers.allA == 1) {
+			if(Controllers.allA[4] == 1) {
+				Game.initGame();
 				HvlMenu.setCurrent(game);
 			}
 		}
