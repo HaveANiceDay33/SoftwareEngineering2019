@@ -33,7 +33,15 @@ public class MenuManager {
 	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game;
 	private static float whiteFade = 0;
 	static boolean playedSound = false;
-	private static ArrayList<Controller> contsArray;
+	
+	private static void timerBar(float time) {
+		hvlDrawQuad(200, 620, Display.getWidth()-400, 20, Color.gray);
+		hvlDrawQuadc(200, 630, 5, 40, Color.green);
+		hvlDrawQuadc(Display.getWidth()-200, 630, 5, 40, Color.green);
+		hvlDrawQuad(200, 620, (Display.getWidth()-400)*time, 20, Color.green);
+	}
+	
+	
 	public static void initialize() {
 		HvlComponentDefault.setDefault(new HvlArrangerBox(Display.getWidth(), Display.getHeight(), HvlArrangerBox.ArrangementStyle.HORIZONTAL));
 		HvlComponentDefault.setDefault(HvlLabeledButton.class, new HvlLabeledButton.Builder().setWidth(BUTTON_WIDTH).setHeight(BUTTON_HEIGHT).setFont(Main.font).setTextColor(Color.cyan).setTextScale(0.2f).setOnDrawable(new HvlComponentDrawable() {
@@ -59,8 +67,6 @@ public class MenuManager {
 		controllerInit = new HvlMenu();
 		charSelect = new HvlMenu();
 		game = new HvlMenu();
-		
-		contsArray = new ArrayList<>();
 		
 		menu.add(new HvlArrangerBox.Builder().setStyle(ArrangementStyle.VERTICAL).build());
 		menu.getFirstArrangerBox().add(new HvlSpacer(0f, 32f));
@@ -124,6 +130,7 @@ public class MenuManager {
 			controllerTimer -= delta;
 			buttonWait -= delta;
 			Main.font.drawWordc("Player "+(currentPlayer+1)+" press A", Display.getWidth()/2, 200, Color.white, 0.3f);
+			timerBar(controllerTimer/CONTROLLER_TIME);
 			if(currentPlayer == 0 && buttonWait <= 0) {
 				if(Controllers.allA[0] == 1) {p1index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[1] == 1) {p1index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
@@ -148,6 +155,7 @@ public class MenuManager {
 				//Game.initGame(p1index, p2index, p3index, p4index, Main.blue, Main.blue, Main.blue, Main.blue);
 				//HvlMenu.setCurrent(game);
 				currentPlayer = 0;
+				controllerTimer = CONTROLLER_TIME*2;
 				HvlMenu.setCurrent(charSelect);
 			}
 			if(controllerTimer <= 0) {
@@ -160,6 +168,16 @@ public class MenuManager {
 			buttonWait -= delta;
 			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 350, 350, Main.getTexture(Main.BTNS_INDEX));
 			hvlDrawQuadc(Display.getWidth()/2 - 300, Display.getHeight()/2, -256, 256, Main.blue.moving);
+			timerBar(controllerTimer/(CONTROLLER_TIME*2));
+			if(Controllers.allX[p1index] == 1) {p1A = Main.blue;}
+			if(Controllers.allX[p2index] == 1) {p2A = Main.blue;}
+			if(Controllers.allX[p3index] == 1) {p3A = Main.blue;}
+			if(Controllers.allX[p4index] == 1) {p4A = Main.blue;}
+			
+			if(controllerTimer <= 0) {
+				Game.initGame(p1index, p2index, p3index, p4index, p1A, p2A, p3A, p4A);
+				HvlMenu.setCurrent(game);
+			}
 		}
 		else if(HvlMenu.getCurrent() == game) {
 			Game.updateGame(delta);
