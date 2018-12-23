@@ -3,12 +3,17 @@ package com.samuel;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
+import java.util.ArrayList;
+
+import org.lwjgl.input.Controller;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlMath;
 import com.osreboot.ridhvl.action.HvlAction1;
+import com.osreboot.ridhvl.input.HvlController;
+import com.osreboot.ridhvl.input.HvlControllerProfile;
 import com.osreboot.ridhvl.input.collection.HvlCPG_Gamepad;
 import com.osreboot.ridhvl.menu.HvlComponentDefault;
 import com.osreboot.ridhvl.menu.HvlMenu;
@@ -21,11 +26,14 @@ import com.osreboot.ridhvl.menu.component.collection.HvlLabeledButton;
 import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
 
 public class MenuManager {
-	public static HvlMenu intro, intro2, menu, game;
-	private static float whiteFade = 0f;
 	public static final float BUTTON_WIDTH = 256f, BUTTON_HEIGHT = 96f;
-	static boolean playedSound = false;
+	private static final float CONTROLLER_TIME = 5f;
+	private static final float BUTTON_WAIT_TIME = 0.5f;
 	
+	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game;
+	private static float whiteFade = 0;
+	static boolean playedSound = false;
+	private static ArrayList<Controller> contsArray;
 	public static void initialize() {
 		HvlComponentDefault.setDefault(new HvlArrangerBox(Display.getWidth(), Display.getHeight(), HvlArrangerBox.ArrangementStyle.HORIZONTAL));
 		HvlComponentDefault.setDefault(HvlLabeledButton.class, new HvlLabeledButton.Builder().setWidth(BUTTON_WIDTH).setHeight(BUTTON_HEIGHT).setFont(Main.font).setTextColor(Color.cyan).setTextScale(0.2f).setOnDrawable(new HvlComponentDrawable() {
@@ -48,15 +56,20 @@ public class MenuManager {
 		intro = new HvlMenu();
 		intro2 = new HvlMenu();
 		menu = new HvlMenu();
+		controllerInit = new HvlMenu();
+		charSelect = new HvlMenu();
 		game = new HvlMenu();
+		
+		contsArray = new ArrayList<>();
 		
 		menu.add(new HvlArrangerBox.Builder().setStyle(ArrangementStyle.VERTICAL).build());
 		menu.getFirstArrangerBox().add(new HvlSpacer(0f, 32f));
 		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Start").setX(Display.getWidth()/2).setY(Display.getHeight()/2 - BUTTON_HEIGHT/2).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
-				Game.initGame();
-				HvlMenu.setCurrent(game);
+				currentPlayer = 0;
+				controllerTimer = CONTROLLER_TIME;
+				HvlMenu.setCurrent(controllerInit);
 			}
 		}).build());
 		
@@ -64,7 +77,13 @@ public class MenuManager {
 
 		HvlMenu.setCurrent(intro);
 	}
+	
 	private static float introProgress = 0f;
+	private static float controllerTimer = CONTROLLER_TIME;
+	private static float buttonWait = BUTTON_WAIT_TIME;
+	public static int p1index = 3, p2index = 3, p3index = 3, p4index = 3; //default
+	public static AnimatedTextureGroup p1A = Main.blue, p2A = Main.blue, p3A = Main.blue, p4A = Main.blue;
+	public static int currentPlayer = 0;
 	
 	public static void update(float delta){
 		if(!playedSound) {
@@ -96,9 +115,51 @@ public class MenuManager {
 		}
 		else if(HvlMenu.getCurrent() == menu) {
 			if(Controllers.allA[4] == 1) {
-				Game.initGame();
-				HvlMenu.setCurrent(game);
+				currentPlayer = 0;
+				controllerTimer = CONTROLLER_TIME;
+				HvlMenu.setCurrent(controllerInit);
 			}
+		}
+		else if(HvlMenu.getCurrent() == controllerInit) {
+			controllerTimer -= delta;
+			buttonWait -= delta;
+			Main.font.drawWordc("Player "+(currentPlayer+1)+" press A", Display.getWidth()/2, 200, Color.white, 0.3f);
+			if(currentPlayer == 0 && buttonWait <= 0) {
+				if(Controllers.allA[0] == 1) {p1index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[1] == 1) {p1index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[2] == 1) {p1index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[3] == 1) {p1index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+			} else if (currentPlayer == 1 && buttonWait <= 0) {
+				if(Controllers.allA[0] == 1) {p2index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[1] == 1) {p2index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[2] == 1) {p2index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[3] == 1) {p2index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+			} else if (currentPlayer == 2 && buttonWait <= 0) {
+				if(Controllers.allA[0] == 1) {p3index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[1] == 1) {p3index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[2] == 1) {p3index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[3] == 1) {p3index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+			} else if (currentPlayer == 3 && buttonWait <= 0) {
+				if(Controllers.allA[0] == 1) {p4index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[1] == 1) {p4index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[2] == 1) {p4index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[3] == 1) {p4index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+			} else if (currentPlayer > 3) {
+				//Game.initGame(p1index, p2index, p3index, p4index, Main.blue, Main.blue, Main.blue, Main.blue);
+				//HvlMenu.setCurrent(game);
+				currentPlayer = 0;
+				HvlMenu.setCurrent(charSelect);
+			}
+			if(controllerTimer <= 0) {
+				currentPlayer++;
+				controllerTimer = CONTROLLER_TIME;
+			}
+
+		}else if(HvlMenu.getCurrent() == charSelect) {
+			controllerTimer -= delta;
+			buttonWait -= delta;
+			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 350, 350, Main.getTexture(Main.BTNS_INDEX));
+			hvlDrawQuadc(Display.getWidth()/2 - 300, Display.getHeight()/2, -256, 256, Main.blue.moving);
 		}
 		else if(HvlMenu.getCurrent() == game) {
 			Game.updateGame(delta);

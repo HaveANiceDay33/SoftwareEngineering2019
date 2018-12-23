@@ -18,14 +18,15 @@ public class Player {
 	static final private float DRAG = 100;
 	static final public float PLAYER_SIZE = 256;
 	
-	public int id;
+	public int id, cont;
 	public float fixedX, fixedY, x, y, vx, vy, x1Cont, aCont;
 	public float jumpTimer = 0;
 	public HvlAnimatedTextureUV standing, moving;
 	
-	public Player(int id, float fixedX, float fixedY, 
+	public Player(int id, int cont, float fixedX, float fixedY, 
 			HvlAnimatedTextureUV standing, HvlAnimatedTextureUV moving){
 		this.id = id;
+		this.cont = cont;
 		this.fixedX = fixedX;
 		this.fixedY = fixedY;
 		this.standing = standing;
@@ -39,8 +40,8 @@ public class Player {
 		this.vx = HvlMath.stepTowards(this.vx, DRAG * delta, 0);
 		this.x += this.vx;
 		this.y += this.vy;
-		this.x1Cont = Controllers.joy1x[this.id];
-		this.aCont = Controllers.allA[this.id];
+		this.x1Cont = Controllers.joy1x[this.cont];
+		this.aCont = Controllers.allA[this.cont];
 		if(this.x1Cont > 0)
 			this.vx = -MOVE_SPEED * Math.abs(this.x1Cont);
 		if(this.x1Cont < 0)

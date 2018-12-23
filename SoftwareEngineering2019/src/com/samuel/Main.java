@@ -25,13 +25,15 @@ public class Main extends HvlTemplateInteg2D{
 	COG_TEXT_INDEX = 5,
 	C_TEXT_INDEX = 6,
 	BLUE_STILL_INDEX = 7,
-	BLUE_RUNNING = 8;
+	BLUE_RUNNING = 8,
+	BTNS_INDEX = 9;
 	
 	public static final int
 	GEAR_RUN_INDEX = 0;
 	
 	static HvlFontPainter2D font;
 	public static HvlAnimatedTextureUV loadingAnimation, blueRunning, blueStanding;
+	public static AnimatedTextureGroup blue;
 	@Override
 	public void initialize() {
 		getTextureLoader().loadResource("level1");//0
@@ -43,6 +45,7 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("textTry");//6
 		getTextureLoader().loadResource("blueStill");//7
 		getTextureLoader().loadResource("blueManRunning");//8
+		getTextureLoader().loadResource("btns");
 		
 		getSoundLoader().loadResource("gears");//0
 		
@@ -52,12 +55,10 @@ public class Main extends HvlTemplateInteg2D{
 		loadingAnimation = new HvlAnimatedTextureUV(getTexture(COG_INDEX), 1024, 26, 0.05f);
 		loadingAnimation.setAutoStop(false);
 		loadingAnimation.setRunning(true);
+		
 		blueStanding = new HvlAnimatedTextureUV(getTexture(BLUE_STILL_INDEX), 256, 26, 0.5f);
-		blueStanding.setAutoStop(true);
-		blueStanding.setRunning(true);
 		blueRunning = new HvlAnimatedTextureUV(getTexture(BLUE_RUNNING), 256, 26, 0.2f);
-		blueRunning.setAutoStop(false);
-		blueRunning.setRunning(true);
+		blue = new AnimatedTextureGroup(blueStanding, blueRunning);
 		
 		MenuManager.initialize();
 	}

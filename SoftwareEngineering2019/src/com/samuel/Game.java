@@ -35,14 +35,16 @@ public class Game {
 		Main.font.drawWord("Player "+(player.id+1), 20, 20, Color.black, 0.3f);
 	}
 
-	public static void initGame() {
+	public static void initGame(int p1, int p2, int p3 ,int p4, 
+			AnimatedTextureGroup p1Ani, AnimatedTextureGroup p2Ani, AnimatedTextureGroup p3Ani, AnimatedTextureGroup p4Ani) {
 		x1 = x2 = x3 = x4 = Display.getWidth()/2; 
 		y1 = y2 = y3 = y4 = Display.getHeight()/2;
 		
-		player1 = new Player(0, x1, y1, Main.blueStanding, Main.blueRunning);
-		player2 = new Player(1, x2, y2, Main.blueStanding, Main.blueRunning);
-		player3 = new Player(2, x3, y3, Main.blueStanding, Main.blueRunning);
-		player4 = new Player(3, x4, y4, Main.blueStanding, Main.blueRunning);
+		player1 = new Player(0, p1, x1, y1, p1Ani.standing, p1Ani.moving);
+		player2 = new Player(1, p2, x2, y2, p2Ani.standing, p2Ani.moving);
+		player3 = new Player(2, p3, x3, y3, p3Ani.standing, p3Ani.moving);
+		player4 = new Player(3, p4, x4, y4, p4Ani.standing, p4Ani.moving);
+		
 		try {
 			p1R = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
 			p2R = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
