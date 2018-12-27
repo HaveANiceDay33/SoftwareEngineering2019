@@ -26,6 +26,7 @@ import com.osreboot.ridhvl.menu.component.HvlSpacer;
 import com.osreboot.ridhvl.menu.component.collection.HvlLabeledButton;
 import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
 import com.samuel.LevelProfiles.Battlefield;
+import com.samuel.LevelProfiles.Skyrise;
 
 public class MenuManager {
 	public static final float BUTTON_WIDTH = 256f, BUTTON_HEIGHT = 96f;
@@ -34,7 +35,9 @@ public class MenuManager {
 	
 	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game;
 	private static float whiteFade = 0;
-	static boolean playedSound = false;
+	
+	static boolean playedIntroSound = false;
+	
 	static Level currentLevel;
 	private static void timerBar(float time) {
 		hvlDrawQuad(200, 620, Display.getWidth()-400, 20, Color.gray);
@@ -80,7 +83,7 @@ public class MenuManager {
 			}
 		}).build());
 		
-		currentLevel = new Battlefield();
+		currentLevel = new Skyrise();
 		
 		Controllers.initControllers();
 		//Game.initGame(p1index, p2index, p3index, p4index, p1A, p2A, p3A, p4A);
@@ -98,9 +101,9 @@ public class MenuManager {
 
 		whiteFade = HvlMath.stepTowards(whiteFade, delta, 0f);
 		if(HvlMenu.getCurrent() == intro){
-			if(!playedSound) {
+			if(!playedIntroSound) {
 				Main.getSound(Main.GEAR_RUN_INDEX).playAsSoundEffect(1f, 1f, false);
-				playedSound = true;
+				playedIntroSound = true;
 			}
 			//UPDATING THE INTRO MENU//
 			introProgress += delta/6f;
@@ -135,8 +138,11 @@ public class MenuManager {
 		else if(HvlMenu.getCurrent() == controllerInit) {
 			controllerTimer -= delta;
 			buttonWait -= delta;
-			Main.font.drawWordc("Player "+(currentPlayer+1)+":", Display.getWidth()/2,100, Color.white, 0.3f);
-			Main.font.drawWordc("Press A on Xbox controller or W on Keyboard", Display.getWidth()/2, 200, Color.white, 0.22f);
+			
+			Main.font.drawWordc("Player "+ (currentPlayer != 4 ? (currentPlayer+1) : currentPlayer) +":", Display.getWidth()/2,100, Color.white, 0.3f);
+			Main.font.drawWordc("Press A on Xbox controller or W on Keyboard", Display.getWidth()/2, 150, Color.white, 0.22f);
+			Main.font.drawWordc("Press B (Xbox) or D (Keyboard) to skip", Display.getWidth()/2, 200, Color.red, 0.15f);
+
 			timerBar(controllerTimer/CONTROLLER_TIME);
 			if(currentPlayer == 0 && buttonWait <= 0) {
 				if(Controllers.allA[0] == 1) {p1index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
@@ -164,8 +170,13 @@ public class MenuManager {
 				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p4index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 			} else if (currentPlayer > 3) {
 				currentPlayer = 0;
-				controllerTimer = CONTROLLER_TIME*2;
+				controllerTimer = CONTROLLER_TIME;
 				HvlMenu.setCurrent(charSelect);
+			} 
+			if((Controllers.allB[4] == 1 || Keyboard.isKeyDown(Keyboard.KEY_D)) && buttonWait <= 0) {
+				controllerTimer = CONTROLLER_TIME;
+				buttonWait = BUTTON_WAIT_TIME;
+				currentPlayer++;
 			}
 			if(controllerTimer <= 0) {
 				currentPlayer++;
@@ -197,7 +208,7 @@ public class MenuManager {
 			Main.font.drawWord("Player 4: ", 10, 215, Color.white, 0.2f);
 			hvlDrawQuad(160, 190, 75, 75, p4A.standing);
 			
-			timerBar(controllerTimer/(CONTROLLER_TIME*2));
+			timerBar(controllerTimer/CONTROLLER_TIME);
 			Main.font.drawWordc("Select your characters!", Display.getWidth()/2, 680, Color.white, 0.24f);
 			
 			if(Controllers.allX[p1index] == 1 && buttonWait <= 0) {p1A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}

@@ -17,36 +17,31 @@ public class Player {
 	static final private float MOVE_SPEED = 900;//Movement speed in x-plane
 	static final private float JUMP_TIMER = 1f;//Time between jumps, in seconds
 	static final private float GRAVITY = 100; //Gravity value, constantly modifies y-velocity
-	static final private float TERMINAL_VELOCITY = -4000; //maximum speed a player can fall through the air
 	static final private float DRAG = 50;//Similar to gravity, but affects x-velocity
 	static final public float PLAYER_SIZE = 256;
 	
 	public int id, cont;//used to decorate UI elements and assign controller numbers
-	public float fixedX, fixedY, x, y, vx, vy, x1Cont, aCont; //movement and controller values
+	public float x, y, vx, vy, x1Cont, aCont; //movement and controller values
 	public float jumpTimer = 0;//Timer that gets modified every frame to allow jumps
-	public HvlAnimatedTextureUV standing, moving;
+	public AnimatedTextureGroup animations;
+	
 	//Player constructor that runs when a player object is created
-	public Player(int id, int cont, float fixedX, float fixedY, 
-			HvlAnimatedTextureUV standing, HvlAnimatedTextureUV moving){
+	public Player(int id, int cont, AnimatedTextureGroup animations){
 		this.id = id;
 		this.cont = cont;
-		this.fixedX = fixedX;
-		this.fixedY = fixedY;
-		this.standing = standing;
-		this.moving = moving;
+		this.animations = animations;
 		this.vx = HvlMath.randomIntBetween(-2700, 2700); //sets the initial x-velocity of the player, creates a “fanning” effect for when the players spawn in.
 	}
 	
 	//method that runs every frame, calculates physics, checks border and element collisions, and draws the player.
 	public void update(float delta) {
 		this.jumpTimer -= delta;//Jumping timer modification
-		if(this.vy > TERMINAL_VELOCITY) {
-			this.vy -= GRAVITY;//”pull” of gravity
-		}
+		this.vy -= GRAVITY;//”pull” of gravity
 		this.vx = HvlMath.stepTowards(this.vx, DRAG, 0);//function to slow player down in the x-plane
 		this.x += this.vx * delta; //positions are modified by velocities
 		this.y += this.vy * delta;
 		updateElementCollisions();//put here to correct for gravity's effect in one frame, vy is set to 0 here, and upon a jump is changed to JUMP_POWER
+		updateBorderCollisions(Game.BACK_Y-2160, -550, Game.BACK_X/2-1920, -Game.BACK_X/2+1920);
 		if(this.cont != 4) {
 			this.x1Cont = Controllers.joy1x[this.cont]; //controller inputs saved to variables for later use
 			this.aCont = Controllers.allA[this.cont];
@@ -54,23 +49,23 @@ public class Player {
 				this.vx = -MOVE_SPEED * Math.abs(this.x1Cont);
 			if(this.x1Cont < 0)
 				this.vx = MOVE_SPEED * Math.abs(this.x1Cont);
-			if(this.aCont == 1 && this.jumpTimer <= 0){//Determines jumping
+			if(this.aCont == 1 && this.vy == 0 && this.jumpTimer <= 0){//Determines jumping
 				this.vy = JUMP_POWER; 
 				this.jumpTimer = JUMP_TIMER;//resets jump timer
 			} 
 		} else { //Clause to add keyboard support
 			if(Keyboard.isKeyDown(Keyboard.KEY_D)){this.vx = -MOVE_SPEED;}
 			if(Keyboard.isKeyDown(Keyboard.KEY_A)){this.vx = MOVE_SPEED;}
-			if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && this.jumpTimer <= 0){this.vy = JUMP_POWER; this.jumpTimer = JUMP_TIMER;}
+			if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && this.vy == 0 && this.jumpTimer <= 0){this.vy = JUMP_POWER; this.jumpTimer = JUMP_TIMER;}
 		}
-		updateBorderCollisions(Game.BACK_Y-2160, -720, Game.BACK_X/2-1920, -Game.BACK_X/2+1920);
-		hvlDrawQuadc(this.fixedX, this.fixedY, this.vx <= 0 ? -PLAYER_SIZE : PLAYER_SIZE, PLAYER_SIZE,
-				vx == 0 ? this.standing : this.moving);
+		
+		hvlDrawQuadc(Game.fixedX, Game.fixedY, this.vx <= 0 ? -PLAYER_SIZE : PLAYER_SIZE, PLAYER_SIZE,
+				vx == 0 ? this.animations.standing : this.animations.moving);
 	}
 	
 	//Calculates and prevents players from leaving the play area. 
 	public void updateBorderCollisions(int top, int bottom, int left, int right) {
-		if(this.y < bottom) {this.y = bottom;} // bottom world border 
+		if(this.y < bottom) {this.y = bottom; this.vy = 0;} // bottom world border 
 		if(this.y > top) {this.y = top;}  //top world border 
 		if(this.x > left) {this.x = left;} // left world border 
 		if(this.x < right) {this.x = right;} // right world border
@@ -95,7 +90,7 @@ public class Player {
 				if(this.vy < 0) {
 					this.vy = 0;
 					this.y = -(closest.y + 32) + PLAYER_SIZE/2;
-				}else {
+				} else if (this.vy > 0) {
 					this.vy = -1;
 					this.y = -(closest.y - 32) -PLAYER_SIZE/2;
 				}
@@ -105,9 +100,9 @@ public class Player {
 	
 	public HvlAnimatedTextureUV get_animation() {
 		if(vx == 0) {
-			return this.standing;
+			return this.animations.standing;
 		}else {
-			return this.moving;
+			return this.animations.moving;
 		}
 	}
 	
