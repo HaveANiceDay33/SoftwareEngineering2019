@@ -28,7 +28,6 @@ public class Game {
 	static float x1, y1, x2, y2, x3, y3, x4, y4;
 
 	public static void drawWorld(float x, float y, float delta) {
-		//System.out.println(player1.get_x() + "\t" + player1.get_y());
 		LevelGenerator.update(delta, x, y);
 	}
 	

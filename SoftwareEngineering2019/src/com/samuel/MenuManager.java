@@ -6,6 +6,7 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Controller;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -134,32 +135,34 @@ public class MenuManager {
 		else if(HvlMenu.getCurrent() == controllerInit) {
 			controllerTimer -= delta;
 			buttonWait -= delta;
-			Main.font.drawWordc("Player "+(currentPlayer+1)+" press A", Display.getWidth()/2, 200, Color.white, 0.3f);
-			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2 + 40, 250, 250, Main.getTexture(Main.A_INDEX));
+			Main.font.drawWordc("Player "+(currentPlayer+1)+":", Display.getWidth()/2,100, Color.white, 0.3f);
+			Main.font.drawWordc("Press A on Xbox controller or W on Keyboard", Display.getWidth()/2, 200, Color.white, 0.22f);
 			timerBar(controllerTimer/CONTROLLER_TIME);
 			if(currentPlayer == 0 && buttonWait <= 0) {
 				if(Controllers.allA[0] == 1) {p1index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[1] == 1) {p1index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[2] == 1) {p1index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[3] == 1) {p1index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p1index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 			} else if (currentPlayer == 1 && buttonWait <= 0) {
 				if(Controllers.allA[0] == 1) {p2index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[1] == 1) {p2index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[2] == 1) {p2index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[3] == 1) {p2index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p2index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 			} else if (currentPlayer == 2 && buttonWait <= 0) {
 				if(Controllers.allA[0] == 1) {p3index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[1] == 1) {p3index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[2] == 1) {p3index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[3] == 1) {p3index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p3index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 			} else if (currentPlayer == 3 && buttonWait <= 0) {
 				if(Controllers.allA[0] == 1) {p4index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[1] == 1) {p4index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[2] == 1) {p4index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 				if(Controllers.allA[3] == 1) {p4index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p4index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
 			} else if (currentPlayer > 3) {
-				//Game.initGame(p1index, p2index, p3index, p4index, Main.blue, Main.blue, Main.blue, Main.blue);
-				//HvlMenu.setCurrent(game);
 				currentPlayer = 0;
 				controllerTimer = CONTROLLER_TIME*2;
 				HvlMenu.setCurrent(charSelect);
@@ -172,8 +175,12 @@ public class MenuManager {
 		}else if(HvlMenu.getCurrent() == charSelect) {
 			controllerTimer -= delta;
 			buttonWait -= delta;
-			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 256, 256, Main.getTexture(Main.BTNS_INDEX));
-			hvlDrawQuadc(Display.getWidth()/2 - 210, Display.getHeight()/2, -200, 200, Main.blue.moving);
+			hvlDrawQuadc(256, 500, 50, 50, Main.getTexture(Main.A_INDEX));
+			hvlDrawQuadc(512, 500, 50, 50, Main.getTexture(Main.B_INDEX));
+			hvlDrawQuadc(768, 500, 50, 50, Main.getTexture(Main.X_INDEX));
+			hvlDrawQuadc(768, Display.getHeight()/2+50, -170, 170, Main.blue.moving);
+			hvlDrawQuadc(1024, 500, 50, 50, Main.getTexture(Main.Y_INDEX));
+			
 			Main.font.drawWord("Player 1: ", 10, 20, Color.white, 0.2f);
 			hvlDrawQuad(160, -5, 75, 75, p1A.standing);
 			Main.font.drawWord("Player 2: ", 10, 85, Color.white, 0.2f);

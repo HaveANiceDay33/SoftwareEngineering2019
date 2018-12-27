@@ -46,18 +46,23 @@ public class Player {
 		this.vx = HvlMath.stepTowards(this.vx, DRAG, 0);//function to slow player down in the x-plane
 		this.x += this.vx * delta; //positions are modified by velocities
 		this.y += this.vy * delta;
-		updateElementCollisions(); //put here to correct for gravity's effect in one frame, vy is set to 0 here, and upon a jump is changed to JUMP_POWER
-		this.x1Cont = Controllers.joy1x[this.cont]; //controller inputs saved to variables for later use
-		this.aCont = Controllers.allA[this.cont];
-		if(this.x1Cont > 0) //Determines player movement direction and scales to the joystick input
-			this.vx = -MOVE_SPEED * Math.abs(this.x1Cont);
-		if(this.x1Cont < 0)
-			this.vx = MOVE_SPEED * Math.abs(this.x1Cont);
-		if(this.aCont == 1 && this.jumpTimer <= 0){//Determines jumping
-			this.vy = JUMP_POWER; 
-			this.jumpTimer = JUMP_TIMER;//resets jump timer
+		updateElementCollisions();//put here to correct for gravity's effect in one frame, vy is set to 0 here, and upon a jump is changed to JUMP_POWER
+		if(this.cont != 4) {
+			this.x1Cont = Controllers.joy1x[this.cont]; //controller inputs saved to variables for later use
+			this.aCont = Controllers.allA[this.cont];
+			if(this.x1Cont > 0) //Determines player movement direction and scales to the joystick input
+				this.vx = -MOVE_SPEED * Math.abs(this.x1Cont);
+			if(this.x1Cont < 0)
+				this.vx = MOVE_SPEED * Math.abs(this.x1Cont);
+			if(this.aCont == 1 && this.jumpTimer <= 0){//Determines jumping
+				this.vy = JUMP_POWER; 
+				this.jumpTimer = JUMP_TIMER;//resets jump timer
+			} 
+		} else { //Clause to add keyboard support
+			if(Keyboard.isKeyDown(Keyboard.KEY_D)){this.vx = -MOVE_SPEED;}
+			if(Keyboard.isKeyDown(Keyboard.KEY_A)){this.vx = MOVE_SPEED;}
+			if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && this.jumpTimer <= 0){this.vy = JUMP_POWER; this.jumpTimer = JUMP_TIMER;}
 		}
-		
 		updateBorderCollisions(Game.BACK_Y-2160, -720, Game.BACK_X/2-1920, -Game.BACK_X/2+1920);
 		hvlDrawQuadc(this.fixedX, this.fixedY, this.vx <= 0 ? -PLAYER_SIZE : PLAYER_SIZE, PLAYER_SIZE,
 				vx == 0 ? this.standing : this.moving);
