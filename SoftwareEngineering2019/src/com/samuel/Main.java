@@ -26,7 +26,8 @@ public class Main extends HvlTemplateInteg2D{
 	C_TEXT_INDEX = 6,
 	BLUE_STILL_INDEX = 7,
 	BLUE_RUNNING = 8,
-	BTNS_INDEX = 9;
+	BTNS_INDEX = 9,
+	A_INDEX = 10;
 	
 	public static final int
 	GEAR_RUN_INDEX = 0;
@@ -45,7 +46,8 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("textTry");//6
 		getTextureLoader().loadResource("blueStill");//7
 		getTextureLoader().loadResource("blueManRunning");//8
-		getTextureLoader().loadResource("btns");
+		getTextureLoader().loadResource("btns");//9
+		getTextureLoader().loadResource("a");//10
 		
 		getSoundLoader().loadResource("gears");//0
 		
