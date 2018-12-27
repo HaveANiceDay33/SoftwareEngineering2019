@@ -29,7 +29,11 @@ public class Main extends HvlTemplateInteg2D{
 	B_INDEX = 9,
 	A_INDEX = 10,
 	X_INDEX = 11,
-	Y_INDEX = 12;
+	Y_INDEX = 12,
+	A_KEY_INDEX = 13,
+	D_INDEX = 14,
+	S_INDEX = 15,
+	W_INDEX = 16;
 	
 	public static final int
 	GEAR_RUN_INDEX = 0;
@@ -52,6 +56,10 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("a");//10
 		getTextureLoader().loadResource("x");//11
 		getTextureLoader().loadResource("y");//12
+		getTextureLoader().loadResource("ak");//13
+		getTextureLoader().loadResource("d");//14
+		getTextureLoader().loadResource("s");//15
+		getTextureLoader().loadResource("w");//16
 		
 		getSoundLoader().loadResource("gears");//0
 		

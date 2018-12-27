@@ -175,11 +175,18 @@ public class MenuManager {
 		}else if(HvlMenu.getCurrent() == charSelect) {
 			controllerTimer -= delta;
 			buttonWait -= delta;
-			hvlDrawQuadc(256, 500, 50, 50, Main.getTexture(Main.A_INDEX));
-			hvlDrawQuadc(512, 500, 50, 50, Main.getTexture(Main.B_INDEX));
-			hvlDrawQuadc(768, 500, 50, 50, Main.getTexture(Main.X_INDEX));
-			hvlDrawQuadc(768, Display.getHeight()/2+50, -170, 170, Main.blue.moving);
-			hvlDrawQuadc(1024, 500, 50, 50, Main.getTexture(Main.Y_INDEX));
+			hvlDrawQuadc(256, 500, 50, 50, Main.getTexture(Main.Y_INDEX));
+			hvlDrawQuadc(256, 560, 50, 50, Main.getTexture(Main.W_INDEX));
+			
+			hvlDrawQuadc(512, 500, 50, 50, Main.getTexture(Main.X_INDEX));
+			hvlDrawQuadc(512, 560, 50, 50, Main.getTexture(Main.A_KEY_INDEX));
+			hvlDrawQuadc(512, Display.getHeight()/2+50, -170, 170, Main.blue.moving);
+			
+			hvlDrawQuadc(768, 500, 50, 50, Main.getTexture(Main.A_INDEX));
+			hvlDrawQuadc(768, 560, 50, 50, Main.getTexture(Main.S_INDEX));
+			
+			hvlDrawQuadc(1024, 500, 50, 50, Main.getTexture(Main.B_INDEX));
+			hvlDrawQuadc(1024, 560, 50, 50, Main.getTexture(Main.D_INDEX));
 			
 			Main.font.drawWord("Player 1: ", 10, 20, Color.white, 0.2f);
 			hvlDrawQuad(160, -5, 75, 75, p1A.standing);
@@ -197,6 +204,10 @@ public class MenuManager {
 			if(Controllers.allX[p2index] == 1 && buttonWait <= 0) {p2A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
 			if(Controllers.allX[p3index] == 1 && buttonWait <= 0) {p3A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
 			if(Controllers.allX[p4index] == 1 && buttonWait <= 0) {p4A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p1A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p2A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p3A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p4A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
 			
 			if(controllerTimer <= 0) {
 				Game.initGame(p1index, p2index, p3index, p4index, p1A, p2A, p3A, p4A);
