@@ -27,8 +27,9 @@ public class Game {
 	static HvlRenderFrame p4R;
 	static float x1, y1, x2, y2, x3, y3, x4, y4;
 
-	public static void drawBack(float x, float y, Texture texture) {
-		hvlDrawQuadc(x, y, BACK_X, BACK_Y, texture);
+	public static void drawWorld(float x, float y, float delta) {
+		//System.out.println(player1.get_x() + "\t" + player1.get_y());
+		LevelGenerator.update(delta, x, y);
 	}
 	
 	public static void drawUI(Player player) {
@@ -37,6 +38,8 @@ public class Game {
 
 	public static void initGame(int p1, int p2, int p3 ,int p4, 
 			AnimatedTextureGroup p1Ani, AnimatedTextureGroup p2Ani, AnimatedTextureGroup p3Ani, AnimatedTextureGroup p4Ani) {
+		LevelGenerator.init();
+		
 		x1 = x2 = x3 = x4 = Display.getWidth()/2; 
 		y1 = y2 = y3 = y4 = Display.getHeight()/2;
 		
@@ -56,10 +59,11 @@ public class Game {
 	}
 	
 	public static void updateGame(float delta) {
+		
 		p1R.doCapture(new HvlAction0() { //player 1 
 			@Override
 			public void run() {
-				drawBack(player1.get_x(), player1.get_y(), Main.getTexture(Main.LEVEL_ONE_INDEX));
+				drawWorld(player1.get_x(), player1.get_y(), delta);
 				drawUI(player1);
 				hvlDrawQuadc(player1.get_x() + -player2.get_x() + Display.getWidth()/2, player1.get_y() + -player2.get_y() + Display.getHeight()/2, player2.get_width(), Player.PLAYER_SIZE, player2.get_animation()); //render player 2
 				hvlDrawQuadc(player1.get_x() + -player3.get_x() + Display.getWidth()/2, player1.get_y() + -player3.get_y() + Display.getHeight()/2, player3.get_width(), Player.PLAYER_SIZE, player3.get_animation()); //render player 3
@@ -70,7 +74,7 @@ public class Game {
 		p2R.doCapture(new HvlAction0() { //player 2 
 			@Override
 			public void run() {
-				drawBack(player2.get_x(), player2.get_y(), Main.getTexture(Main.LEVEL_ONE_INDEX));
+				drawWorld(player2.get_x(), player2.get_y(), delta);
 				drawUI(player2);
 				hvlDrawQuadc(player2.get_x() + -player1.get_x() + Display.getWidth()/2, player2.get_y() + -player1.get_y() + Display.getHeight()/2, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1
 				hvlDrawQuadc(player2.get_x() + -player3.get_x() + Display.getWidth()/2, player2.get_y() + -player3.get_y() + Display.getHeight()/2, player3.get_width(), Player.PLAYER_SIZE, player3.get_animation()); //render player 3
@@ -81,7 +85,7 @@ public class Game {
 		p3R.doCapture(new HvlAction0() { //player 3 
 			@Override
 			public void run() {
-				drawBack(player3.get_x(), player3.get_y(), Main.getTexture(Main.LEVEL_ONE_INDEX));
+				drawWorld(player3.get_x(), player3.get_y(), delta);
 				drawUI(player3);
 				hvlDrawQuadc(player3.get_x() + -player2.get_x() + Display.getWidth()/2, player3.get_y() + -player2.get_y() + Display.getHeight()/2, player2.get_width(), Player.PLAYER_SIZE, player2.get_animation()); //render player 2
 				hvlDrawQuadc(player3.get_x() + -player1.get_x() + Display.getWidth()/2, player3.get_y() + -player1.get_y() + Display.getHeight()/2, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1
@@ -92,7 +96,7 @@ public class Game {
 		p4R.doCapture(new HvlAction0() { //player 4 
 			@Override
 			public void run() {
-				drawBack(player4.get_x(), player4.get_y(), Main.getTexture(Main.LEVEL_ONE_INDEX));
+				drawWorld(player4.get_x(), player4.get_y(), delta);
 				drawUI(player4);
 				hvlDrawQuadc(player4.get_x() + -player2.get_x() + Display.getWidth()/2, player4.get_y() + -player2.get_y() + Display.getHeight()/2, player2.get_width(), Player.PLAYER_SIZE, player2.get_animation()); //render player 2
 				hvlDrawQuadc(player4.get_x() + -player1.get_x() + Display.getWidth()/2, player4.get_y() + -player1.get_y() + Display.getHeight()/2, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1

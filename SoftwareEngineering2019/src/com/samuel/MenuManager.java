@@ -24,6 +24,7 @@ import com.osreboot.ridhvl.menu.component.HvlComponentDrawable;
 import com.osreboot.ridhvl.menu.component.HvlSpacer;
 import com.osreboot.ridhvl.menu.component.collection.HvlLabeledButton;
 import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
+import com.samuel.LevelProfiles.Battlefield;
 
 public class MenuManager {
 	public static final float BUTTON_WIDTH = 256f, BUTTON_HEIGHT = 96f;
@@ -33,7 +34,7 @@ public class MenuManager {
 	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game;
 	private static float whiteFade = 0;
 	static boolean playedSound = false;
-	
+	static Level currentLevel;
 	private static void timerBar(float time) {
 		hvlDrawQuad(200, 620, Display.getWidth()-400, 20, Color.gray);
 		hvlDrawQuadc(200, 630, 5, 40, Color.green);
@@ -79,8 +80,10 @@ public class MenuManager {
 			}
 		}).build());
 		
+		currentLevel = new Battlefield();
+		
 		Controllers.initControllers();
-
+		//Game.initGame(p1index, p2index, p3index, p4index, p1A, p2A, p3A, p4A);
 		HvlMenu.setCurrent(intro);
 	}
 	
@@ -92,12 +95,13 @@ public class MenuManager {
 	public static int currentPlayer = 0;
 	
 	public static void update(float delta){
-		if(!playedSound) {
-			Main.getSound(Main.GEAR_RUN_INDEX).playAsSoundEffect(1f, 1f, false);
-			playedSound = true;
-		}
+
 		whiteFade = HvlMath.stepTowards(whiteFade, delta, 0f);
 		if(HvlMenu.getCurrent() == intro){
+			if(!playedSound) {
+				Main.getSound(Main.GEAR_RUN_INDEX).playAsSoundEffect(1f, 1f, false);
+				playedSound = true;
+			}
 			//UPDATING THE INTRO MENU//
 			introProgress += delta/6f;
 			if(introProgress >= 1f || (introProgress > 0.25f && (Mouse.isButtonDown(0) || Controllers.allA[4] == 1))) {
@@ -168,11 +172,19 @@ public class MenuManager {
 			buttonWait -= delta;
 			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 350, 350, Main.getTexture(Main.BTNS_INDEX));
 			hvlDrawQuadc(Display.getWidth()/2 - 300, Display.getHeight()/2, -256, 256, Main.blue.moving);
+			Main.font.drawWord("Player 1: ", 10, 20, Color.white, 0.2f);
+			hvlDrawQuad(160, -5, 75, 75, p1A.standing);
+			Main.font.drawWord("Player 2: ", 10, 85, Color.white, 0.2f);
+			hvlDrawQuad(160, 60, 75, 75, p2A.standing);
+			Main.font.drawWord("Player 3: ", 10, 150, Color.white, 0.2f);
+			hvlDrawQuad(160, 125, 75, 75, p3A.standing);
+			Main.font.drawWord("Player 4: ", 10, 215, Color.white, 0.2f);
+			hvlDrawQuad(160, 190, 75, 75, p4A.standing);
 			timerBar(controllerTimer/(CONTROLLER_TIME*2));
-			if(Controllers.allX[p1index] == 1) {p1A = Main.blue;}
-			if(Controllers.allX[p2index] == 1) {p2A = Main.blue;}
-			if(Controllers.allX[p3index] == 1) {p3A = Main.blue;}
-			if(Controllers.allX[p4index] == 1) {p4A = Main.blue;}
+			if(Controllers.allX[p1index] == 1 && buttonWait <= 0) {p1A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allX[p2index] == 1 && buttonWait <= 0) {p2A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allX[p3index] == 1 && buttonWait <= 0) {p3A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allX[p4index] == 1 && buttonWait <= 0) {p4A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
 			
 			if(controllerTimer <= 0) {
 				Game.initGame(p1index, p2index, p3index, p4index, p1A, p2A, p3A, p4A);
