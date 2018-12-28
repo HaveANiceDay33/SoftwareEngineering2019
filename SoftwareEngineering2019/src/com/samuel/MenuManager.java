@@ -261,6 +261,7 @@ public class MenuManager {
 			
 			hvlDrawQuadc(1024, 500, 50, 50, Main.getTexture(Main.B_INDEX));
 			hvlDrawQuadc(1024, 560, 50, 50, Main.getTexture(Main.D_INDEX));
+			hvlDrawQuadc(1024, Display.getHeight()/2+50, -170, 170, Main.purp.moving);
 			
 			Main.font.drawWord("Player 1: ", 10, 20, Color.white, 0.2f);
 			hvlDrawQuad(160, -5, 75, 75, p1A.standing);
@@ -282,6 +283,15 @@ public class MenuManager {
 			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p2A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
 			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p3A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
 			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p4A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
+			
+			if(Controllers.allB[p1index] == 1 && buttonWait <= 0) {p1A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allB[p2index] == 1 && buttonWait <= 0) {p2A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allB[p3index] == 1 && buttonWait <= 0) {p3A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allB[p4index] == 1 && buttonWait <= 0) {p4A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p1A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p2A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p3A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p4A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
 			
 			if(controllerTimer <= 0) {
 				Game.initGame(p1index, p2index, p3index, p4index, p1A, p2A, p3A, p4A);

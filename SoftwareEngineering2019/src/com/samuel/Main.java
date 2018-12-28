@@ -31,8 +31,10 @@ public class Main extends HvlTemplateInteg2D{
 		super(144, 1280, 720, "Message Melee", new HvlDisplayModeDefault());
 	}
 	
-	public static final int NUM_TEXTURES = 17;
+	public static final int NUM_TEXTURES = 19;
+	
 	public static final int NUM_SOUNDS = 1;
+	
 	public static final int
 	LEVEL_ONE_INDEX = 0,
 	CRATE_INDEX = 1,
@@ -42,7 +44,7 @@ public class Main extends HvlTemplateInteg2D{
 	COG_TEXT_INDEX = 5,
 	C_TEXT_INDEX = 6,
 	BLUE_STILL_INDEX = 7,
-	BLUE_RUNNING = 8,
+	BLUE_RUNNING_INDEX = 8,
 	B_INDEX = 9,
 	A_INDEX = 10,
 	X_INDEX = 11,
@@ -50,7 +52,9 @@ public class Main extends HvlTemplateInteg2D{
 	A_KEY_INDEX = 13,
 	D_INDEX = 14,
 	S_INDEX = 15,
-	W_INDEX = 16;
+	W_INDEX = 16,
+	PURP_RUNNING_INDEX = 17,
+	PURP_STILL_INDEX = 18;
 	
 	public static final int
 	GEAR_RUN_INDEX = 0;
@@ -60,8 +64,8 @@ public class Main extends HvlTemplateInteg2D{
 	public static Options options;
 	
 	static HvlFontPainter2D font;
-	public static HvlAnimatedTextureUV loadingAnimation, blueRunning, blueStanding;
-	public static AnimatedTextureGroup blue;
+	public static HvlAnimatedTextureUV loadingAnimation, blueRunning, blueStanding, purpRunning, purpStanding;
+	public static AnimatedTextureGroup blue, purp;
 	
 	public static void saveConfig(){
 		HvlConfig.saveToFile(options, PATH_SETTINGS);
@@ -85,6 +89,8 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("d");//14
 		getTextureLoader().loadResource("s");//15
 		getTextureLoader().loadResource("w");//16
+		getTextureLoader().loadResource("purpCharRun");//17
+		getTextureLoader().loadResource("purpmanidle");//18
 		
 		getSoundLoader().loadResource("gears");//0
 		
@@ -101,8 +107,12 @@ public class Main extends HvlTemplateInteg2D{
 		loadingAnimation.setRunning(true);
 		
 		blueStanding = new HvlAnimatedTextureUV(getTexture(BLUE_STILL_INDEX), 256, 26, 0.5f);
-		blueRunning = new HvlAnimatedTextureUV(getTexture(BLUE_RUNNING), 256, 26, 0.2f);
+		blueRunning = new HvlAnimatedTextureUV(getTexture(BLUE_RUNNING_INDEX), 256, 26, 0.2f);
 		blue = new AnimatedTextureGroup(blueStanding, blueRunning);
+		
+		purpStanding = new HvlAnimatedTextureUV(getTexture(PURP_STILL_INDEX), 256, 26, 0.5f);
+		purpRunning = new HvlAnimatedTextureUV(getTexture(PURP_RUNNING_INDEX), 256, 26, 0.2f);
+		purp = new AnimatedTextureGroup(purpStanding, purpRunning);
 		
 		File config = new File(PATH_SETTINGS);
 		if(config.exists()){
