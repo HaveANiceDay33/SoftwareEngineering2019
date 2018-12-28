@@ -126,8 +126,8 @@ public class MenuManager {
 	private static float introProgress = 0f;
 	private static float controllerTimer = CONTROLLER_TIME;
 	private static float buttonWait = BUTTON_WAIT_TIME;
-	public static int p1index = 0, p2index = 3, p3index = 3, p4index = 3; //default
-	public static AnimatedTextureGroup p1A = Main.blue, p2A = Main.blue, p3A = Main.blue, p4A = Main.blue;
+	public static int p1index = 3, p2index = 3, p3index = 3, p4index = 3; //default controller
+	public static AnimatedTextureGroup p1A = Main.blue, p2A = Main.blue, p3A = Main.blue, p4A = Main.blue; //default character
 	public static int currentPlayer = 0;
 	
 	public static void update(float delta){
@@ -204,7 +204,7 @@ public class MenuManager {
 			
 			Main.font.drawWordc("Player "+ (currentPlayer != 4 ? (currentPlayer+1) : currentPlayer) +":", Display.getWidth()/2,100, Color.lightGray, 0.3f);
 			Main.font.drawWordc("Press A on Xbox controller or W on Keyboard", Display.getWidth()/2, 150, Color.lightGray, 0.22f);
-			Main.font.drawWordc("Press B (Xbox) or D (Keyboard) to skip", Display.getWidth()/2, 200, Color.red, 0.15f);
+			Main.font.drawWordc("Press D (Keyboard) to skip", Display.getWidth()/2, 200, Color.red, 0.15f);
 
 			timerBar(controllerTimer/CONTROLLER_TIME);
 			if(currentPlayer == 0 && buttonWait <= 0) {
@@ -236,7 +236,7 @@ public class MenuManager {
 				controllerTimer = CONTROLLER_TIME;
 				HvlMenu.setCurrent(charSelect);
 			} 
-			if((Controllers.allB[4] == 1 || Keyboard.isKeyDown(Keyboard.KEY_D)) && buttonWait <= 0) {
+			if(Keyboard.isKeyDown(Keyboard.KEY_D) && buttonWait <= 0) {
 				controllerTimer = CONTROLLER_TIME;
 				buttonWait = BUTTON_WAIT_TIME;
 				currentPlayer++;
