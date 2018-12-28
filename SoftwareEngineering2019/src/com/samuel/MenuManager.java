@@ -236,7 +236,7 @@ public class MenuManager {
 				controllerTimer = CONTROLLER_TIME;
 				HvlMenu.setCurrent(charSelect);
 			} 
-			if(Keyboard.isKeyDown(Keyboard.KEY_D) && buttonWait <= 0) {
+			if((Controllers.allB[p1index] == 1 || Keyboard.isKeyDown(Keyboard.KEY_D))&& buttonWait <= 0) {
 				controllerTimer = CONTROLLER_TIME;
 				buttonWait = BUTTON_WAIT_TIME;
 				currentPlayer++;
