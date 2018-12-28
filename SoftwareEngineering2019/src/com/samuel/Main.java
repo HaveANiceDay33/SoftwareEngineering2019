@@ -1,21 +1,38 @@
 package com.samuel;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ConcurrentModificationException;
+
+import javax.management.RuntimeErrorException;
+import javax.swing.JOptionPane;
+
+import com.osreboot.ridhvl.config.HvlConfig;
 import com.osreboot.ridhvl.display.collection.HvlDisplayModeDefault;
 import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
 import com.osreboot.ridhvl.painter.HvlCamera2D;
 import com.osreboot.ridhvl.painter.HvlRenderFrame;
+import com.osreboot.ridhvl.painter.HvlRenderFrame.FBOUnsupportedException;
 import com.osreboot.ridhvl.painter.painter2d.HvlFontPainter2D;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
 public class Main extends HvlTemplateInteg2D{
 	
 	public static void main(String [] args){
-		new Main();
-	}
-	public Main(){
-		super(60, 1280, 720, "Message Melee", new HvlDisplayModeDefault());
+		try {
+			new Main();
+		} catch (Exception e){
+			JOptionPane.showMessageDialog(null, e.getClass().getSimpleName() + " - " + e.getMessage(), "Message Melee Exception", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
 	}
 	
+	public Main(){
+		super(144, 1280, 720, "Message Melee", new HvlDisplayModeDefault());
+	}
+	
+	public static final int NUM_TEXTURES = 17;
+	public static final int NUM_SOUNDS = 1;
 	public static final int
 	LEVEL_ONE_INDEX = 0,
 	CRATE_INDEX = 1,
@@ -38,9 +55,17 @@ public class Main extends HvlTemplateInteg2D{
 	public static final int
 	GEAR_RUN_INDEX = 0;
 	
+	public static final String PATH_SETTINGS = "res\\settings.cfg";
+	
+	public static Options options;
+	
 	static HvlFontPainter2D font;
 	public static HvlAnimatedTextureUV loadingAnimation, blueRunning, blueStanding;
 	public static AnimatedTextureGroup blue;
+	
+	public static void saveConfig(){
+		HvlConfig.saveToFile(options, PATH_SETTINGS);
+	}
 	@Override
 	public void initialize() {
 		getTextureLoader().loadResource("level1");//0
@@ -63,6 +88,11 @@ public class Main extends HvlTemplateInteg2D{
 		
 		getSoundLoader().loadResource("gears");//0
 		
+		if(getTextureLoader().getResources().size() != NUM_TEXTURES)
+			throw new RuntimeException("Textures and/or sounds not loaded, try running the application in the same directory as the 'res' folder.");
+		if(getSoundLoader().getResources().size() != NUM_SOUNDS) 
+			throw new RuntimeException("Textures and/or sounds not loaded, try running the application in the same directory as the 'res' folder.");
+		
 		font = new HvlFontPainter2D(getTexture(FONT_INDEX), HvlFontPainter2D.Preset.FP_INOFFICIAL);
 		font.setCharSpacing(16f);
 		
@@ -74,11 +104,19 @@ public class Main extends HvlTemplateInteg2D{
 		blueRunning = new HvlAnimatedTextureUV(getTexture(BLUE_RUNNING), 256, 26, 0.2f);
 		blue = new AnimatedTextureGroup(blueStanding, blueRunning);
 		
+		File config = new File(PATH_SETTINGS);
+		if(config.exists()){
+			options = HvlConfig.loadFromFile(PATH_SETTINGS);
+		}else{
+			HvlConfig.saveToFile(new Options(), PATH_SETTINGS);
+			options = HvlConfig.loadFromFile(PATH_SETTINGS);
+		}
+		
 		MenuManager.initialize();
 	}
 	@Override
 	public void update(float delta) {
 		Controllers.updateButtons(); 
-		MenuManager.update(delta);		
+		MenuManager.update(delta);	
 	}
 }

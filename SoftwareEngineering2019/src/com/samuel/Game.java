@@ -3,6 +3,8 @@ package com.samuel;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
+import javax.management.RuntimeErrorException;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
@@ -46,14 +48,13 @@ public class Game {
 		player2 = new Player(1, p2, p2Ani);
 		player3 = new Player(2, p3, p3Ani);
 		player4 = new Player(3, p4, p4Ani);
-		
 		try {
 			p1R = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
 			p2R = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
 			p3R = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
 			p4R = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
-		} catch (FBOUnsupportedException e) {
-			e.printStackTrace();
+		}catch (FBOUnsupportedException e){
+			throw new RuntimeException("Your PC does not have Frame Buffer Support, do you live in the 80's?");
 		}
 	}
 	
@@ -77,7 +78,7 @@ public class Game {
 				drawUI(player2);
 				hvlDrawQuadc(player2.get_x() + -player1.get_x() + fixedX, player2.get_y() + -player1.get_y() + fixedY, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1
 				hvlDrawQuadc(player2.get_x() + -player3.get_x() + fixedX, player2.get_y() + -player3.get_y() + fixedY, player3.get_width(), Player.PLAYER_SIZE, player3.get_animation()); //render player 3
-				hvlDrawQuadc(player2.get_x() + -player4.get_x() +fixedX, player2.get_y() + -player4.get_y() + fixedY, player4.get_width(), Player.PLAYER_SIZE, player4.get_animation()); //render player 4
+				hvlDrawQuadc(player2.get_x() + -player4.get_x() + fixedX, player2.get_y() + -player4.get_y() + fixedY, player4.get_width(), Player.PLAYER_SIZE, player4.get_animation()); //render player 4
 				player2.update(delta);
 			}
 		});
@@ -103,6 +104,7 @@ public class Game {
 				player4.update(delta);
 			}
 		});
+		
 		hvlDrawQuad(0, 0, Display.getWidth()/2, Display.getHeight()/2, p1R); //drawing player 1's render frame
 		hvlDrawQuad(Display.getWidth()/2, 0, Display.getWidth()/2, Display.getHeight()/2, p2R);//drawing player 2's render frame
 		hvlDrawQuad(0, Display.getHeight()/2, Display.getWidth()/2, Display.getHeight()/2, p3R);//drawing player 3's render frame

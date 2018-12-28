@@ -13,10 +13,10 @@ import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
 import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
 
 public class Player {
-	static final private float JUMP_POWER = 3000;//Instantaneous velocity the player gains when jumping
+	static final private float JUMP_POWER = 3100;//Instantaneous velocity the player gains when jumping
 	static final private float MOVE_SPEED = 900;//Movement speed in x-plane
-	static final private float JUMP_TIMER = 1f;//Time between jumps, in seconds
-	static final private float GRAVITY = 100; //Gravity value, constantly modifies y-velocity
+	static final private float JUMP_TIMER = 0.75f;//Time between jumps, in seconds
+	static final private float GRAVITY = 7000; //Gravity value, constantly modifies y-velocity
 	static final private float DRAG = 50;//Similar to gravity, but affects x-velocity
 	static final public float PLAYER_SIZE = 256;
 	
@@ -36,7 +36,7 @@ public class Player {
 	//method that runs every frame, calculates physics, checks border and element collisions, and draws the player.
 	public void update(float delta) {
 		this.jumpTimer -= delta;//Jumping timer modification
-		this.vy -= GRAVITY;//”pull” of gravity
+		this.vy -= GRAVITY * delta;//”pull” of gravity
 		this.vx = HvlMath.stepTowards(this.vx, DRAG, 0);//function to slow player down in the x-plane
 		this.x += this.vx * delta; //positions are modified by velocities
 		this.y += this.vy * delta;
