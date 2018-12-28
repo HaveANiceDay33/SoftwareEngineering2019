@@ -204,7 +204,7 @@ public class MenuManager {
 			
 			Main.font.drawWordc("Player "+ (currentPlayer != 4 ? (currentPlayer+1) : currentPlayer) +":", Display.getWidth()/2,100, Color.lightGray, 0.3f);
 			Main.font.drawWordc("Press A on Xbox controller or W on Keyboard", Display.getWidth()/2, 150, Color.lightGray, 0.22f);
-			Main.font.drawWordc("Press D (Keyboard) to skip", Display.getWidth()/2, 200, Color.red, 0.15f);
+			Main.font.drawWordc("Press B (Xbox) or D (Keyboard) to skip", Display.getWidth()/2, 200, Color.red, 0.15f);
 
 			timerBar(controllerTimer/CONTROLLER_TIME);
 			if(currentPlayer == 0 && buttonWait <= 0) {
@@ -235,8 +235,9 @@ public class MenuManager {
 				currentPlayer = 0;
 				controllerTimer = CONTROLLER_TIME;
 				HvlMenu.setCurrent(charSelect);
-			} 
-			if((Controllers.allB[p1index] == 1 || Keyboard.isKeyDown(Keyboard.KEY_D))&& buttonWait <= 0) {
+			}
+			System.out.println(p1index);
+			if(((Controllers.allB[p1index] == 1 && p1index < 4) || Keyboard.isKeyDown(Keyboard.KEY_D))  && buttonWait <= 0) {
 				controllerTimer = CONTROLLER_TIME;
 				buttonWait = BUTTON_WAIT_TIME;
 				currentPlayer++;
