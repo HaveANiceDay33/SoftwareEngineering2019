@@ -19,8 +19,8 @@ public class Word{
 		}
 	}
 	public void draw(float xPlay, float yPlay) {
-		actX = this.x + xPlay + Game.fixedX;
-		actY = this.y + yPlay + Game.fixedY;
+		actX = this.x + xPlay + Game.FIXED_X;
+		actY = this.y + yPlay + Game.FIXED_Y;
 		Main.font.drawWordc(this.text, actX, actY, Color.black, 0.4f);
 	}
 	public void remove(WorldElement toRemove, boolean onPlat) {

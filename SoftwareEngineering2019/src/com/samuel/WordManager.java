@@ -38,11 +38,10 @@ public class WordManager {
 	public static void initWords() {
 		saveTextData("res/nouns.txt", nouns);
 		wordTimer = 0;
-		MenuManager.currentLevel.words.add(new Word(0, Game.fixedX, Game.fixedY + 10000));
+		MenuManager.currentLevel.words.add(new Word(0, Game.FIXED_X, Game.FIXED_Y + 10000));
 	}
 	
 	public static void updateWords(float delta) {
-		System.out.println(MenuManager.currentLevel.elements.get(1).wordOn);
 		wordTimer -= delta;
 		if(wordTimer <= 0) {
 			float x, y;
@@ -53,7 +52,7 @@ public class WordManager {
 				spawnOn.wordOn = true;
 			}else {
 				x = HvlMath.randomIntBetween(Player.BORDER_RIGHT, Player.BORDER_LEFT);
-				y = Game.fixedY;
+				y = Game.FIXED_Y;
 			}
 			Word newWord = new Word(HvlMath.randomIntBetween(0, 0), x, y);
 			MenuManager.currentLevel.words.add(newWord);

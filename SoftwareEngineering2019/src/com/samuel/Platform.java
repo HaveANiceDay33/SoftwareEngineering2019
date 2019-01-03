@@ -12,8 +12,8 @@ public class Platform extends WorldElement{
 		wordOn = false;
 	}
 	public void draw(float xPlay, float yPlay) {
-		actX = this.x + xPlay + Game.fixedX;
-		actY = this.y + yPlay + Game.fixedY;
+		actX = this.x + xPlay + Game.FIXED_X;
+		actY = this.y + yPlay + Game.FIXED_Y;
 		hvlDrawQuadc(actX, actY, this.sizeX*64, this.sizeY*64, 0, 0, this.sizeX, this.sizeY, this.staticTexture);
 	}
 }

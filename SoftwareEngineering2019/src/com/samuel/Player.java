@@ -2,15 +2,12 @@ package com.samuel;
 
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
+import java.util.ArrayList;
+
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.opengl.Texture;
 
 import com.osreboot.ridhvl.HvlMath;
-import com.osreboot.ridhvl.input.collection.HvlCPG_Gamepad;
 import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
-import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
 
 public class Player {
 	static final private float JUMP_POWER = 3100;//Instantaneous velocity the player gains when jumping
@@ -28,6 +25,7 @@ public class Player {
 	public float x, y, vx, vy, x1Cont, aCont; //movement and controller values
 	public float jumpTimer = 0;//Timer that gets modified every frame to allow jumps
 	public AnimatedTextureGroup animations;
+	public ArrayList<Word> playerWords;
 	
 	public float distanceFrom;
 	public boolean onPlat;
@@ -37,6 +35,7 @@ public class Player {
 		this.cont = cont;
 		this.animations = animations;
 		this.vx = HvlMath.randomIntBetween(-2700, 2700); //sets the initial x-velocity of the player, creates a “fanning” effect for when the players spawn in.
+		this.playerWords = new ArrayList<>();
 	}
 	
 	//method that runs every frame, calculates physics, checks border and element collisions, and draws the player.
@@ -66,7 +65,7 @@ public class Player {
 			if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && this.vy == 0 && this.jumpTimer <= 0){this.vy = JUMP_POWER; this.jumpTimer = JUMP_TIMER;}
 		}
 		
-		hvlDrawQuadc(Game.fixedX, Game.fixedY, this.vx <= 0 ? -PLAYER_SIZE : PLAYER_SIZE, PLAYER_SIZE,
+		hvlDrawQuadc(Game.FIXED_X, Game.FIXED_Y, this.vx <= 0 ? -PLAYER_SIZE : PLAYER_SIZE, PLAYER_SIZE,
 				vx == 0 ? this.animations.standing : this.animations.moving);
 	}
 	
@@ -77,20 +76,22 @@ public class Player {
 		if(this.x > left) {this.x = left;} // left world border 
 		if(this.x < right) {this.x = right;} // right world border
 	}
+	
 	private WorldElement closestElement() {
 		WorldElement closest = null;
 		for(WorldElement e : MenuManager.currentLevel.elements) {
 			if(closest == null) {
 				closest = e;
 			}
-			float distance = HvlMath.distance(Game.fixedX, Game.fixedY, closest.actX, closest.actY);
-			float distanceTest = HvlMath.distance(Game.fixedX, Game.fixedY, e.actX, e.actY);
+			float distance = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, closest.actX, closest.actY);
+			float distanceTest = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, e.actX, e.actY);
 			if(distanceTest < distance) {
 				closest = e;
 			}
 		}
 		return closest;
 	}
+	
 	private void updateElementCollisions() {
 		WorldElement closest = closestElement();
 		onPlat = false;
@@ -116,14 +117,15 @@ public class Player {
 			if(closeWord == null) {
 				closeWord = w;
 			}
-			float distance = HvlMath.distance(Game.fixedX, Game.fixedY, closeWord.actX, closeWord.actY);
-			float distanceTest = HvlMath.distance(Game.fixedX, Game.fixedY, w.actX, w.actY);
+			float distance = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, closeWord.actX, closeWord.actY);
+			float distanceTest = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, w.actX, w.actY);
 			if(distanceTest < distance) {
 				closeWord = w;
 			}
 		}
-		distanceFrom = HvlMath.distance(Game.fixedX, Game.fixedY, closeWord.actX, closeWord.actY);
+		distanceFrom = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, closeWord.actX, closeWord.actY);
 		if(distanceFrom < PLAYER_SIZE/3) {
+			this.playerWords.add(0, closeWord);
 			closeWord.remove(closestElement(), onPlat);
 		}
 	}

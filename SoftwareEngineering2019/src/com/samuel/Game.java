@@ -16,13 +16,14 @@ public class Game {
 	static final public int BACK_X = 7680;
 	static final public int BACK_Y = 4320;
 	static final private int BORDER_WIDTH = 6;
+	static final public float FIXED_X = Display.getWidth()/2;
+	static final public float FIXED_Y = Display.getHeight()/2+100;
 	
 	public static Player player1, player2, player3, player4;
 	static HvlRenderFrame p1R;
 	static HvlRenderFrame p2R;
 	static HvlRenderFrame p3R;
 	static HvlRenderFrame p4R;
-	static float fixedX, fixedY;
 
 	public static void drawWorld(float x, float y, float delta) {
 		LevelGenerator.update(delta, x, y);
@@ -30,15 +31,22 @@ public class Game {
 	
 	public static void drawUI(Player player) {
 		Main.font.drawWord("Player "+(player.id+1), 20, 20, Color.black, 0.3f);
+		if(player.playerWords.size() == 1) {
+			Main.font.drawWord(player.playerWords.get(0).text, Display.getWidth()-300, 20, Color.black, 0.3f);
+		}else if(player.playerWords.size() == 2) {
+			Main.font.drawWord(player.playerWords.get(0).text, Display.getWidth()-300, 20, Color.black, 0.3f);
+			Main.font.drawWord(player.playerWords.get(1).text, Display.getWidth()-300, 70, Color.black, 0.3f);
+		}else if(player.playerWords.size() >= 3) {
+			Main.font.drawWord(player.playerWords.get(0).text, Display.getWidth()-300, 20, Color.black, 0.3f);
+			Main.font.drawWord(player.playerWords.get(1).text, Display.getWidth()-300, 70, Color.black, 0.3f);
+			Main.font.drawWord(player.playerWords.get(2).text, Display.getWidth()-300, 120, Color.black, 0.3f);
+		}
 	}
 
 	public static void initGame(int p1, int p2, int p3 ,int p4, 
 			AnimatedTextureGroup p1Ani, AnimatedTextureGroup p2Ani, AnimatedTextureGroup p3Ani, AnimatedTextureGroup p4Ani) {
 		
 		LevelGenerator.init();
-		System.out.println("Here");
-		fixedX = Display.getWidth()/2; 
-		fixedY = Display.getHeight()/2+100;
 		
 		player1 = new Player(0, p1, p1Ani);
 		player2 = new Player(1, p2, p2Ani);
@@ -61,9 +69,9 @@ public class Game {
 			public void run() {
 				drawWorld(player1.get_x(), player1.get_y(), delta);
 				drawUI(player1);
-				hvlDrawQuadc(player1.get_x() + -player2.get_x() + fixedX, player1.get_y() + -player2.get_y() + fixedY, player2.get_width(), Player.PLAYER_SIZE, player2.get_animation()); //render player 2
-				hvlDrawQuadc(player1.get_x() + -player3.get_x() + fixedX, player1.get_y() + -player3.get_y() + fixedY, player3.get_width(), Player.PLAYER_SIZE, player3.get_animation()); //render player 3
-				hvlDrawQuadc(player1.get_x() + -player4.get_x() + fixedX, player1.get_y() + -player4.get_y() + fixedY, player4.get_width(), Player.PLAYER_SIZE, player4.get_animation());//render player 4
+				hvlDrawQuadc(player1.get_x() + -player2.get_x() + FIXED_X, player1.get_y() + -player2.get_y() + FIXED_Y, player2.get_width(), Player.PLAYER_SIZE, player2.get_animation()); //render player 2
+				hvlDrawQuadc(player1.get_x() + -player3.get_x() + FIXED_X, player1.get_y() + -player3.get_y() + FIXED_Y, player3.get_width(), Player.PLAYER_SIZE, player3.get_animation()); //render player 3
+				hvlDrawQuadc(player1.get_x() + -player4.get_x() + FIXED_X, player1.get_y() + -player4.get_y() + FIXED_Y, player4.get_width(), Player.PLAYER_SIZE, player4.get_animation());//render player 4
 				player1.update(delta);
 			}
 		});
@@ -72,9 +80,9 @@ public class Game {
 			public void run() {
 				drawWorld(player2.get_x(), player2.get_y(), delta);
 				drawUI(player2);
-				hvlDrawQuadc(player2.get_x() + -player1.get_x() + fixedX, player2.get_y() + -player1.get_y() + fixedY, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1
-				hvlDrawQuadc(player2.get_x() + -player3.get_x() + fixedX, player2.get_y() + -player3.get_y() + fixedY, player3.get_width(), Player.PLAYER_SIZE, player3.get_animation()); //render player 3
-				hvlDrawQuadc(player2.get_x() + -player4.get_x() + fixedX, player2.get_y() + -player4.get_y() + fixedY, player4.get_width(), Player.PLAYER_SIZE, player4.get_animation()); //render player 4
+				hvlDrawQuadc(player2.get_x() + -player1.get_x() + FIXED_X, player2.get_y() + -player1.get_y() + FIXED_Y, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1
+				hvlDrawQuadc(player2.get_x() + -player3.get_x() + FIXED_X, player2.get_y() + -player3.get_y() + FIXED_Y, player3.get_width(), Player.PLAYER_SIZE, player3.get_animation()); //render player 3
+				hvlDrawQuadc(player2.get_x() + -player4.get_x() + FIXED_X, player2.get_y() + -player4.get_y() + FIXED_Y, player4.get_width(), Player.PLAYER_SIZE, player4.get_animation()); //render player 4
 				player2.update(delta);
 			}
 		});
@@ -83,9 +91,9 @@ public class Game {
 			public void run() {
 				drawWorld(player3.get_x(), player3.get_y(), delta);
 				drawUI(player3);
-				hvlDrawQuadc(player3.get_x() + -player2.get_x() + fixedX, player3.get_y() + -player2.get_y() + fixedY, player2.get_width(), Player.PLAYER_SIZE, player2.get_animation()); //render player 2
-				hvlDrawQuadc(player3.get_x() + -player1.get_x() + fixedX, player3.get_y() + -player1.get_y() + fixedY, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1
-				hvlDrawQuadc(player3.get_x() + -player4.get_x() + fixedX, player3.get_y() + -player4.get_y() + fixedY, player4.get_width(), Player.PLAYER_SIZE, player4.get_animation()); //render player 4
+				hvlDrawQuadc(player3.get_x() + -player2.get_x() + FIXED_X, player3.get_y() + -player2.get_y() + FIXED_Y, player2.get_width(), Player.PLAYER_SIZE, player2.get_animation()); //render player 2
+				hvlDrawQuadc(player3.get_x() + -player1.get_x() + FIXED_X, player3.get_y() + -player1.get_y() + FIXED_Y, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1
+				hvlDrawQuadc(player3.get_x() + -player4.get_x() + FIXED_X, player3.get_y() + -player4.get_y() + FIXED_Y, player4.get_width(), Player.PLAYER_SIZE, player4.get_animation()); //render player 4
 				player3.update(delta);
 			}
 		});
@@ -94,9 +102,9 @@ public class Game {
 			public void run() {
 				drawWorld(player4.get_x(), player4.get_y(), delta);
 				drawUI(player4);
-				hvlDrawQuadc(player4.get_x() + -player2.get_x() + fixedX, player4.get_y() + -player2.get_y() + fixedY, player2.get_width(), Player.PLAYER_SIZE, player2.get_animation()); //render player 2
-				hvlDrawQuadc(player4.get_x() + -player1.get_x() + fixedX, player4.get_y() + -player1.get_y() + fixedY, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1
-				hvlDrawQuadc(player4.get_x() + -player3.get_x() + fixedX, player4.get_y() + -player3.get_y() + fixedY, player3.get_width(), Player.PLAYER_SIZE, player3.get_animation()); //render player 3
+				hvlDrawQuadc(player4.get_x() + -player2.get_x() + FIXED_X, player4.get_y() + -player2.get_y() + FIXED_Y, player2.get_width(), Player.PLAYER_SIZE, player2.get_animation()); //render player 2
+				hvlDrawQuadc(player4.get_x() + -player1.get_x() + FIXED_X, player4.get_y() + -player1.get_y() + FIXED_Y, player1.get_width(), Player.PLAYER_SIZE, player1.get_animation()); //render player 1
+				hvlDrawQuadc(player4.get_x() + -player3.get_x() + FIXED_X, player4.get_y() + -player3.get_y() + FIXED_Y, player3.get_width(), Player.PLAYER_SIZE, player3.get_animation()); //render player 3
 				player4.update(delta);
 			}
 		});

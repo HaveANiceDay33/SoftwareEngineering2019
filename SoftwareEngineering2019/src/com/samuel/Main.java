@@ -19,12 +19,12 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 public class Main extends HvlTemplateInteg2D{
 	
 	public static void main(String [] args){
-		//try {
+		try {
 			new Main();
-		//} catch (Exception e){
-			//JOptionPane.showMessageDialog(null, e.getClass().getSimpleName() + " - " + e.getMessage(), "Message Melee Exception", JOptionPane.ERROR_MESSAGE);
-			//System.exit(0);
-		//}
+		} catch (Exception e){
+			JOptionPane.showMessageDialog(null, e.getClass().getSimpleName() + " - " + e.getMessage(), "Message Melee Exception", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
 	}
 	
 	public Main(){
