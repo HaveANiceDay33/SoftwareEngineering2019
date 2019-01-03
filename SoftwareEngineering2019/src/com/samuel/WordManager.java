@@ -42,7 +42,6 @@ public class WordManager {
 	}
 	
 	public static void updateWords(float delta) {
-		System.out.println(MenuManager.currentLevel.elements.get(1).wordOn);
 		wordTimer -= delta;
 		if(wordTimer <= 0) {
 			float x, y;
