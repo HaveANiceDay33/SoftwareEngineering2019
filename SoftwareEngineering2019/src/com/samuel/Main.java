@@ -19,12 +19,12 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 public class Main extends HvlTemplateInteg2D{
 	
 	public static void main(String [] args){
-		try {
+		//try {
 			new Main();
-		} catch (Exception e){
-			JOptionPane.showMessageDialog(null, e.getClass().getSimpleName() + " - " + e.getMessage(), "Message Melee Exception", JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
-		}
+		//} catch (Exception e){
+			//JOptionPane.showMessageDialog(null, e.getClass().getSimpleName() + " - " + e.getMessage(), "Message Melee Exception", JOptionPane.ERROR_MESSAGE);
+			//System.exit(0);
+		//}
 	}
 	
 	public Main(){
@@ -32,9 +32,7 @@ public class Main extends HvlTemplateInteg2D{
 	}
 	
 	public static final int NUM_TEXTURES = 19;
-	
-	public static final int NUM_SOUNDS = 1;
-	
+
 	public static final int
 	LEVEL_ONE_INDEX = 0,
 	CRATE_INDEX = 1,
@@ -56,8 +54,12 @@ public class Main extends HvlTemplateInteg2D{
 	PURP_RUNNING_INDEX = 17,
 	PURP_STILL_INDEX = 18;
 	
+	public static final int NUM_SOUNDS = 3;
+	
 	public static final int
-	GEAR_RUN_INDEX = 0;
+	GEAR_RUN_INDEX = 0,
+	FORWARD_INDEX = 1,
+	BACK_INDEX = 2;
 	
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 	
@@ -93,6 +95,8 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("purpmanidle");//18
 		
 		getSoundLoader().loadResource("gears");//0
+		getSoundLoader().loadResource("forward");//1
+		getSoundLoader().loadResource("back");//2
 		
 		if(getTextureLoader().getResources().size() != NUM_TEXTURES)
 			throw new RuntimeException("Textures and/or sounds not loaded, try running the application in the same directory as the 'res' folder.");

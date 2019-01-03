@@ -3,17 +3,12 @@ package com.samuel;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
-import javax.management.RuntimeErrorException;
+import java.util.ArrayList;
 
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.opengl.Texture;
 
-import com.osreboot.ridhvl.HvlMath;
 import com.osreboot.ridhvl.action.HvlAction0;
-import com.osreboot.ridhvl.input.HvlControllerProfile;
-import com.osreboot.ridhvl.input.collection.HvlCPG_Gamepad;
 import com.osreboot.ridhvl.painter.HvlRenderFrame;
 import com.osreboot.ridhvl.painter.HvlRenderFrame.FBOUnsupportedException;
 
@@ -39,8 +34,9 @@ public class Game {
 
 	public static void initGame(int p1, int p2, int p3 ,int p4, 
 			AnimatedTextureGroup p1Ani, AnimatedTextureGroup p2Ani, AnimatedTextureGroup p3Ani, AnimatedTextureGroup p4Ani) {
-		LevelGenerator.init();
 		
+		LevelGenerator.init();
+		System.out.println("Here");
 		fixedX = Display.getWidth()/2; 
 		fixedY = Display.getHeight()/2+100;
 		
@@ -59,7 +55,7 @@ public class Game {
 	}
 	
 	public static void updateGame(float delta) {
-		
+		WordManager.updateWords(delta);
 		p1R.doCapture(new HvlAction0() { //player 1 
 			@Override
 			public void run() {

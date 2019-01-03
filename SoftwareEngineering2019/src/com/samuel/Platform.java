@@ -9,6 +9,7 @@ public class Platform extends WorldElement{
 		super(x, y, Main.getTexture(Main.CRATE_INDEX));
 		this.sizeY = 1;
 		this.sizeX = sizeX;
+		wordOn = false;
 	}
 	public void draw(float xPlay, float yPlay) {
 		actX = this.x + xPlay + Game.fixedX;

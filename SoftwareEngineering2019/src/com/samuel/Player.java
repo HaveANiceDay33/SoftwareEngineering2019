@@ -17,14 +17,20 @@ public class Player {
 	static final private float MOVE_SPEED = 900;//Movement speed in x-plane
 	static final private float JUMP_TIMER = 0.75f;//Time between jumps, in seconds
 	static final private float GRAVITY = 7000; //Gravity value, constantly modifies y-velocity
-	static final private float DRAG = 50;//Similar to gravity, but affects x-velocity
+	static final private float DRAG = 6000;//Similar to gravity, but affects x-velocity
 	static final public float PLAYER_SIZE = 256;
+	static final public int BORDER_TOP = Game.BACK_Y-2160;
+	static final public int BORDER_BOTTOM = -550;
+	static final public int BORDER_RIGHT = -Game.BACK_X/2+1920;
+	static final public int BORDER_LEFT = Game.BACK_X/2-1920;
 	
 	public int id, cont;//used to decorate UI elements and assign controller numbers
 	public float x, y, vx, vy, x1Cont, aCont; //movement and controller values
 	public float jumpTimer = 0;//Timer that gets modified every frame to allow jumps
 	public AnimatedTextureGroup animations;
 	
+	public float distanceFrom;
+	public boolean onPlat;
 	//Player constructor that runs when a player object is created
 	public Player(int id, int cont, AnimatedTextureGroup animations){
 		this.id = id;
@@ -37,11 +43,12 @@ public class Player {
 	public void update(float delta) {
 		this.jumpTimer -= delta;//Jumping timer modification
 		this.vy -= GRAVITY * delta;//”pull” of gravity
-		this.vx = HvlMath.stepTowards(this.vx, DRAG, 0);//function to slow player down in the x-plane
+		this.vx = HvlMath.stepTowards(this.vx, DRAG*delta, 0);//function to slow player down in the x-plane
 		this.x += this.vx * delta; //positions are modified by velocities
 		this.y += this.vy * delta;
 		updateElementCollisions();//put here to correct for gravity's effect in one frame, vy is set to 0 here, and upon a jump is changed to JUMP_POWER
-		updateBorderCollisions(Game.BACK_Y-2160, -550, Game.BACK_X/2-1920, -Game.BACK_X/2+1920);
+		updateWords();
+		updateBorderCollisions(BORDER_TOP, BORDER_BOTTOM, BORDER_LEFT, BORDER_RIGHT);
 		if(this.cont != 4) {
 			this.x1Cont = Controllers.joy1x[this.cont]; //controller inputs saved to variables for later use
 			this.aCont = Controllers.allA[this.cont];
@@ -70,19 +77,23 @@ public class Player {
 		if(this.x > left) {this.x = left;} // left world border 
 		if(this.x < right) {this.x = right;} // right world border
 	}
-	
-	public void updateElementCollisions() {
+	private WorldElement closestElement() {
 		WorldElement closest = null;
 		for(WorldElement e : MenuManager.currentLevel.elements) {
 			if(closest == null) {
 				closest = e;
 			}
-			float distance = HvlMath.distance(Display.getWidth()/2, Display.getHeight()/2, closest.actX, closest.actY);
-			float distanceTest = HvlMath.distance(Display.getWidth()/2, Display.getHeight()/2, e.actX, e.actY);
+			float distance = HvlMath.distance(Game.fixedX, Game.fixedY, closest.actX, closest.actY);
+			float distanceTest = HvlMath.distance(Game.fixedX, Game.fixedY, e.actX, e.actY);
 			if(distanceTest < distance) {
 				closest = e;
 			}
 		}
+		return closest;
+	}
+	private void updateElementCollisions() {
+		WorldElement closest = closestElement();
+		onPlat = false;
 		//CHECKING PLATFORM COLLISIONS
 		if(closest instanceof Platform) {
 			if(this.y < -(closest.y + 32) + PLAYER_SIZE/2 && this.y > -(closest.y - 32) - PLAYER_SIZE/2 && 
@@ -90,6 +101,7 @@ public class Player {
 				if(this.vy < 0) {
 					this.vy = 0;
 					this.y = -(closest.y + 32) + PLAYER_SIZE/2;
+					onPlat = true;
 				} else if (this.vy > 0) {
 					this.vy = -1;
 					this.y = -(closest.y - 32) -PLAYER_SIZE/2;
@@ -98,6 +110,24 @@ public class Player {
 		}
 	}
 	
+	private void updateWords() {
+		Word closeWord = null;
+		for(Word w : MenuManager.currentLevel.words) {
+			if(closeWord == null) {
+				closeWord = w;
+			}
+			float distance = HvlMath.distance(Game.fixedX, Game.fixedY, closeWord.actX, closeWord.actY);
+			float distanceTest = HvlMath.distance(Game.fixedX, Game.fixedY, w.actX, w.actY);
+			if(distanceTest < distance) {
+				closeWord = w;
+			}
+		}
+		distanceFrom = HvlMath.distance(Game.fixedX, Game.fixedY, closeWord.actX, closeWord.actY);
+		if(distanceFrom < PLAYER_SIZE/3) {
+			closeWord.remove(closestElement(), onPlat);
+		}
+	}
+ 	
 	public HvlAnimatedTextureUV get_animation() {
 		if(vx == 0) {
 			return this.animations.standing;
