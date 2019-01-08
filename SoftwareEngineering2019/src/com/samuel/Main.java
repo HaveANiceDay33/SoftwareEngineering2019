@@ -51,8 +51,12 @@ public class Main extends HvlTemplateInteg2D{
 	D_INDEX = 14,
 	S_INDEX = 15,
 	W_INDEX = 16,
-	PURP_RUNNING_INDEX = 17,
-	PURP_STILL_INDEX = 18;
+	BLACK_RUNNING_INDEX = 17,
+	BLACK_STILL_INDEX = 18,
+	RED_RUNNING_INDEX = 19,
+	RED_STILL_INDEX = 20,
+	GREEN_RUNNING_INDEX = 21,
+	GREEN_STILL_INDEX = 22;
 	
 	public static final int NUM_SOUNDS = 3;
 	
@@ -81,8 +85,8 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("headSheet");//4
 		getTextureLoader().loadResource("splashText");//5
 		getTextureLoader().loadResource("textTry");//6
-		getTextureLoader().loadResource("blueStill");//7
-		getTextureLoader().loadResource("blueManRunning");//8
+		getTextureLoader().loadResource("Idle4");//7
+		getTextureLoader().loadResource("Left4");//8
 		getTextureLoader().loadResource("b");//9
 		getTextureLoader().loadResource("a");//10
 		getTextureLoader().loadResource("x");//11
@@ -91,8 +95,12 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("d");//14
 		getTextureLoader().loadResource("s");//15
 		getTextureLoader().loadResource("w");//16
-		getTextureLoader().loadResource("purpCharRun");//17
-		getTextureLoader().loadResource("purpmanidle");//18
+		getTextureLoader().loadResource("Left1");//17
+		getTextureLoader().loadResource("Idle1");//18
+		getTextureLoader().loadResource("Left2");//19
+		getTextureLoader().loadResource("Idle2");//20
+		getTextureLoader().loadResource("Left3");//21
+		getTextureLoader().loadResource("Idle3");//22
 		
 		getSoundLoader().loadResource("gears");//0
 		getSoundLoader().loadResource("forward");//1

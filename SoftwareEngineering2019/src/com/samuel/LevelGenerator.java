@@ -20,5 +20,10 @@ public class LevelGenerator {
 		for(Word w : currentLevel.words) {
 			w.draw(playerX, playerY);
 		}
+		for(Weapon w : currentLevel.weapons) {
+			if(!w.onPlayer) {
+				w.draw(playerX, playerY);
+			}
+		}
 	}
 }
