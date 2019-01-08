@@ -31,7 +31,7 @@ public class Main extends HvlTemplateInteg2D{
 		super(144, 1280, 720, "Message Melee", new HvlDisplayModeDefault());
 	}
 	
-	public static final int NUM_TEXTURES = 23;
+	public static final int NUM_TEXTURES = 27;
 
 	public static final int
 	LEVEL_ONE_INDEX = 0,
@@ -56,7 +56,11 @@ public class Main extends HvlTemplateInteg2D{
 	RED_RUNNING_INDEX = 19,
 	RED_STILL_INDEX = 20,
 	GREEN_RUNNING_INDEX = 21,
-	GREEN_STILL_INDEX = 22;
+	GREEN_STILL_INDEX = 22,
+	BLUE_JUMP_INDEX = 23,
+	BLACK_JUMP_INDEX = 24,
+	RED_JUMP_INDEX = 25,
+	GREEN_JUMP_INDEX = 26;
 	
 	public static final int NUM_SOUNDS = 3;
 	
@@ -70,8 +74,8 @@ public class Main extends HvlTemplateInteg2D{
 	public static Options options;
 	
 	static HvlFontPainter2D font;
-	public static HvlAnimatedTextureUV loadingAnimation, blueRunning, blueStanding, blackRunning, 
-	blackStanding, redRunning, redStanding, greenRunning, greenStanding ;
+	public static HvlAnimatedTextureUV loadingAnimation, blueRunning, blueStanding, blueJumping, blackRunning, 
+	blackStanding, blackJumping, redRunning, redStanding, redJumping, greenRunning, greenStanding, greenJumping;
 	public static AnimatedTextureGroup blue, black, red, green;
 	
 	public static void saveConfig(){
@@ -102,6 +106,10 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("Idle2");//20
 		getTextureLoader().loadResource("Left3");//21
 		getTextureLoader().loadResource("Idle3");//22
+		getTextureLoader().loadResource("Jump4");//23
+		getTextureLoader().loadResource("Jump1");//24
+		getTextureLoader().loadResource("Jump2");//25
+		getTextureLoader().loadResource("Jump3");//26
 		
 		getSoundLoader().loadResource("gears");//0
 		getSoundLoader().loadResource("forward");//1
@@ -121,19 +129,23 @@ public class Main extends HvlTemplateInteg2D{
 		
 		blueStanding = new HvlAnimatedTextureUV(getTexture(BLUE_STILL_INDEX), 512, 26, 0.1f);
 		blueRunning = new HvlAnimatedTextureUV(getTexture(BLUE_RUNNING_INDEX), 512, 26, 0.1f);
-		blue = new AnimatedTextureGroup(blueStanding, blueRunning);
+		blueJumping = new HvlAnimatedTextureUV(getTexture(BLUE_JUMP_INDEX), 512, 26, 0.1f);
+		blue = new AnimatedTextureGroup(blueStanding, blueRunning, blueJumping);
 		
 		blackStanding = new HvlAnimatedTextureUV(getTexture(BLACK_STILL_INDEX), 512, 26, 0.1f);
 		blackRunning = new HvlAnimatedTextureUV(getTexture(BLACK_RUNNING_INDEX), 512, 26, 0.1f);
-		black = new AnimatedTextureGroup(blackStanding, blackRunning);
+		blackJumping = new HvlAnimatedTextureUV(getTexture(BLACK_JUMP_INDEX), 512, 26, 0.1f);
+		black = new AnimatedTextureGroup(blackStanding, blackRunning, blackJumping);
 		
 		redStanding = new HvlAnimatedTextureUV(getTexture(RED_STILL_INDEX), 512, 26, 0.1f);
 		redRunning = new HvlAnimatedTextureUV(getTexture(RED_RUNNING_INDEX), 512, 26, 0.1f);
-		red = new AnimatedTextureGroup(redStanding, redRunning);
+		redJumping = new HvlAnimatedTextureUV(getTexture(RED_JUMP_INDEX), 512, 26, 0.1f);
+		red = new AnimatedTextureGroup(redStanding, redRunning, redJumping);
 		
 		greenStanding = new HvlAnimatedTextureUV(getTexture(GREEN_STILL_INDEX), 512, 26, 0.1f);
 		greenRunning = new HvlAnimatedTextureUV(getTexture(GREEN_RUNNING_INDEX), 512, 26, 0.1f);
-		green = new AnimatedTextureGroup(greenStanding, greenRunning);
+		greenJumping = new HvlAnimatedTextureUV(getTexture(GREEN_JUMP_INDEX), 512, 26, 0.1f);
+		green = new AnimatedTextureGroup(greenStanding, greenRunning, greenJumping);
 		
 		File config = new File(PATH_SETTINGS);
 		if(config.exists()){

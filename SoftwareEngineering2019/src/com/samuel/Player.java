@@ -26,9 +26,13 @@ public class Player {
 	public float jumpTimer = 0;//Timer that gets modified every frame to allow jumps
 	public AnimatedTextureGroup animations;
 	public ArrayList<Word> playerWords;
-	
-	public float distanceFrom;
+	private boolean jumped = false;
+	private float aniTime = 0.8f;
+	public HvlAnimatedTextureUV currentAnimation;
+	private float distanceFrom;
 	public boolean onPlat;
+	
+	
 	//Player constructor that runs when a player object is created
 	public Player(int id, int cont, AnimatedTextureGroup animations){
 		this.id = id;
@@ -36,6 +40,7 @@ public class Player {
 		this.animations = animations;
 		this.vx = HvlMath.randomIntBetween(-2700, 2700); //sets the initial x-velocity of the player, creates a “fanning” effect for when the players spawn in.
 		this.playerWords = new ArrayList<>();
+		this.currentAnimation = this.animations.standing; 
 	}
 	
 	//method that runs every frame, calculates physics, checks border and element collisions, and draws the player.
@@ -56,17 +61,37 @@ public class Player {
 			if(this.x1Cont < 0)
 				this.vx = MOVE_SPEED * Math.abs(this.x1Cont);
 			if(this.aCont == 1 && this.vy == 0 && this.jumpTimer <= 0){//Determines jumping
-				this.vy = JUMP_POWER; 
+				this.vy = JUMP_POWER;
+				this.jumped = true;
 				this.jumpTimer = JUMP_TIMER;//resets jump timer
 			} 
 		} else { //Clause to add keyboard support
 			if(Keyboard.isKeyDown(Keyboard.KEY_D)){this.vx = -MOVE_SPEED;}
 			if(Keyboard.isKeyDown(Keyboard.KEY_A)){this.vx = MOVE_SPEED;}
-			if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && this.vy == 0 && this.jumpTimer <= 0){this.vy = JUMP_POWER; this.jumpTimer = JUMP_TIMER;}
+			if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && this.vy == 0 && this.jumpTimer <= 0){
+				this.vy = JUMP_POWER; 
+				this.jumpTimer = JUMP_TIMER;
+				this.jumped = true;
+			}
 		}
 		
+		if(this.vx == 0) {
+			currentAnimation = this.animations.standing;
+		} else {
+			currentAnimation = this.animations.moving;
+		}
+		if(this.jumped) {
+			aniTime -= delta;
+			this.currentAnimation = this.animations.jumping;
+			this.animations.jumping.setRunning(true);
+			if(aniTime <= 0) {
+				this.jumped = false;
+				aniTime = 0.8f;
+			}
+		} 
+		
 		hvlDrawQuadc(Game.FIXED_X, Game.FIXED_Y, this.vx <= 0 ? -PLAYER_SIZE : PLAYER_SIZE, PLAYER_SIZE,
-				vx == 0 ? this.animations.standing : this.animations.moving);
+				currentAnimation);
 	}
 	
 	//Calculates and prevents players from leaving the play area. 
@@ -132,7 +157,7 @@ public class Player {
 	}
  	
 	public HvlAnimatedTextureUV get_animation() {
-		if(vx == 0) {
+		if(this.vx == 0) {
 			return this.animations.standing;
 		}else {
 			return this.animations.moving;
