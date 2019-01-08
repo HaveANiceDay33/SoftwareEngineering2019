@@ -98,7 +98,8 @@ public class Player {
 		//CHECKING PLATFORM COLLISIONS
 		if(closest instanceof Platform) {
 			if(this.y < -(closest.y + 32) + PLAYER_SIZE/2 && this.y > -(closest.y - 32) - PLAYER_SIZE/2 && 
-					((this.x > closest.x - closest.sizeX*32 && this.x < closest.x + closest.sizeX*32) || (this.x < -(closest.x - closest.sizeX*32) && this.x > -(closest.x + closest.sizeX*32)) )){
+					((this.x + (PLAYER_SIZE/4) > closest.x - closest.sizeX*32 && this.x - (PLAYER_SIZE/4) < closest.x + closest.sizeX*32) || 
+							(this.x - (PLAYER_SIZE/4) < -(closest.x - closest.sizeX*32) && this.x + (PLAYER_SIZE/4) > -(closest.x + closest.sizeX*32)) )){
 				if(this.vy < 0) {
 					this.vy = 0;
 					this.y = -(closest.y + 32) + PLAYER_SIZE/2;

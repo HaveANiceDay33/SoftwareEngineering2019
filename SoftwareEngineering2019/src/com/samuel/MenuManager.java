@@ -281,17 +281,19 @@ public class MenuManager {
 			buttonWait -= delta;
 			hvlDrawQuadc(256, 500, 50, 50, Main.getTexture(Main.Y_INDEX));
 			hvlDrawQuadc(256, 560, 50, 50, Main.getTexture(Main.W_INDEX));
+			hvlDrawQuadc(256, Display.getHeight()/2+50, -170, 170, Main.black.standing);
 			
 			hvlDrawQuadc(512, 500, 50, 50, Main.getTexture(Main.X_INDEX));
 			hvlDrawQuadc(512, 560, 50, 50, Main.getTexture(Main.A_KEY_INDEX));
-			hvlDrawQuadc(512, Display.getHeight()/2+50, -170, 170, Main.blue.moving);
+			hvlDrawQuadc(512, Display.getHeight()/2+50, -170, 170, Main.blue.standing);
 			
 			hvlDrawQuadc(768, 500, 50, 50, Main.getTexture(Main.A_INDEX));
 			hvlDrawQuadc(768, 560, 50, 50, Main.getTexture(Main.S_INDEX));
+			hvlDrawQuadc(768, Display.getHeight()/2+50, -170, 170, Main.green.standing);
 			
 			hvlDrawQuadc(1024, 500, 50, 50, Main.getTexture(Main.B_INDEX));
 			hvlDrawQuadc(1024, 560, 50, 50, Main.getTexture(Main.D_INDEX));
-			hvlDrawQuadc(1024, Display.getHeight()/2+50, -170, 170, Main.purp.moving);
+			hvlDrawQuadc(1024, Display.getHeight()/2+50, -170, 170, Main.red.standing);
 			
 			Main.font.drawWord("Player 1: ", 10, 20, Color.white, 0.2f);
 			hvlDrawQuad(160, -5, 75, 75, p1A.standing);
@@ -314,15 +316,32 @@ public class MenuManager {
 			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p3A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
 			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p4A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
 			
-			if(Controllers.allB[p1index] == 1 && buttonWait <= 0) {p1A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allB[p2index] == 1 && buttonWait <= 0) {p2A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allB[p3index] == 1 && buttonWait <= 0) {p3A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allB[p4index] == 1 && buttonWait <= 0) {p4A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
-			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p1A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
-			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p2A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
-			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p3A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
-			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p4A = Main.purp; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allY[p1index] == 1 && buttonWait <= 0) {p1A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allY[p2index] == 1 && buttonWait <= 0) {p2A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allY[p3index] == 1 && buttonWait <= 0) {p3A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allY[p4index] == 1 && buttonWait <= 0) {p4A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p1A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p2A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p3A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p4A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
 			
+			if(Controllers.allB[p1index] == 1 && buttonWait <= 0) {p1A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allB[p2index] == 1 && buttonWait <= 0) {p2A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allB[p3index] == 1 && buttonWait <= 0) {p3A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allB[p4index] == 1 && buttonWait <= 0) {p4A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p1A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p2A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p3A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p4A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
+			
+			if(Controllers.allA[p1index] == 1 && buttonWait <= 0) {p1A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allA[p2index] == 1 && buttonWait <= 0) {p2A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allA[p3index] == 1 && buttonWait <= 0) {p3A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allA[p4index] == 1 && buttonWait <= 0) {p4A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p1A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p2A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p3A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p4A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
 			if(controllerTimer <= 0) {
 				Game.initGame(p1index, p2index, p3index, p4index, p1A, p2A, p3A, p4A);
 				HvlMenu.setCurrent(game);
