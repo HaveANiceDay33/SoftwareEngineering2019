@@ -39,10 +39,14 @@ public class MenuManager {
 	}
 
 	private static void playForward() {
-		Main.getSound(Main.FORWARD_INDEX).playAsSoundEffect(1, 0.2f, false);
+		if(Main.options.soundEffectsEnabled) {
+			Main.getSound(Main.FORWARD_INDEX).playAsSoundEffect(1, 0.2f, false);
+		}
 	}
 	private static void playBack() {
-		Main.getSound(Main.BACK_INDEX).playAsSoundEffect(1, 0.2f, false);
+		if(Main.options.soundEffectsEnabled) {
+			Main.getSound(Main.BACK_INDEX).playAsSoundEffect(1, 0.2f, false);
+		}
 	}
 	
 	public static void initialize() {

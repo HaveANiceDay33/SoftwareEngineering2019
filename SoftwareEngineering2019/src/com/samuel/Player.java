@@ -156,14 +156,6 @@ public class Player {
 		}
 	}
  	
-	public HvlAnimatedTextureUV get_animation() {
-		if(this.vx == 0) {
-			return this.animations.standing;
-		}else {
-			return this.animations.moving;
-		}
-	}
-	
 	public float get_width() {
 		if(this.vx <= 0) {return -PLAYER_SIZE;}
 		else {return PLAYER_SIZE;}
