@@ -16,10 +16,10 @@ public class Player {
 	static final private float GRAVITY = 7000; //Gravity value, constantly modifies y-velocity
 	static final private float DRAG = 6000;//Similar to gravity, but affects x-velocity
 	static final public float PLAYER_SIZE = 256;
-	static final public int BORDER_TOP = Game.BACK_Y-2160;
-	static final public int BORDER_BOTTOM = -550;
-	static final public int BORDER_RIGHT = -Game.BACK_X/2+1920;
-	static final public int BORDER_LEFT = Game.BACK_X/2-1920;
+	static final public int BORDER_TOP = 2160;
+	static final public int BORDER_BOTTOM = -500;
+	static final public int BORDER_RIGHT = -1920; //+1920
+	static final public int BORDER_LEFT = 1920;
 	
 	public int id, cont;//used to decorate UI elements and assign controller numbers
 	public float x, y, vx, vy, x1Cont, aCont; //movement and controller values

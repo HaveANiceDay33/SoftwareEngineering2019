@@ -12,7 +12,7 @@ public class LevelGenerator {
 	}
 	public static void update(float delta, float playerX, float playerY) {
 		
-		hvlDrawQuadc(playerX, playerY, Game.BACK_X, Game.BACK_Y, backTexture);
+		hvlDrawQuadc(playerX+500, playerY-300, Game.BACK_X, Game.BACK_Y, backTexture);
 		//hvlDrawQuadc(playerX + Display.getWidth()/2, playerY + Display.getHeight()/2, 50, 50, Color.red); CENTER OF WORLD INDICATOR FOR LEVEL DESIGN
 		for(WorldElement e : currentLevel.elements) {
 			e.draw(playerX, playerY);

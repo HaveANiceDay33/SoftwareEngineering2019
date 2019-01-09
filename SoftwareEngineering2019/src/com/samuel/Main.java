@@ -83,7 +83,7 @@ public class Main extends HvlTemplateInteg2D{
 	}
 	@Override
 	public void initialize() {
-		getTextureLoader().loadResource("level1");//0
+		getTextureLoader().loadResource("1");//0
 		getTextureLoader().loadResource("crate");//1
 		getTextureLoader().loadResource("INOF");//2
 		getTextureLoader().loadResource("clogo");//3

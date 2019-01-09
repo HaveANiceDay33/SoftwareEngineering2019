@@ -13,8 +13,8 @@ import com.osreboot.ridhvl.painter.HvlRenderFrame;
 import com.osreboot.ridhvl.painter.HvlRenderFrame.FBOUnsupportedException;
 
 public class Game {
-	static final public int BACK_X = 7680;
-	static final public int BACK_Y = 4320;
+	static final public int BACK_X = 5500; //5760
+	static final public int BACK_Y = 3094; //3240
 	static final private int BORDER_WIDTH = 6;
 	static final public float FIXED_X = Display.getWidth()/2;
 	static final public float FIXED_Y = Display.getHeight()/2+100;
