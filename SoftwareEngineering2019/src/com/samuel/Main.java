@@ -75,7 +75,8 @@ public class Main extends HvlTemplateInteg2D{
 	
 	static HvlFontPainter2D font;
 	public static HvlAnimatedTextureUV loadingAnimation, blueRunning, blueStanding, blueJumping, blackRunning, 
-	blackStanding, blackJumping, redRunning, redStanding, redJumping, greenRunning, greenStanding, greenJumping;
+	blackStanding, blackJumping, redRunning, redStanding, redJumping, greenRunning, greenStanding, greenJumping,
+	level1;
 	public static AnimatedTextureGroup blue, black, red, green;
 	
 	public static void saveConfig(){
