@@ -29,6 +29,7 @@ public class MenuManager {
 	private static float whiteFade = 0;
 	
 	static boolean playedIntroSound = false;
+	static boolean playedMenuMusic = false;
 	static Level currentLevel;
 	
 	private static void timerBar(float time) {
@@ -40,12 +41,12 @@ public class MenuManager {
 
 	private static void playForward() {
 		if(Main.options.soundEffectsEnabled) {
-			Main.getSound(Main.FORWARD_INDEX).playAsSoundEffect(1, 0.2f, false);
+			Main.getSound(Main.FORWARD_INDEX).playAsSoundEffect(1, 1f, false);
 		}
 	}
 	private static void playBack() {
 		if(Main.options.soundEffectsEnabled) {
-			Main.getSound(Main.BACK_INDEX).playAsSoundEffect(1, 0.2f, false);
+			Main.getSound(Main.BACK_INDEX).playAsSoundEffect(1, 1f, false);
 		}
 	}
 	
@@ -189,7 +190,8 @@ public class MenuManager {
 			hvlDrawQuadc(Display.getWidth()/2+15, Display.getHeight()/2+170, 688, 86, Main.getTexture(Main.C_TEXT_INDEX), new Color(1f, 1f, 1f, alpha));
 		}
 		else if(HvlMenu.getCurrent() == menu) {
-			Main.font.drawWordc("Message\n  Melee", 800, Display.getHeight()/2, Color.lightGray, 0.95f);
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.MENU_BACK_INDEX));
+			Main.font.drawWordc("Message\n  Melee", 800, Display.getHeight()/2, Color.black, 0.95f);
 			buttonWait-=delta;
 			if(Controllers.allA[4] == 1 && buttonWait <= 0) {
 				currentPlayer = 0;
@@ -197,6 +199,12 @@ public class MenuManager {
 				buttonWait = BUTTON_WAIT_TIME;
 				HvlMenu.setCurrent(controllerInit);
 			}
+			
+			if(Main.options.backgroundMusicEnabled && playedMenuMusic == false) {
+				Main.getSound(Main.MENU_SONG_INDEX).playAsSoundEffect(1f, 1f, true);
+				playedMenuMusic = true;
+			}
+			
 			if(Controllers.allB[4] == 1 && buttonWait <= 0) {playBack(); System.exit(0);}
 			if(Controllers.allY[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(options); buttonWait = BUTTON_WAIT_TIME;}
 			if(Controllers.allX[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(credits); buttonWait = BUTTON_WAIT_TIME;}
@@ -348,6 +356,7 @@ public class MenuManager {
 			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p4A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
 			if(controllerTimer <= 0) {
 				Game.initGame(p1index, p2index, p3index, p4index, p1A, p2A, p3A, p4A);
+				Main.getSound(Main.MENU_SONG_INDEX).stop();
 				HvlMenu.setCurrent(game);
 			}
 		}

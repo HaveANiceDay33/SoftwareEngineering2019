@@ -16,8 +16,8 @@ public class Player {
 	static final private float GRAVITY = 7000; //Gravity value, constantly modifies y-velocity
 	static final private float DRAG = 6000;//Similar to gravity, but affects x-velocity
 	static final public float PLAYER_SIZE = 256;
-	static final public int BORDER_TOP = 2160;
-	static final public int BORDER_BOTTOM = -500;
+	static final private int BORDER_TOP = 2160;
+	static final private int BORDER_BOTTOM = -500;
 	static final public int BORDER_RIGHT = -1920; //+1920
 	static final public int BORDER_LEFT = 1920;
 	
@@ -31,6 +31,7 @@ public class Player {
 	public HvlAnimatedTextureUV currentAnimation;
 	private float distanceFrom;
 	public boolean onPlat;
+	public Weapon playerWeapon;
 	
 	
 	//Player constructor that runs when a player object is created
@@ -41,6 +42,7 @@ public class Player {
 		this.vx = HvlMath.randomIntBetween(-2700, 2700); //sets the initial x-velocity of the player, creates a “fanning” effect for when the players spawn in.
 		this.playerWords = new ArrayList<>();
 		this.currentAnimation = this.animations.standing; 
+		this.playerWeapon = null;
 	}
 	
 	//method that runs every frame, calculates physics, checks border and element collisions, and draws the player.
@@ -52,6 +54,7 @@ public class Player {
 		this.y += this.vy * delta;
 		updateElementCollisions();//put here to correct for gravity's effect in one frame, vy is set to 0 here, and upon a jump is changed to JUMP_POWER
 		updateWords();
+		updateWeapons();
 		updateBorderCollisions(BORDER_TOP, BORDER_BOTTOM, BORDER_LEFT, BORDER_RIGHT);
 		if(this.cont != 4) {
 			this.x1Cont = Controllers.joy1x[this.cont]; //controller inputs saved to variables for later use
@@ -95,7 +98,7 @@ public class Player {
 	}
 	
 	//Calculates and prevents players from leaving the play area. 
-	public void updateBorderCollisions(int top, int bottom, int left, int right) {
+	private void updateBorderCollisions(int top, int bottom, int left, int right) {
 		if(this.y < bottom) {this.y = bottom; this.vy = 0;} // bottom world border 
 		if(this.y > top) {this.y = top;}  //top world border 
 		if(this.x > left) {this.x = left;} // left world border 
@@ -156,6 +159,31 @@ public class Player {
 		}
 	}
  	
+	private void updateWeapons() {
+		Weapon closeWeapon = null;
+		for(Weapon w : MenuManager.currentLevel.weapons) {
+			if(closeWeapon == null) {
+				closeWeapon = w;
+			}
+			float distance = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, closeWeapon.actX, closeWeapon.actY);
+			float distanceTest = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, w.actX, w.actY);
+			if(distanceTest < distance) {
+				closeWeapon = w;
+			}
+		}
+		if(MenuManager.currentLevel.weapons.size() > 0) {
+			distanceFrom = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, closeWeapon.actX, closeWeapon.actY);
+			if(distanceFrom < PLAYER_SIZE/3) {
+				this.playerWeapon = closeWeapon;
+				closeWeapon.onPlayer = true;
+				closeWeapon.remove();
+			}
+		}
+		if(this.playerWeapon != null) {
+			this.playerWeapon.draw(this.vx);
+		}
+	}
+	
 	public float get_width() {
 		if(this.vx <= 0) {return -PLAYER_SIZE;}
 		else {return PLAYER_SIZE;}

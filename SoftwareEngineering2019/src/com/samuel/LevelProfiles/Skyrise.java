@@ -3,11 +3,12 @@ package com.samuel.LevelProfiles;
 import com.samuel.Level;
 import com.samuel.Main;
 import com.samuel.Platform;
+import com.samuel.Weapon;
 
 public class Skyrise extends Level{
 	private static final String NAME = "Skyrise";
 	public Skyrise() {
-		super(Main.getTexture(Main.LEVEL_ONE_INDEX));
+		super(Main.level1);
 		Platform plat1 = new Platform(0, -300, 8);
 		elements.add(plat1); 
 		Platform plat2 = new Platform(1000, 200, 10);

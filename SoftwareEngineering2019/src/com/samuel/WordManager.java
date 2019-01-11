@@ -37,6 +37,7 @@ public class WordManager {
 	
 	public static void initWords() {
 		saveTextData("res/nouns.txt", nouns);
+		saveTextData("res/verbs.txt", verbs);
 		wordTimer = 0;
 		MenuManager.currentLevel.words.add(new Word(0, Game.FIXED_X, Game.FIXED_Y + 10000));
 	}

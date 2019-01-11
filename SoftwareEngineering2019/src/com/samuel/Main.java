@@ -23,6 +23,7 @@ public class Main extends HvlTemplateInteg2D{
 			new Main();
 		} catch (Exception e){
 			JOptionPane.showMessageDialog(null, e.getClass().getSimpleName() + " - " + e.getMessage(), "Message Melee Exception", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
 			System.exit(0);
 		}
 	}
@@ -31,7 +32,7 @@ public class Main extends HvlTemplateInteg2D{
 		super(144, 1280, 720, "Message Melee", new HvlDisplayModeDefault());
 	}
 	
-	public static final int NUM_TEXTURES = 27;
+	public static final int NUM_TEXTURES = 28;
 
 	public static final int
 	LEVEL_ONE_INDEX = 0,
@@ -60,14 +61,16 @@ public class Main extends HvlTemplateInteg2D{
 	BLUE_JUMP_INDEX = 23,
 	BLACK_JUMP_INDEX = 24,
 	RED_JUMP_INDEX = 25,
-	GREEN_JUMP_INDEX = 26;
+	GREEN_JUMP_INDEX = 26,
+	MENU_BACK_INDEX = 27;
 	
-	public static final int NUM_SOUNDS = 3;
+	public static final int NUM_SOUNDS = 4;
 	
 	public static final int
 	GEAR_RUN_INDEX = 0,
 	FORWARD_INDEX = 1,
-	BACK_INDEX = 2;
+	BACK_INDEX = 2,
+	MENU_SONG_INDEX = 3;
 	
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 	
@@ -84,7 +87,7 @@ public class Main extends HvlTemplateInteg2D{
 	}
 	@Override
 	public void initialize() {
-		getTextureLoader().loadResource("1");//0
+		getTextureLoader().loadResource("BackgroundSheet");//0
 		getTextureLoader().loadResource("crate");//1
 		getTextureLoader().loadResource("INOF");//2
 		getTextureLoader().loadResource("clogo");//3
@@ -111,10 +114,12 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("Jump1");//24
 		getTextureLoader().loadResource("Jump2");//25
 		getTextureLoader().loadResource("Jump3");//26
+		getTextureLoader().loadResource("1");//27
 		
 		getSoundLoader().loadResource("gears");//0
 		getSoundLoader().loadResource("forward");//1
 		getSoundLoader().loadResource("back");//2
+		getSoundLoader().loadResource("Song2");//3
 		
 		if(getTextureLoader().getResources().size() != NUM_TEXTURES)
 			throw new RuntimeException("Textures and/or sounds not loaded, try running the application in the same directory as the 'res' folder.");
@@ -147,6 +152,8 @@ public class Main extends HvlTemplateInteg2D{
 		greenRunning = new HvlAnimatedTextureUV(getTexture(GREEN_RUNNING_INDEX), 512, 26, 0.1f);
 		greenJumping = new HvlAnimatedTextureUV(getTexture(GREEN_JUMP_INDEX), 512, 26, 0.1f);
 		green = new AnimatedTextureGroup(greenStanding, greenRunning, greenJumping);
+		
+		level1 = new HvlAnimatedTextureUV(getTexture(LEVEL_ONE_INDEX), 2048, 26, 2f);
 		
 		File config = new File(PATH_SETTINGS);
 		if(config.exists()){

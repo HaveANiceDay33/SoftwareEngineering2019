@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.opengl.Texture;
 
+import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
+
 public class Level {
 	public ArrayList<WorldElement> elements;
 	public ArrayList<Word> words;
 	public ArrayList<Weapon> weapons;
-	public Texture background;
-	public Level(Texture back) {
+	public HvlAnimatedTextureUV background;
+	public Level(HvlAnimatedTextureUV back) {
 		background = back;
 		elements = new ArrayList<>();
 		words = new ArrayList<>();
