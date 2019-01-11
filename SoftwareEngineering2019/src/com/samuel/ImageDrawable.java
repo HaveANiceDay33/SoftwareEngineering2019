@@ -19,6 +19,6 @@ public class ImageDrawable extends HvlComponentDrawable{
 	public void draw(float delta, float x, float y, float width, float height) {
 		hvlDrawQuad(x, y, width, height, Main.getTexture(Main.CRATE_INDEX), this.shade);
 		hvlDrawQuadc(x+width-45, y+(height/2)-3, 50, 50, Main.getTexture(this.textureIndex));
-	}
+	}//lol
 
 }
