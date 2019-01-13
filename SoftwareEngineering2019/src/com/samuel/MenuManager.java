@@ -370,7 +370,7 @@ public class MenuManager {
 				playedMenuMusic = true;
 			}
 			if(Main.getSound(songs[currentSong]).isPlaying() == false) {
-				currentSong = HvlMath.randomIntBetween(0, 2);
+				currentSong = HvlMath.randomIntBetween(0, 3);
 				playedMenuMusic = false;
 			}
 		}

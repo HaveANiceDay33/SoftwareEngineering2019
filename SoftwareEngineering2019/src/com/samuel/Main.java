@@ -65,7 +65,7 @@ public class Main extends HvlTemplateInteg2D{
 	MENU_BACK_INDEX = 27,
 	NAME_INDEX = 28;
 	
-	public static final int NUM_SOUNDS = 6;
+	public static final int NUM_SOUNDS = 7;
 	
 	public static final int
 	GEAR_RUN_INDEX = 0,
@@ -73,7 +73,8 @@ public class Main extends HvlTemplateInteg2D{
 	BACK_INDEX = 2,
 	MENU_SONG_INDEX = 3,
 	MENU_SONG_2_INDEX = 4,
-	COCONUT_LAUNCH_INDEX = 5;
+	COCONUT_LAUNCH_INDEX = 5,
+	MENU_SONG_3_INDEX = 6;
 	
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 	
@@ -126,6 +127,7 @@ public class Main extends HvlTemplateInteg2D{
 		getSoundLoader().loadResource("Song2");//3
 		getSoundLoader().loadResource("Song3");//4
 		getSoundLoader().loadResource("coconutLaunch");//5
+		getSoundLoader().loadResource("Song1");//6
 		
 		if(getTextureLoader().getResources().size() != NUM_TEXTURES)
 			throw new RuntimeException("Textures and/or sounds not loaded, try running the application in the same directory as the 'res' folder.");
