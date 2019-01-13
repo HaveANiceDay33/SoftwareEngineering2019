@@ -32,7 +32,7 @@ public class Main extends HvlTemplateInteg2D{
 		super(144, 1280, 720, "Message Melee", new HvlDisplayModeDefault());
 	}
 	
-	public static final int NUM_TEXTURES = 28;
+	public static final int NUM_TEXTURES = 29;
 
 	public static final int
 	LEVEL_ONE_INDEX = 0,
@@ -62,15 +62,18 @@ public class Main extends HvlTemplateInteg2D{
 	BLACK_JUMP_INDEX = 24,
 	RED_JUMP_INDEX = 25,
 	GREEN_JUMP_INDEX = 26,
-	MENU_BACK_INDEX = 27;
+	MENU_BACK_INDEX = 27,
+	NAME_INDEX = 28;
 	
-	public static final int NUM_SOUNDS = 4;
+	public static final int NUM_SOUNDS = 6;
 	
 	public static final int
 	GEAR_RUN_INDEX = 0,
 	FORWARD_INDEX = 1,
 	BACK_INDEX = 2,
-	MENU_SONG_INDEX = 3;
+	MENU_SONG_INDEX = 3,
+	MENU_SONG_2_INDEX = 4,
+	COCONUT_LAUNCH_INDEX = 5;
 	
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 	
@@ -115,11 +118,14 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("Jump2");//25
 		getTextureLoader().loadResource("Jump3");//26
 		getTextureLoader().loadResource("1");//27
+		getTextureLoader().loadResource("Logo");//28
 		
 		getSoundLoader().loadResource("gears");//0
 		getSoundLoader().loadResource("forward");//1
 		getSoundLoader().loadResource("back");//2
 		getSoundLoader().loadResource("Song2");//3
+		getSoundLoader().loadResource("Song3");//4
+		getSoundLoader().loadResource("coconutLaunch");//5
 		
 		if(getTextureLoader().getResources().size() != NUM_TEXTURES)
 			throw new RuntimeException("Textures and/or sounds not loaded, try running the application in the same directory as the 'res' folder.");

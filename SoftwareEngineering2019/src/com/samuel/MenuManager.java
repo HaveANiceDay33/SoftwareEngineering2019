@@ -160,6 +160,8 @@ public class MenuManager {
 	public static int p1index = 3, p2index = 3, p3index = 3, p4index = 3; //default controller
 	public static AnimatedTextureGroup p1A = Main.blue, p2A = Main.blue, p3A = Main.blue, p4A = Main.blue; //default character
 	public static int currentPlayer = 0;
+	public static int[] songs = {Main.MENU_SONG_INDEX, Main.MENU_SONG_2_INDEX};
+	public static int currentSong = HvlMath.randomIntBetween(0, 2);
 	
 	public static void update(float delta){
 		whiteFade = HvlMath.stepTowards(whiteFade, delta, 0f);
@@ -191,7 +193,7 @@ public class MenuManager {
 		}
 		else if(HvlMenu.getCurrent() == menu) {
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.MENU_BACK_INDEX));
-			Main.font.drawWordc("Message\n  Melee", 800, Display.getHeight()/2, Color.black, 0.95f);
+			hvlDrawQuadc(800, Display.getHeight()/2, 640, 360, Main.getTexture(Main.NAME_INDEX));
 			buttonWait-=delta;
 			if(Controllers.allA[4] == 1 && buttonWait <= 0) {
 				currentPlayer = 0;
@@ -200,18 +202,14 @@ public class MenuManager {
 				HvlMenu.setCurrent(controllerInit);
 			}
 			
-			if(Main.options.backgroundMusicEnabled && playedMenuMusic == false) {
-				Main.getSound(Main.MENU_SONG_INDEX).playAsSoundEffect(1f, 1f, true);
-				playedMenuMusic = true;
-			}
-			
 			if(Controllers.allB[4] == 1 && buttonWait <= 0) {playBack(); System.exit(0);}
 			if(Controllers.allY[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(options); buttonWait = BUTTON_WAIT_TIME;}
 			if(Controllers.allX[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(credits); buttonWait = BUTTON_WAIT_TIME;}
 		}
 		else if(HvlMenu.getCurrent() == options) {
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.MENU_BACK_INDEX));
 			buttonWait -= delta;
-			Main.font.drawWordc("Options", Display.getWidth()/2, 100, Color.lightGray, 0.3f);
+			Main.font.drawWordc("Options", Display.getWidth()/2, 100, Color.black, 0.3f);
 			if(Controllers.allA[4] == 1 && buttonWait <= 0) {
 				playForward();
 				Main.options.soundEffectsEnabled = !Main.options.soundEffectsEnabled;
@@ -232,8 +230,9 @@ public class MenuManager {
 			}
 		}
 		else if(HvlMenu.getCurrent() == credits) {
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.MENU_BACK_INDEX));
 			buttonWait -= delta;
-			Main.font.drawWordc("Credits", Display.getWidth()/2, 100, Color.lightGray, 0.3f);
+			Main.font.drawWordc("Credits", Display.getWidth()/2, 100, Color.black, 0.3f);
 			if(Controllers.allB[4] == 1 && buttonWait <= 0) {
 				playBack();
 				buttonWait = BUTTON_WAIT_TIME;
@@ -241,11 +240,12 @@ public class MenuManager {
 			}
 		}
 		else if(HvlMenu.getCurrent() == controllerInit) {
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.MENU_BACK_INDEX));
 			controllerTimer -= delta;
 			buttonWait -= delta;
 			
-			Main.font.drawWordc("Player "+ (currentPlayer != 4 ? (currentPlayer+1) : currentPlayer) +":", Display.getWidth()/2,100, Color.lightGray, 0.3f);
-			Main.font.drawWordc("Press A on Xbox controller or W on Keyboard", Display.getWidth()/2, 150, Color.lightGray, 0.22f);
+			Main.font.drawWordc("Player "+ (currentPlayer != 4 ? (currentPlayer+1) : currentPlayer) +":", Display.getWidth()/2,100, Color.black, 0.3f);
+			Main.font.drawWordc("Press A on Xbox controller or W on Keyboard", Display.getWidth()/2, 150, Color.black, 0.22f);
 			Main.font.drawWordc("Press B (Xbox) or D (Keyboard) to skip", Display.getWidth()/2, 200, Color.red, 0.15f);
 
 			timerBar(controllerTimer/CONTROLLER_TIME);
@@ -289,6 +289,7 @@ public class MenuManager {
 			}
 
 		}else if(HvlMenu.getCurrent() == charSelect) {
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.MENU_BACK_INDEX));
 			controllerTimer -= delta;
 			buttonWait -= delta;
 			hvlDrawQuadc(256, 500, 50, 50, Main.getTexture(Main.Y_INDEX));
@@ -317,7 +318,7 @@ public class MenuManager {
 			hvlDrawQuad(160, 190, 75, 75, p4A.standing);
 			
 			timerBar(controllerTimer/CONTROLLER_TIME);
-			Main.font.drawWordc("Select your characters!", Display.getWidth()/2, 680, Color.lightGray, 0.24f);
+			Main.font.drawWordc("Select your characters!", Display.getWidth()/2, 680, Color.black, 0.24f);
 			
 			if(Controllers.allX[p1index] == 1 && buttonWait <= 0) {p1A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
 			if(Controllers.allX[p2index] == 1 && buttonWait <= 0) {p2A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
@@ -359,9 +360,19 @@ public class MenuManager {
 				Main.getSound(Main.MENU_SONG_INDEX).stop();
 				HvlMenu.setCurrent(game);
 			}
-		}
-		else if(HvlMenu.getCurrent() == game) {
+		} else if(HvlMenu.getCurrent() == game) {
 			Game.updateGame(delta);
+		}
+		
+		if(HvlMenu.getCurrent() == menu || HvlMenu.getCurrent() == controllerInit || HvlMenu.getCurrent() == charSelect || HvlMenu.getCurrent() == game) {
+			if(Main.options.backgroundMusicEnabled && playedMenuMusic == false) {
+				Main.getSound(songs[currentSong]).playAsSoundEffect(1f, 1f, false);
+				playedMenuMusic = true;
+			}
+			if(Main.getSound(songs[currentSong]).isPlaying() == false) {
+				currentSong = HvlMath.randomIntBetween(0, 2);
+				playedMenuMusic = false;
+			}
 		}
 		
 		HvlMenu.updateMenus(delta);
