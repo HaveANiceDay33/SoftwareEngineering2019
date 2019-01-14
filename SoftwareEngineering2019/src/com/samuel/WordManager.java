@@ -55,7 +55,7 @@ public class WordManager {
 				x = HvlMath.randomIntBetween(Player.BORDER_RIGHT, Player.BORDER_LEFT);
 				y = Game.FIXED_Y;
 			}
-			Word newWord = new Word(HvlMath.randomIntBetween(0, 0), x, y);
+			Word newWord = new Word(HvlMath.randomIntBetween(0, 1), x, y);
 			MenuManager.currentLevel.words.add(newWord);
 			wordTimer = WORD_TIME;
 		}
