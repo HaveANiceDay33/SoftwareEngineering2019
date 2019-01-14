@@ -357,7 +357,7 @@ public class MenuManager {
 			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p4A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
 			if(controllerTimer <= 0) {
 				Game.initGame(p1index, p2index, p3index, p4index, p1A, p2A, p3A, p4A);
-				Main.getSound(Main.MENU_SONG_INDEX).stop();
+				Main.getSound(songs[currentSong]).stop();
 				HvlMenu.setCurrent(game);
 			}
 		} else if(HvlMenu.getCurrent() == game) {

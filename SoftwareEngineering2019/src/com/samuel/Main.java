@@ -29,7 +29,7 @@ public class Main extends HvlTemplateInteg2D{
 	}
 	
 	public Main(){
-		super(144, 1280, 720, "Message Melee", new HvlDisplayModeDefault());
+		super(144, 1280, 720, "Message Melee", "Icon32", new HvlDisplayModeDefault());
 	}
 	
 	public static final int NUM_TEXTURES = 29;
