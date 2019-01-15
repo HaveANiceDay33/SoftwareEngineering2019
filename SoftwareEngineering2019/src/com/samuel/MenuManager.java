@@ -21,7 +21,7 @@ import com.osreboot.ridhvl.menu.component.collection.HvlLabeledButton;
 import com.samuel.LevelProfiles.Skyrise;
 
 public class MenuManager {
-	public static final float BUTTON_WIDTH = 256f, BUTTON_HEIGHT = 96f;
+	public static final float BUTTON_WIDTH = 254f, BUTTON_HEIGHT = 78f;
 	private static final float CONTROLLER_TIME = 5f;
 	private static final float BUTTON_WAIT_TIME = 0.25f;
 	
@@ -64,8 +64,8 @@ public class MenuManager {
 		credits = new HvlMenu();
 		
 		menu.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
-		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Start").setOffDrawable(new ImageDrawable(Main.A_INDEX, Color.darkGray, false)).
-				setOnDrawable(new ImageDrawable(Main.A_INDEX, Color.lightGray, false)).setHoverDrawable(new ImageDrawable(Main.A_INDEX, Color.gray, true)).setClickedCommand(new HvlAction1<HvlButton>(){
+		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Start").setOffDrawable(new ImageDrawable(Main.START_INDEX)).
+				setOnDrawable(new ImageDrawable(Main.START_INDEX)).setHoverDrawable(new ImageDrawable(Main.START_INDEX)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
 				playForward();
@@ -75,8 +75,8 @@ public class MenuManager {
 			}
 		}).build());
 		menu.getFirstArrangerBox().add(new HvlSpacer(0,20));
-		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Options  ").setOffDrawable(new ImageDrawable(Main.Y_INDEX, Color.darkGray, false)).
-				setOnDrawable(new ImageDrawable(Main.Y_INDEX, Color.lightGray, false)).setHoverDrawable(new ImageDrawable(Main.Y_INDEX, Color.gray, true)).setClickedCommand(new HvlAction1<HvlButton>(){
+		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Options  ").setOffDrawable(new ImageDrawable(Main.OPTIONS_INDEX)).
+				setOnDrawable(new ImageDrawable(Main.OPTIONS_INDEX)).setHoverDrawable(new ImageDrawable(Main.OPTIONS_INDEX)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
 				playForward();
@@ -84,8 +84,8 @@ public class MenuManager {
 			}
 		}).build());
 		menu.getFirstArrangerBox().add(new HvlSpacer(0,20));
-		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Credits  ").setOffDrawable(new ImageDrawable(Main.X_INDEX, Color.darkGray, false)).
-				setOnDrawable(new ImageDrawable(Main.X_INDEX, Color.lightGray, false)).setHoverDrawable(new ImageDrawable(Main.X_INDEX, Color.gray, true)).setClickedCommand(new HvlAction1<HvlButton>(){
+		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Credits  ").setOffDrawable(new ImageDrawable(Main.CREDITS_INDEX)).
+				setOnDrawable(new ImageDrawable(Main.CREDITS_INDEX)).setHoverDrawable(new ImageDrawable(Main.CREDITS_INDEX)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
 				playForward();
@@ -93,8 +93,8 @@ public class MenuManager {
 			}
 		}).build());
 		menu.getFirstArrangerBox().add(new HvlSpacer(0,20));
-		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Exit  ").setOffDrawable(new ImageDrawable(Main.B_INDEX, Color.darkGray, false)).
-				setOnDrawable(new ImageDrawable(Main.B_INDEX, Color.lightGray, false)).setHoverDrawable(new ImageDrawable(Main.B_INDEX, Color.gray, true)).setClickedCommand(new HvlAction1<HvlButton>(){
+		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Exit  ").setOffDrawable(new ImageDrawable(Main.EXIT_INDEX)).
+				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
 				playBack();
@@ -103,8 +103,8 @@ public class MenuManager {
 		}).build());
 		
 		options.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
-		options.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Sound \nEffects: " + (Main.options.soundEffectsEnabled ? "on" : "off")+"    ").setTextScale(0.16f).setOffDrawable(new ImageDrawable(Main.A_INDEX, Color.darkGray, false)).
-				setOnDrawable(new ImageDrawable(Main.A_INDEX, Color.lightGray, false)).setHoverDrawable(new ImageDrawable(Main.A_INDEX, Color.gray, true)).setClickedCommand(new HvlAction1<HvlButton>(){
+		options.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Sound \nEffects: " + (Main.options.soundEffectsEnabled ? "on" : "off")+"    ").setTextScale(0.16f).setOffDrawable(new ImageDrawable(Main.EXIT_INDEX)).
+				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg) {
 				playForward();
@@ -114,8 +114,8 @@ public class MenuManager {
 			}
 		}).build());
 		options.getFirstArrangerBox().add(new HvlSpacer(0, 10));
-		options.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Background\nMusic: " + (Main.options.backgroundMusicEnabled ? "on" : "off")+"          ").setTextScale(0.16f).setOffDrawable(new ImageDrawable(Main.X_INDEX, Color.darkGray, false)).
-				setOnDrawable(new ImageDrawable(Main.X_INDEX, Color.lightGray, false)).setHoverDrawable(new ImageDrawable(Main.X_INDEX, Color.gray, true)).setClickedCommand(new HvlAction1<HvlButton>(){
+		options.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Background\nMusic: " + (Main.options.backgroundMusicEnabled ? "on" : "off")+"          ").setTextScale(0.16f).setOffDrawable(new ImageDrawable(Main.EXIT_INDEX)).
+				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg) {
 				playForward();
@@ -127,8 +127,8 @@ public class MenuManager {
 		
 		options.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		options.getChildOfType(HvlArrangerBox.class, 1).add(new HvlSpacer(0, 500));
-		options.getChildOfType(HvlArrangerBox.class, 1).add(new HvlLabeledButton.Builder().setText("Back").setOffDrawable(new ImageDrawable(Main.B_INDEX, Color.darkGray, false)).
-				setOnDrawable(new ImageDrawable(Main.B_INDEX, Color.lightGray, false)).setHoverDrawable(new ImageDrawable(Main.B_INDEX, Color.gray, true)).setClickedCommand(new HvlAction1<HvlButton>(){
+		options.getChildOfType(HvlArrangerBox.class, 1).add(new HvlLabeledButton.Builder().setText("Back").setOffDrawable(new ImageDrawable(Main.EXIT_INDEX)).
+				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg) {
 				playBack();
@@ -138,8 +138,8 @@ public class MenuManager {
 		
 		credits.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		credits.getFirstArrangerBox().add(new HvlSpacer(0, 500));
-		credits.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Back").setOffDrawable(new ImageDrawable(Main.B_INDEX, Color.darkGray, false)).
-				setOnDrawable(new ImageDrawable(Main.B_INDEX, Color.lightGray, false)).setHoverDrawable(new ImageDrawable(Main.B_INDEX, Color.gray, true)).setClickedCommand(new HvlAction1<HvlButton>(){
+		credits.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setText("Back").setOffDrawable(new ImageDrawable(Main.EXIT_INDEX)).
+				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg) {
 				playBack();

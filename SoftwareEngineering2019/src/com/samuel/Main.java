@@ -32,38 +32,41 @@ public class Main extends HvlTemplateInteg2D{
 		super(144, 1280, 720, "Message Melee", "Icon32", new HvlDisplayModeDefault());
 	}
 	
-	public static final int NUM_TEXTURES = 29;
+	public static final int NUM_TEXTURES = 32;
 
 	public static final int
 	LEVEL_ONE_INDEX = 0,
 	CRATE_INDEX = 1,
 	FONT_INDEX = 2,
-	CVILLE_INDEX = 3,
-	COG_INDEX = 4,
-	COG_TEXT_INDEX = 5,
-	C_TEXT_INDEX = 6,
-	BLUE_STILL_INDEX = 7,
-	BLUE_RUNNING_INDEX = 8,
-	B_INDEX = 9,
-	A_INDEX = 10,
-	X_INDEX = 11,
-	Y_INDEX = 12,
-	A_KEY_INDEX = 13,
-	D_INDEX = 14,
-	S_INDEX = 15,
-	W_INDEX = 16,
-	BLACK_RUNNING_INDEX = 17,
-	BLACK_STILL_INDEX = 18,
-	RED_RUNNING_INDEX = 19,
-	RED_STILL_INDEX = 20,
-	GREEN_RUNNING_INDEX = 21,
-	GREEN_STILL_INDEX = 22,
-	BLUE_JUMP_INDEX = 23,
-	BLACK_JUMP_INDEX = 24,
-	RED_JUMP_INDEX = 25,
-	GREEN_JUMP_INDEX = 26,
-	MENU_BACK_INDEX = 27,
-	NAME_INDEX = 28;
+	COG_INDEX = 3,
+	COG_TEXT_INDEX = 4,
+	BLUE_STILL_INDEX = 5,
+	BLUE_RUNNING_INDEX = 6,
+	B_INDEX = 7,
+	A_INDEX = 8,
+	X_INDEX = 9,
+	Y_INDEX = 10,
+	A_KEY_INDEX = 11,
+	D_INDEX = 12,
+	S_INDEX = 13,
+	W_INDEX = 14,
+	BLACK_RUNNING_INDEX = 15,
+	BLACK_STILL_INDEX = 16,
+	RED_RUNNING_INDEX = 17,
+	RED_STILL_INDEX = 18,
+	GREEN_RUNNING_INDEX = 19,
+	GREEN_STILL_INDEX = 20,
+	BLUE_JUMP_INDEX = 21,
+	BLACK_JUMP_INDEX = 22,
+	RED_JUMP_INDEX = 23,
+	GREEN_JUMP_INDEX = 24,
+	MENU_BACK_INDEX = 25,
+	NAME_INDEX = 26,
+	CREDITS_INDEX = 27,
+	EXIT_INDEX = 28,
+	OPTIONS_INDEX = 29,
+	START_INDEX = 30,
+	CVILLE_INDEX = 31;
 	
 	public static final int NUM_SOUNDS = 7;
 	
@@ -91,35 +94,38 @@ public class Main extends HvlTemplateInteg2D{
 	}
 	@Override
 	public void initialize() {
-		getTextureLoader().loadResource("BackgroundSheet");//0
-		getTextureLoader().loadResource("crate");//1
-		getTextureLoader().loadResource("INOF");//2
-		getTextureLoader().loadResource("clogo");//3
-		getTextureLoader().loadResource("headSheet");//4
-		getTextureLoader().loadResource("splashText");//5
-		getTextureLoader().loadResource("textTry");//6
-		getTextureLoader().loadResource("Idle4");//7
-		getTextureLoader().loadResource("Left4");//8
-		getTextureLoader().loadResource("b");//9
-		getTextureLoader().loadResource("a");//10
-		getTextureLoader().loadResource("x");//11
-		getTextureLoader().loadResource("y");//12
-		getTextureLoader().loadResource("ak");//13
-		getTextureLoader().loadResource("d");//14
-		getTextureLoader().loadResource("s");//15
-		getTextureLoader().loadResource("w");//16
-		getTextureLoader().loadResource("Left1");//17
-		getTextureLoader().loadResource("Idle1");//18
-		getTextureLoader().loadResource("Left2");//19
-		getTextureLoader().loadResource("Idle2");//20
-		getTextureLoader().loadResource("Left3");//21
-		getTextureLoader().loadResource("Idle3");//22
-		getTextureLoader().loadResource("Jump4");//23
-		getTextureLoader().loadResource("Jump1");//24
-		getTextureLoader().loadResource("Jump2");//25
-		getTextureLoader().loadResource("Jump3");//26
-		getTextureLoader().loadResource("1");//27
-		getTextureLoader().loadResource("Logo");//28
+		getTextureLoader().loadResource("BackgroundSheet");
+		getTextureLoader().loadResource("crate");
+		getTextureLoader().loadResource("INOF");
+		getTextureLoader().loadResource("headSheet");
+		getTextureLoader().loadResource("splashText");
+		getTextureLoader().loadResource("Idle4");
+		getTextureLoader().loadResource("Left4");
+		getTextureLoader().loadResource("b");
+		getTextureLoader().loadResource("a");
+		getTextureLoader().loadResource("x");
+		getTextureLoader().loadResource("y");
+		getTextureLoader().loadResource("ak");
+		getTextureLoader().loadResource("d");
+		getTextureLoader().loadResource("s");
+		getTextureLoader().loadResource("w");
+		getTextureLoader().loadResource("Left1");
+		getTextureLoader().loadResource("Idle1");
+		getTextureLoader().loadResource("Left2");
+		getTextureLoader().loadResource("Idle2");
+		getTextureLoader().loadResource("Left3");
+		getTextureLoader().loadResource("Idle3");
+		getTextureLoader().loadResource("Jump4");
+		getTextureLoader().loadResource("Jump1");
+		getTextureLoader().loadResource("Jump2");
+		getTextureLoader().loadResource("Jump3");
+		getTextureLoader().loadResource("1");
+		getTextureLoader().loadResource("Logo");
+		getTextureLoader().loadResource("CreditsButton");
+		getTextureLoader().loadResource("ExitButton");
+		getTextureLoader().loadResource("OptionsButton");
+		getTextureLoader().loadResource("StartButton");
+		getTextureLoader().loadResource("clogo");
 		
 		getSoundLoader().loadResource("gears");//0
 		getSoundLoader().loadResource("forward");//1
