@@ -17,5 +17,9 @@ public class Battlefield extends Level{
 		elements.add(plat2);
 		Platform plat3 = new Platform(-1000, 200, 12);
 		elements.add(plat3);
+		Platform plat4 = new Platform(-1200, -1000, 12);
+		elements.add(plat4);
+		Platform plat5 = new Platform(1200, -1000, 12);
+		elements.add(plat5);
 	}
 }

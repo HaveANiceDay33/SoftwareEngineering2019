@@ -1,18 +1,12 @@
 package com.samuel;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ConcurrentModificationException;
 
-import javax.management.RuntimeErrorException;
 import javax.swing.JOptionPane;
 
 import com.osreboot.ridhvl.config.HvlConfig;
 import com.osreboot.ridhvl.display.collection.HvlDisplayModeDefault;
 import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
-import com.osreboot.ridhvl.painter.HvlCamera2D;
-import com.osreboot.ridhvl.painter.HvlRenderFrame;
-import com.osreboot.ridhvl.painter.HvlRenderFrame.FBOUnsupportedException;
 import com.osreboot.ridhvl.painter.painter2d.HvlFontPainter2D;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
@@ -32,7 +26,7 @@ public class Main extends HvlTemplateInteg2D{
 		super(144, 1280, 720, "Message Melee", "Icon32", new HvlDisplayModeDefault());
 	}
 	
-	public static final int NUM_TEXTURES = 32;
+	public static final int NUM_TEXTURES = 34;
 
 	public static final int
 	LEVEL_ONE_INDEX = 0,
@@ -66,7 +60,9 @@ public class Main extends HvlTemplateInteg2D{
 	EXIT_INDEX = 28,
 	OPTIONS_INDEX = 29,
 	START_INDEX = 30,
-	CVILLE_INDEX = 31;
+	CVILLE_INDEX = 31,
+	EFFECTS_INDEX = 32,
+	B_MUSIC_INDEX = 33;
 	
 	public static final int NUM_SOUNDS = 7;
 	
@@ -126,6 +122,8 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("OptionsButton");
 		getTextureLoader().loadResource("StartButton");
 		getTextureLoader().loadResource("clogo");
+		getTextureLoader().loadResource("SoundEffects");
+		getTextureLoader().loadResource("BackgroundMuzak");
 		
 		getSoundLoader().loadResource("gears");//0
 		getSoundLoader().loadResource("forward");//1
