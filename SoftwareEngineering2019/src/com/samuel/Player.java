@@ -76,7 +76,7 @@ public class Player {
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_F) && this.shotTimer <= 0) {
 			if(this.playerWeapon != null) {
-				this.playerWeapon.fire();
+				this.playerWeapon.fire(this);
 				this.shotTimer = SHOT_TIMER;
 			}
 		}
@@ -185,16 +185,15 @@ public class Player {
 			}
 		}
 		if(this.playerWeapon != null) {
-			this.playerWeapon.x = Game.FIXED_X;
-			this.playerWeapon.y = Game.FIXED_Y;
-			this.playerWeapon.draw(this.vx);
+			this.playerWeapon.drawOn(this.vx);
 		}
 	}
-	
+	float ree = 0;
 	public void drawPlayer(Player player) {
 		hvlDrawQuadc(player.get_x() + -this.get_x() + Game.FIXED_X, player.get_y() + -this.get_y() + Game.FIXED_Y, this.get_width(), Player.PLAYER_SIZE, this.currentAnimation);
 		if(this.playerWeapon != null) {
-			this.playerWeapon.draw(player.get_x() + -this.get_x() + Game.FIXED_X, player.get_y() + -this.get_y() + Game.FIXED_Y, this.vx);
+			ree+=0.01;
+			this.playerWeapon.drawOther(player.get_x() + -this.get_x() + Game.FIXED_X + ree, player.get_y() + -this.get_y() + Game.FIXED_Y, this.vx);
 		}
 	}
 	

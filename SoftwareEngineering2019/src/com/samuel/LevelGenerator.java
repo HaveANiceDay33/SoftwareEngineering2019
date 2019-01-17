@@ -30,7 +30,7 @@ public class LevelGenerator {
 		}
 		for(Projectile p : currentLevel.projs) {
 			if(currentLevel.projs.size() > 0) {
-				p.update(delta, p.owner.x, p.owner.y);
+				p.update(delta, playerX, playerY);
 			}
 		}
 	}

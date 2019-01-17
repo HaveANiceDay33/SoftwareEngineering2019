@@ -11,6 +11,7 @@ public class Platform extends WorldElement{
 		this.sizeX = sizeX;
 		wordOn = false;
 	}
+	
 	public void draw(float xPlay, float yPlay) {
 		actX = this.x + xPlay + Game.FIXED_X;
 		actY = this.y + yPlay + Game.FIXED_Y;
