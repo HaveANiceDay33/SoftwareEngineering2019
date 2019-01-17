@@ -5,6 +5,7 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
 
 import com.osreboot.ridhvl.HvlMath;
 import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
@@ -184,14 +185,16 @@ public class Player {
 			}
 		}
 		if(this.playerWeapon != null) {
+			this.playerWeapon.x = Game.FIXED_X;
+			this.playerWeapon.y = Game.FIXED_Y;
 			this.playerWeapon.draw(this.vx);
 		}
 	}
 	
 	public void drawPlayer(Player player) {
 		hvlDrawQuadc(player.get_x() + -this.get_x() + Game.FIXED_X, player.get_y() + -this.get_y() + Game.FIXED_Y, this.get_width(), Player.PLAYER_SIZE, this.currentAnimation);
-		if(player.playerWeapon != null) {
-			player.playerWeapon.draw(player.vx);
+		if(this.playerWeapon != null) {
+			this.playerWeapon.draw(player.get_x() + -this.get_x() + Game.FIXED_X, player.get_y() + -this.get_y() + Game.FIXED_Y, this.vx);
 		}
 	}
 	

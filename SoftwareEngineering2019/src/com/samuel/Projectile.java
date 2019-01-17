@@ -9,8 +9,8 @@ import com.osreboot.ridhvl.HvlMath;
 public class Projectile {
 	public Texture pro;
 	public float x, y, sizeX, sizeY, actX, actY, vx, vy;
-
-	public Projectile(Texture pro, float x, float y, float sizeX, float sizeY, float initVX) {
+	public Player owner;
+	public Projectile(Texture pro, float x, float y, float sizeX, float sizeY, float initVX, Player owner) {
 		this.pro = pro;
 		this.x = x;
 		this.y = y;
@@ -18,20 +18,21 @@ public class Projectile {
 		this.sizeY = sizeY;
 		this.vx = initVX;
 		this.vy = -100;
+		this.owner = owner;
 	}
 	
-	public void update(float delta) {
+	public void update(float delta, float xPlay, float yPlay) {
+		actX = this.x + xPlay + Game.FIXED_X;
+		actY = this.y + yPlay + Game.FIXED_Y;
 		this.vy += Game.GRAVITY/100 * delta;
 		this.vx = HvlMath.stepTowards(this.vx, Game.DRAG/1000*delta, 0);
-		this.x += this.vx * delta; //positions are modified by velocities
-		this.y += this.vy * delta;
-		System.out.println(this.y);
-		updateElementCollisions();
-		updateBorderCollisions(Game.BORDER_TOP, Game.BORDER_BOTTOM, Game.BORDER_LEFT, Game.BORDER_RIGHT);
-		
-		hvlDrawQuadc(this.x, this.y, this.sizeX, this.sizeY, this.pro);
+		//this.x += this.vx * delta; //positions are modified by velocities
+		//this.y += this.vy * delta;
+		//updateElementCollisions();
+		//updateBorderCollisions(Game.BORDER_TOP, Game.BORDER_BOTTOM, Game.BORDER_LEFT, Game.BORDER_RIGHT);
+		hvlDrawQuadc(actX, actY, this.sizeX, this.sizeY, this.pro);
 	}
-	
+	/*
 	private void updateBorderCollisions(int top, int bottom, int left, int right) {
 		if(this.y < bottom) {this.y = bottom; this.vy = 0;} // bottom world border 
 		if(this.y > top) {this.y = top; this.vy = 0;}  //top world border
@@ -71,4 +72,5 @@ public class Projectile {
 			}
 		}
 	}
+	*/
 }

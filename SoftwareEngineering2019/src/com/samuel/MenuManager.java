@@ -216,9 +216,11 @@ public class MenuManager {
 		}).build());
 		
 		pause.add(new HvlArrangerBox.Builder().setxAlign(0.5f).build());
-		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setTextColor(Color.black).setTextScale(0.35f).setText("Resume").setClickedCommand(new HvlButtonMenuLink(game)).build());
+		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.CONT_INDEX, Color.white)).
+				setOnDrawable(new ImageDrawable(Main.CONT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.CONT_INDEX, Color.lightGray)).setClickedCommand(new HvlButtonMenuLink(game)).build());
 		pause.getFirstArrangerBox().add(new HvlSpacer(0, 30));
-		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setTextColor(Color.black).setTextScale(0.35f).setText("Exit").setClickedCommand(new HvlAction1<HvlButton>(){
+		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.MENU_B_INDEX, Color.white)).
+				setOnDrawable(new ImageDrawable(Main.MENU_B_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.MENU_B_INDEX, Color.lightGray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
 				HvlMenu.setCurrent(menu);
@@ -258,10 +260,7 @@ public class MenuManager {
 		if(HvlMenu.getCurrent() == pause){
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.4f));
-			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 400, 400, Main.getTexture(Main.CRATE_INDEX));
-			if(Controllers.allB[4] == 1) {
-				HvlMenu.setCurrent(menu);
-			}
+			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 400, 500, Main.getTexture(Main.PAUSE_BACK_INDEX));
 			if(Controllers.allA[4] == 1) {
 				HvlMenu.setCurrent(game);
 			}

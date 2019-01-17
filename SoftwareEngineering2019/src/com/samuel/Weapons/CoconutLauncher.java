@@ -1,5 +1,6 @@
 package com.samuel.Weapons;
 
+import com.samuel.Game;
 import com.samuel.Main;
 import com.samuel.MenuManager;
 import com.samuel.Projectile;
@@ -12,8 +13,7 @@ public class CoconutLauncher extends Weapon {
 	}
 	
 	public void fire() {
-		System.out.println(this.vx);
-		Projectile coco = new Coconut((this.vx <= 0? this.x + this.sizeX : this.x - this.sizeX), this.y, this.vx <= 0 ? 200 : -200);
+		Projectile coco = new Coconut((this.vx <= 0 ? Game.FIXED_X + this.sizeX : Game.FIXED_X - this.sizeX), Game.FIXED_Y, this.vx <= 0 ? 200 : -200);
 		MenuManager.currentLevel.projs.add(coco);
 	}
 }
