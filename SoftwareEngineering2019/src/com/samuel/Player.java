@@ -13,17 +13,12 @@ public class Player {
 	static final private float JUMP_POWER = 3100;//Instantaneous velocity the player gains when jumping
 	static final private float MOVE_SPEED = 900;//Movement speed in x-plane
 	static final private float JUMP_TIMER = 0.75f;//Time between jumps, in seconds
-	static final private float GRAVITY = 7000; //Gravity value, constantly modifies y-velocity
-	static final private float DRAG = 6000;//Similar to gravity, but affects x-velocity
+	static final private float SHOT_TIMER = 1f;//Time between jumps, in seconds
 	static final public float PLAYER_SIZE = 200;
-	static final private int BORDER_TOP = 2160;
-	static final private int BORDER_BOTTOM = -500;
-	static final public int BORDER_RIGHT = -1920; //+1920
-	static final public int BORDER_LEFT = 1920;
 	
 	public int id, cont;//used to decorate UI elements and assign controller numbers
 	public float x, y, vx, vy, x1Cont, aCont; //movement and controller values
-	public float jumpTimer = 0;//Timer that gets modified every frame to allow jumps
+	public float jumpTimer = 0, shotTimer = 0;//Timer that gets modified every frame to allow jumps
 	public AnimatedTextureGroup animations;
 	public ArrayList<Word> playerWords;
 	private boolean jumped = false;
@@ -32,7 +27,6 @@ public class Player {
 	private float distanceFrom;
 	public boolean onPlat;
 	public Weapon playerWeapon;
-	
 	
 	//Player constructor that runs when a player object is created
 	public Player(int id, int cont, AnimatedTextureGroup animations){
@@ -48,14 +42,15 @@ public class Player {
 	//method that runs every frame, calculates physics, checks border and element collisions, and draws the player.
 	public void update(float delta) {
 		this.jumpTimer -= delta;//Jumping timer modification
-		this.vy -= GRAVITY * delta;//”pull” of gravity
-		this.vx = HvlMath.stepTowards(this.vx, DRAG*delta, 0);//function to slow player down in the x-plane
+		this.shotTimer -= delta;
+		this.vy -= Game.GRAVITY * delta;//”pull” of gravity
+		this.vx = HvlMath.stepTowards(this.vx, Game.DRAG*delta, 0);//function to slow player down in the x-plane
 		this.x += this.vx * delta; //positions are modified by velocities
 		this.y += this.vy * delta;
 		updateElementCollisions();//put here to correct for gravity's effect in one frame, vy is set to 0 here, and upon a jump is changed to JUMP_POWER
 		updateWords();
-		updateWeapons();
-		updateBorderCollisions(BORDER_TOP, BORDER_BOTTOM, BORDER_LEFT, BORDER_RIGHT);
+		
+		updateBorderCollisions(Game.BORDER_TOP, Game.BORDER_BOTTOM, Game.BORDER_LEFT, Game.BORDER_RIGHT);
 		if(this.cont != 4) {
 			this.x1Cont = Controllers.joy1x[this.cont]; //controller inputs saved to variables for later use
 			this.aCont = Controllers.allA[this.cont];
@@ -78,6 +73,13 @@ public class Player {
 			}
 		}
 		
+		if(Keyboard.isKeyDown(Keyboard.KEY_F) && this.shotTimer <= 0) {
+			if(this.playerWeapon != null) {
+				this.playerWeapon.fire();
+				this.shotTimer = SHOT_TIMER;
+			}
+		}
+		
 		if(this.vx == 0) {
 			currentAnimation = this.animations.standing;
 		} else {
@@ -95,12 +97,14 @@ public class Player {
 		
 		hvlDrawQuadc(Game.FIXED_X, Game.FIXED_Y, this.vx <= 0 ? -PLAYER_SIZE : PLAYER_SIZE, PLAYER_SIZE,
 				currentAnimation);
+		
+		updateWeapons();
 	}
 	
 	//Calculates and prevents players from leaving the play area. 
 	private void updateBorderCollisions(int top, int bottom, int left, int right) {
 		if(this.y < bottom) {this.y = bottom; this.vy = 0;} // bottom world border 
-		if(this.y > top) {this.y = top;}  //top world border 
+		if(this.y > top) {this.y = top; this.vy = 0;}  //top world border
 		if(this.x > left) {this.x = left;} // left world border 
 		if(this.x < right) {this.x = right;} // right world border
 	}
@@ -173,7 +177,7 @@ public class Player {
 		}
 		if(MenuManager.currentLevel.weapons.size() > 0) {
 			distanceFrom = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, closeWeapon.actX, closeWeapon.actY);
-			if(distanceFrom < PLAYER_SIZE/3) {
+			if(distanceFrom < PLAYER_SIZE/3 && this.playerWeapon == null) {
 				this.playerWeapon = closeWeapon;
 				closeWeapon.onPlayer = true;
 				closeWeapon.remove();

@@ -10,6 +10,7 @@ public class WorldElement {
 	public float actX, actY, sizeX, sizeY;
 	public Texture staticTexture;
 	public boolean wordOn;
+	public boolean weaponOn;
 	
 	public WorldElement(float x, float y) {
 		this.x = x;

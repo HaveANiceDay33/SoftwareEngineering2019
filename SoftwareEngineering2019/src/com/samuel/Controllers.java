@@ -10,6 +10,7 @@ public class Controllers {
 	public static float [] allB = new float[5];
 	public static float [] allY = new float[5];
 	public static float [] allX = new float[5];
+	public static float [] allStart = new float[5];
 	public static float [] joy1x = new float[4];
 	
 	public static void initControllers() {
@@ -40,6 +41,12 @@ public class Controllers {
 		allX[2] = conts.getValue(HvlCPG_Gamepad.BUTTON_X, 2);
 		allX[3] = conts.getValue(HvlCPG_Gamepad.BUTTON_X, 3);
 		allX[4] = conts.getValue(HvlCPG_Gamepad.BUTTON_X);
+		
+		allStart[0] = conts.getValue(HvlCPG_Gamepad.BUTTON_START, 0);
+		allStart[1] = conts.getValue(HvlCPG_Gamepad.BUTTON_START, 1);
+		allStart[2] = conts.getValue(HvlCPG_Gamepad.BUTTON_START, 2);
+		allStart[3] = conts.getValue(HvlCPG_Gamepad.BUTTON_START, 3);
+		allStart[4] = conts.getValue(HvlCPG_Gamepad.BUTTON_START);
 		
 		joy1x[0] = conts.getValue(HvlCPG_Gamepad.JOY1X, 0);
 		joy1x[1] = conts.getValue(HvlCPG_Gamepad.JOY1X, 1);

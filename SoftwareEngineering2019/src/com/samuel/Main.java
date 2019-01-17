@@ -26,7 +26,7 @@ public class Main extends HvlTemplateInteg2D{
 		super(144, 1280, 720, "Message Melee", "Icon32", new HvlDisplayModeDefault());
 	}
 	
-	public static final int NUM_TEXTURES = 34;
+	public static final int NUM_TEXTURES = 36;
 
 	public static final int
 	LEVEL_ONE_INDEX = 0,
@@ -62,7 +62,9 @@ public class Main extends HvlTemplateInteg2D{
 	START_INDEX = 30,
 	CVILLE_INDEX = 31,
 	EFFECTS_INDEX = 32,
-	B_MUSIC_INDEX = 33;
+	B_MUSIC_INDEX = 33,
+	LAUNCHER_INDEX = 34,
+	COCONUT_INDEX = 35;
 	
 	public static final int NUM_SOUNDS = 7;
 	
@@ -88,6 +90,7 @@ public class Main extends HvlTemplateInteg2D{
 	public static void saveConfig(){
 		HvlConfig.saveToFile(options, PATH_SETTINGS);
 	}
+	
 	@Override
 	public void initialize() {
 		getTextureLoader().loadResource("BackgroundSheet");
@@ -124,6 +127,8 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("clogo");
 		getTextureLoader().loadResource("SoundEffects");
 		getTextureLoader().loadResource("BackgroundMuzak");
+		getTextureLoader().loadResource("cocoLanuch");
+		getTextureLoader().loadResource("coconut");
 		
 		getSoundLoader().loadResource("gears");//0
 		getSoundLoader().loadResource("forward");//1

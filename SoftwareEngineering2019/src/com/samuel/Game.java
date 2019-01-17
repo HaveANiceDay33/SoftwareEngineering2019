@@ -15,6 +15,12 @@ import com.osreboot.ridhvl.painter.HvlRenderFrame.FBOUnsupportedException;
 public class Game {
 	static final public int BACK_X = 5500; //5760
 	static final public int BACK_Y = 5500; //3240
+	static final public float GRAVITY = 7000; //Gravity value, constantly modifies y-velocity
+	static final public float DRAG = 6000;//Similar to gravity, but affects x-velocity
+	static final public int BORDER_TOP = 1670;
+	static final public int BORDER_BOTTOM = -500;
+	static final public int BORDER_RIGHT = -1920; //+1920
+	static final public int BORDER_LEFT = 1920;
 	static final private int BORDER_WIDTH = 6;
 	static final public float FIXED_X = Display.getWidth()/2;
 	static final public float FIXED_Y = Display.getHeight()/2+100;
@@ -64,6 +70,7 @@ public class Game {
 	
 	public static void updateGame(float delta) {
 		WordManager.updateWords(delta);
+		WeaponManager.updateWeapons(delta);
 		p1R.doCapture(new HvlAction0() { //player 1 
 			@Override
 			public void run() {
@@ -108,12 +115,18 @@ public class Game {
 				player4.update(delta);
 			}
 		});
+		MenuManager.pauseFrame.doCapture(true, new HvlAction0(){
+			@Override
+			public void run(){
+				hvlDrawQuad(0, 0, Display.getWidth()/2, Display.getHeight()/2, p1R); //drawing player 1's render frame
+				hvlDrawQuad(Display.getWidth()/2, 0, Display.getWidth()/2, Display.getHeight()/2, p2R);//drawing player 2's render frame
+				hvlDrawQuad(0, Display.getHeight()/2, Display.getWidth()/2, Display.getHeight()/2, p3R);//drawing player 3's render frame
+				hvlDrawQuad(Display.getWidth()/2, Display.getHeight()/2, Display.getWidth()/2, Display.getHeight()/2, p4R);//drawing player 4's render frame
+				hvlDrawQuad(Display.getWidth()/2-BORDER_WIDTH/2, 0, BORDER_WIDTH, 1080, Color.black);//drawing division lines
+				hvlDrawQuad(0, Display.getHeight()/2-BORDER_WIDTH/2, Display.getWidth(), BORDER_WIDTH, Color.black);//drawing division lines
+			}
+		});
 		
-		hvlDrawQuad(0, 0, Display.getWidth()/2, Display.getHeight()/2, p1R); //drawing player 1's render frame
-		hvlDrawQuad(Display.getWidth()/2, 0, Display.getWidth()/2, Display.getHeight()/2, p2R);//drawing player 2's render frame
-		hvlDrawQuad(0, Display.getHeight()/2, Display.getWidth()/2, Display.getHeight()/2, p3R);//drawing player 3's render frame
-		hvlDrawQuad(Display.getWidth()/2, Display.getHeight()/2, Display.getWidth()/2, Display.getHeight()/2, p4R);//drawing player 4's render frame
-		hvlDrawQuad(Display.getWidth()/2-BORDER_WIDTH/2, 0, BORDER_WIDTH, 1080, Color.black);//drawing division lines
-		hvlDrawQuad(0, Display.getHeight()/2-BORDER_WIDTH/2, Display.getWidth(), BORDER_WIDTH, Color.black);//drawing division lines
+		hvlDrawQuad(0,0, Display.getWidth(), Display.getHeight(), MenuManager.pauseFrame);
 	}
 }

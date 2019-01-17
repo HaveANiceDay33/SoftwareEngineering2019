@@ -47,12 +47,12 @@ public class WordManager {
 		if(wordTimer <= 0) {
 			float x, y;
 			WorldElement spawnOn = MenuManager.currentLevel.elements.get(HvlMath.randomIntBetween(0, MenuManager.currentLevel.elements.size()));
-			if(spawnOn instanceof Platform && !spawnOn.wordOn) {
-				x = spawnOn.get_x();
+			if(spawnOn instanceof Platform && !spawnOn.wordOn && !spawnOn.weaponOn) {
+				x = spawnOn.get_x(); 
 				y = spawnOn.get_y() - 100;
 				spawnOn.wordOn = true;
 			}else {
-				x = HvlMath.randomIntBetween(Player.BORDER_RIGHT, Player.BORDER_LEFT);
+				x = HvlMath.randomIntBetween(Game.BORDER_RIGHT, Game.BORDER_LEFT);
 				y = Game.FIXED_Y;
 			}
 			Word newWord = new Word(HvlMath.randomIntBetween(0, 1), x, y);

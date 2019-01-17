@@ -9,7 +9,10 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlMath;
+import com.osreboot.ridhvl.action.HvlAction0;
 import com.osreboot.ridhvl.action.HvlAction1;
+import com.osreboot.ridhvl.input.HvlInput;
+import com.osreboot.ridhvl.menu.HvlButtonMenuLink;
 import com.osreboot.ridhvl.menu.HvlComponentDefault;
 import com.osreboot.ridhvl.menu.HvlMenu;
 import com.osreboot.ridhvl.menu.component.HvlArrangerBox;
@@ -17,19 +20,25 @@ import com.osreboot.ridhvl.menu.component.HvlArrangerBox.ArrangementStyle;
 import com.osreboot.ridhvl.menu.component.HvlButton;
 import com.osreboot.ridhvl.menu.component.HvlSpacer;
 import com.osreboot.ridhvl.menu.component.collection.HvlLabeledButton;
+import com.osreboot.ridhvl.painter.HvlCursor;
+import com.osreboot.ridhvl.painter.HvlRenderFrame;
 import com.samuel.LevelProfiles.Battlefield;
+import com.samuel.LevelProfiles.Skyrise;
 
 public class MenuManager {
 	public static final float BUTTON_WIDTH = 254f, BUTTON_HEIGHT = 78f;
 	private static final float CONTROLLER_TIME = 5f;
 	private static final float BUTTON_WAIT_TIME = 0.25f;
 	
-	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, credits;
+	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, credits, pause;
 	private static float whiteFade = 0;
 	
 	static boolean playedIntroSound = false;
 	static boolean playedMenuMusic = false;
-	static Level currentLevel;
+	public static Level currentLevel;
+	static int pickLevel;
+	
+	public static HvlRenderFrame pauseFrame;
 	
 	private static void timerBar(float time) {
 		hvlDrawQuad(200, 620, Display.getWidth()-400, 20, Color.gray);
@@ -50,7 +59,67 @@ public class MenuManager {
 		}
 	}
 	
+	public static HvlInput pauseInput, backInput;
+	
 	public static void initialize() {
+		
+		try{
+			pauseFrame = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
+		}catch(Exception e){
+			throw new RuntimeException("Render Frames not supported on this computer! Do you live in the 80's?");
+		}
+		
+		pauseInput = new HvlInput(new HvlInput.InputFilter() {
+			@Override
+			public float getCurrentOutput() {
+				if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) || Controllers.allStart[4] == 1) {
+					return 1;
+				}else {
+					return 0;
+				}
+				
+			}
+		});
+		
+		pauseInput.setPressedAction(new HvlAction1<HvlInput>() {
+
+			@Override
+			public void run(HvlInput a) {
+				if(HvlMenu.getCurrent() == pause) {
+					HvlMenu.setCurrent(game);
+				}else if(HvlMenu.getCurrent() == game) {
+					HvlMenu.setCurrent(pause);
+				}
+			}
+			
+		});
+		
+		backInput = new HvlInput(new HvlInput.InputFilter() {
+			@Override
+			public float getCurrentOutput() {
+				if(Controllers.allB[4] == 1) {
+					return 1;
+				}else {
+					return 0;
+				}
+				
+			}
+		});
+		
+		backInput.setPressedAction(new HvlAction1<HvlInput>() {
+
+			@Override
+			public void run(HvlInput a) {
+				if(HvlMenu.getCurrent() == credits || HvlMenu.getCurrent() == options) {
+					HvlMenu.setCurrent(menu);
+				}
+				if(HvlMenu.getCurrent() == menu) {
+					System.exit(0);
+				}
+			}
+			
+		});
+		
 		HvlComponentDefault.setDefault(new HvlArrangerBox(0, 0, Display.getWidth(), Display.getHeight(), ArrangementStyle.VERTICAL));
 		HvlComponentDefault.setDefault(HvlLabeledButton.class, new HvlLabeledButton.Builder().setWidth(BUTTON_WIDTH).setHeight(BUTTON_HEIGHT).setFont(Main.font).setTextColor(Color.white).setTextScale(0.2f).build());
 		
@@ -62,6 +131,7 @@ public class MenuManager {
 		game = new HvlMenu();
 		options = new HvlMenu();
 		credits = new HvlMenu();
+		pause = new HvlMenu();
 		
 		menu.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.START_INDEX, Color.white)).
@@ -129,6 +199,7 @@ public class MenuManager {
 			@Override
 			public void run(HvlButton aArg) {
 				playBack();
+				Main.saveConfig();
 				HvlMenu.setCurrent(menu);
 			}
 		}).build());
@@ -144,7 +215,29 @@ public class MenuManager {
 			}
 		}).build());
 		
-		currentLevel = new Battlefield();
+		pause.add(new HvlArrangerBox.Builder().setxAlign(0.5f).build());
+		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setTextColor(Color.black).setTextScale(0.35f).setText("Resume").setClickedCommand(new HvlButtonMenuLink(game)).build());
+		pause.getFirstArrangerBox().add(new HvlSpacer(0, 30));
+		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setTextColor(Color.black).setTextScale(0.35f).setText("Exit").setClickedCommand(new HvlAction1<HvlButton>(){
+			@Override
+			public void run(HvlButton aArg){
+				HvlMenu.setCurrent(menu);
+			}
+		}).build());
+		
+		pickLevel = HvlMath.randomIntBetween(0, 2);
+		
+		switch(pickLevel) {
+			case 0:
+				currentLevel = new Battlefield();
+				break;
+			case 1:
+				currentLevel = new Skyrise();
+				break;
+			default:
+				currentLevel = new Battlefield();
+				break;
+		}
 		
 		WordManager.initWords();
 		Controllers.initControllers();
@@ -161,6 +254,19 @@ public class MenuManager {
 	public static int currentSong = HvlMath.randomIntBetween(0, 2);
 	
 	public static void update(float delta){
+		
+		if(HvlMenu.getCurrent() == pause){
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.4f));
+			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 400, 400, Main.getTexture(Main.CRATE_INDEX));
+			if(Controllers.allB[4] == 1) {
+				HvlMenu.setCurrent(menu);
+			}
+			if(Controllers.allA[4] == 1) {
+				HvlMenu.setCurrent(game);
+			}
+		}
+		
 		whiteFade = HvlMath.stepTowards(whiteFade, delta, 0f);
 		if(HvlMenu.getCurrent() == intro){
 			if(!playedIntroSound && Main.options.soundEffectsEnabled) {

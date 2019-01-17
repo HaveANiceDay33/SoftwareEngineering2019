@@ -10,12 +10,14 @@ public class Level {
 	public ArrayList<WorldElement> elements;
 	public ArrayList<Word> words;
 	public ArrayList<Weapon> weapons;
+	public ArrayList<Projectile> projs;
 	public HvlAnimatedTextureUV background;
 	public Level(HvlAnimatedTextureUV back) {
 		background = back;
 		elements = new ArrayList<>();
 		words = new ArrayList<>();
 		weapons = new ArrayList<>();
+		projs = new ArrayList<>();
 	}
 
 	public ArrayList<WorldElement> get_elements(){

@@ -28,5 +28,10 @@ public class LevelGenerator {
 				w.draw(playerX, playerY);
 			}	
 		}
+		for(Projectile p : currentLevel.projs) {
+			if(currentLevel.projs.size() > 0) {
+				p.update(delta);
+			}
+		}
 	}
 }
