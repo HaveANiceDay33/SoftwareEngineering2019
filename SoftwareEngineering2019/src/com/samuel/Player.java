@@ -188,6 +188,10 @@ public class Player {
 		}
 	}
 	
+	public void drawPlayer(Player player) {
+		hvlDrawQuadc(player.get_x() + -this.get_x() + Game.FIXED_X, player.get_y() + -this.get_y() + Game.FIXED_Y, this.get_width(), Player.PLAYER_SIZE, this.currentAnimation);
+	}
+	
 	public float get_width() {
 		if(this.vx <= 0) {return -PLAYER_SIZE;}
 		else {return PLAYER_SIZE;}
