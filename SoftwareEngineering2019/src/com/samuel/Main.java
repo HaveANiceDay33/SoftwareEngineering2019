@@ -140,7 +140,7 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("PauseBackground");
 		getTextureLoader().loadResource("Menu");
 		getTextureLoader().loadResource("ContinueButton");
-		getTextureLoader().loadResource("SpaceSheet");
+		getTextureLoader().loadResource("SpaceSheet2");
 		getTextureLoader().loadResource("pinapple");
 		getTextureLoader().loadResource("slingshot");
 		getTextureLoader().loadResource("spacebackM");
