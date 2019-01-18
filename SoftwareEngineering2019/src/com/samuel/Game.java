@@ -47,6 +47,9 @@ public class Game {
 			Main.font.drawWord(player.playerWords.get(1).text, Display.getWidth()-300, 70, MenuManager.currentLevel.textColor, 0.3f);
 			Main.font.drawWord(player.playerWords.get(2).text, Display.getWidth()-300, 120, MenuManager.currentLevel.textColor, 0.3f);
 		}
+		if(player.playerWeapon != null) {
+			Main.font.drawWord("Ammo: "+player.playerWeapon.ammo, 20, 100, MenuManager.currentLevel.textColor, 0.3f);
+		}
 	}
 
 	public static void initGame(int p1, int p2, int p3 ,int p4, 

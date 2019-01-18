@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlMath;
 import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
+import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
 
 public class Player {
 	static final private float JUMP_POWER = 3100;//Instantaneous velocity the player gains when jumping
@@ -18,7 +20,7 @@ public class Player {
 	static final public float PLAYER_SIZE = 200;
 	
 	public int id, cont;//used to decorate UI elements and assign controller numbers
-	public float x, y, vx, vy, x1Cont, aCont; //movement and controller values
+	public float x, y, vx, vy, x1Cont, aCont, xCont; //movement and controller values
 	public float jumpTimer = 0, shotTimer = 0;//Timer that gets modified every frame to allow jumps
 	public AnimatedTextureGroup animations;
 	public ArrayList<Word> playerWords;
@@ -55,6 +57,7 @@ public class Player {
 		if(this.cont != 4) {
 			this.x1Cont = Controllers.joy1x[this.cont]; //controller inputs saved to variables for later use
 			this.aCont = Controllers.allA[this.cont];
+			this.xCont = Controllers.allX[this.cont];
 			if(this.x1Cont > 0) //Determines player movement direction and scales to the joystick input
 				this.vx = -MOVE_SPEED * Math.abs(this.x1Cont);
 			if(this.x1Cont < 0)
@@ -63,7 +66,14 @@ public class Player {
 				this.vy = JUMP_POWER;
 				this.jumped = true;
 				this.jumpTimer = JUMP_TIMER;//resets jump timer
-			} 
+			}
+			if(this.xCont == 1 && this.shotTimer <= 0) {
+				if(this.playerWeapon != null) {
+					this.playerWeapon.fire(this);
+					this.playerWeapon.ammo -= 1;
+					this.shotTimer = SHOT_TIMER;
+				}
+			}
 		} else { //Clause to add keyboard support
 			if(Keyboard.isKeyDown(Keyboard.KEY_D)){this.vx = -MOVE_SPEED;}
 			if(Keyboard.isKeyDown(Keyboard.KEY_A)){this.vx = MOVE_SPEED;}
@@ -72,14 +82,16 @@ public class Player {
 				this.jumpTimer = JUMP_TIMER;
 				this.jumped = true;
 			}
-		}
-		
-		if(Keyboard.isKeyDown(Keyboard.KEY_F) && this.shotTimer <= 0) {
-			if(this.playerWeapon != null) {
-				this.playerWeapon.fire(this);
-				this.shotTimer = SHOT_TIMER;
+			if(Keyboard.isKeyDown(Keyboard.KEY_F) && this.shotTimer <= 0) {
+				if(this.playerWeapon != null) {
+					this.playerWeapon.fire(this);
+					this.playerWeapon.ammo -= 1;
+					this.shotTimer = SHOT_TIMER;
+				}
 			}
 		}
+		
+		
 		
 		if(this.vx == 0) {
 			currentAnimation = this.animations.standing;
@@ -98,8 +110,33 @@ public class Player {
 		
 		hvlDrawQuadc(Game.FIXED_X, Game.FIXED_Y, this.vx <= 0 ? -PLAYER_SIZE : PLAYER_SIZE, PLAYER_SIZE,
 				currentAnimation);
-		
+		updateProjectiles();
 		updateWeapons();
+	}
+	
+	private void updateProjectiles() {
+		Projectile closest = null;
+		if(MenuManager.currentLevel.projs.size() > 0) {
+			for(Projectile p : MenuManager.currentLevel.projs) {
+				if(closest == null) {
+					closest = p;
+				}
+				float distance = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, closest.actX, closest.actY);
+				float distanceTest = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, p.actX, p.actY);
+				if(distanceTest < distance) {
+					closest = p;
+				}
+			}
+			distanceFrom = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, closest.actX, closest.actY);
+			if(closest.owner != this && distanceFrom < PLAYER_SIZE/2 && closest.vx > 0 && closest.vy > 0) {
+				this.vy = 1500;
+				if(this.playerWords.size() > 0) {
+					this.playerWords.remove(0);
+					closest.remove();
+				}
+			}
+			
+		}
 	}
 	
 	//Calculates and prevents players from leaving the play area. 
@@ -147,6 +184,7 @@ public class Player {
 	
 	private void updateWords() {
 		Word closeWord = null;
+		
 		for(Word w : MenuManager.currentLevel.words) {
 			if(closeWord == null) {
 				closeWord = w;
@@ -157,10 +195,12 @@ public class Player {
 				closeWord = w;
 			}
 		}
-		distanceFrom = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, closeWord.actX, closeWord.actY);
-		if(distanceFrom < PLAYER_SIZE/3) {
-			this.playerWords.add(0, closeWord);
-			closeWord.remove(closestElement(), onPlat);
+		if(MenuManager.currentLevel.words.size() > 0) {
+			distanceFrom = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, closeWord.actX, closeWord.actY);
+			if(distanceFrom < PLAYER_SIZE/3) {
+				this.playerWords.add(0, closeWord);
+				closeWord.remove(closestElement(), onPlat);
+			}
 		}
 	}
  	
@@ -186,6 +226,9 @@ public class Player {
 		}
 		if(this.playerWeapon != null) {
 			this.playerWeapon.drawOn(this.x, this.y, this.vx, this);
+			if(this.playerWeapon.ammo <= 0) {
+				this.playerWeapon = null;
+			}
 		}
 	}
 	

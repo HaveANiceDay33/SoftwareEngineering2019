@@ -76,22 +76,21 @@ public class MenuManager {
 					return 1;
 				}else {
 					return 0;
-				}
-				
+				}	
 			}
 		});
 		
 		pauseInput.setPressedAction(new HvlAction1<HvlInput>() {
-
 			@Override
 			public void run(HvlInput a) {
 				if(HvlMenu.getCurrent() == pause) {
 					HvlMenu.setCurrent(game);
+					playForward();
 				}else if(HvlMenu.getCurrent() == game) {
 					HvlMenu.setCurrent(pause);
+					playBack();
 				}
 			}
-			
 		});
 		
 		backInput = new HvlInput(new HvlInput.InputFilter() {
@@ -102,22 +101,21 @@ public class MenuManager {
 				}else {
 					return 0;
 				}
-				
 			}
 		});
 		
 		backInput.setPressedAction(new HvlAction1<HvlInput>() {
-
 			@Override
 			public void run(HvlInput a) {
-				if(HvlMenu.getCurrent() == credits || HvlMenu.getCurrent() == options) {
+				if(HvlMenu.getCurrent() == pause) {
+					resetGame();
+				} else if(HvlMenu.getCurrent() == credits || HvlMenu.getCurrent() == options) {
 					HvlMenu.setCurrent(menu);
-				}
-				if(HvlMenu.getCurrent() == menu) {
+				} else if(HvlMenu.getCurrent() == menu) {
 					System.exit(0);
 				}
+				playBack();
 			}
-			
 		});
 		
 		HvlComponentDefault.setDefault(new HvlArrangerBox(0, 0, Display.getWidth(), Display.getHeight(), ArrangementStyle.VERTICAL));
@@ -223,7 +221,7 @@ public class MenuManager {
 				setOnDrawable(new ImageDrawable(Main.MENU_B_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.MENU_B_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
-				HvlMenu.setCurrent(menu);
+				resetGame();
 			}
 		}).build());
 		
@@ -309,7 +307,6 @@ public class MenuManager {
 				HvlMenu.setCurrent(controllerInit);
 			}
 			
-			if(Controllers.allB[4] == 1 && buttonWait <= 0) {playBack(); System.exit(0);}
 			if(Controllers.allY[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(options); buttonWait = BUTTON_WAIT_TIME;}
 			if(Controllers.allX[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(credits); buttonWait = BUTTON_WAIT_TIME;}
 		}
@@ -483,5 +480,34 @@ public class MenuManager {
 		}
 		
 		HvlMenu.updateMenus(delta);
+	}
+	
+	public static void resetGame() {
+		currentLevel.elements.clear();
+		currentLevel.projs.clear();
+		currentLevel.weapons.clear();
+		currentLevel.words.clear();
+		WordManager.initWords();
+		pickLevel = HvlMath.randomIntBetween(0, 4);
+		
+		switch(pickLevel) {
+			case 0:
+				currentLevel = new Battlefield();
+				break;
+			case 1:
+				currentLevel = new Skyrise();
+				break;
+			case 2:
+				currentLevel = new HomeBase();
+				break;
+			case 3:
+				currentLevel = new Overworld();
+				break;
+			default:
+				currentLevel = new Battlefield();
+				break;
+		}
+		
+		HvlMenu.setCurrent(menu);
 	}
 }
