@@ -2,14 +2,17 @@ package com.samuel;
 
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 
 import com.osreboot.ridhvl.HvlMath;
+import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
 
 public class Projectile {
 	public Texture pro;
 	public float x, y, sizeX, sizeY, actX, actY, vx, vy, xMod=0, yMod=0;
 	public Player owner;
+	public float drag = Game.DRAG/1000;
 	public Projectile(Texture pro, float x, float y, float sizeX, float sizeY, float initVX, Player owner) {
 		this.pro = pro;
 		this.x = x;
@@ -17,13 +20,13 @@ public class Projectile {
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		this.vx = initVX;
-		this.vy = -100;
 		this.owner = owner;
+		this.vy = -100;
 	}
 	
 	public void update(float delta) {
 		this.vy += Game.GRAVITY/100 * delta;
-		this.vx = HvlMath.stepTowards(this.vx, Game.DRAG/1000*delta, 0);
+		this.vx = HvlMath.stepTowards(this.vx, this.drag*delta, 0);
 		this.xMod += this.vx * delta; //positions are modified by velocities
 		this.yMod += this.vy * delta;
 	}
@@ -32,16 +35,13 @@ public class Projectile {
 		this.update(delta);
 		actX = this.x + xPlay + Game.FIXED_X + xMod;
 		actY = this.y + yPlay + Game.FIXED_Y + yMod;
-		//updateElementCollisions();
-		//updateBorderCollisions(Game.BORDER_TOP, Game.BORDER_BOTTOM, Game.BORDER_LEFT, Game.BORDER_RIGHT);
+		updateElementCollisions();
+		updateBorderCollisions(560);
 		hvlDrawQuadc(actX, actY, this.sizeX, this.sizeY, this.pro);
 	}
-	/*
-	private void updateBorderCollisions(int top, int bottom, int left, int right) {
-		if(this.y < bottom) {this.y = bottom; this.vy = 0;} // bottom world border 
-		if(this.y > top) {this.y = top; this.vy = 0;}  //top world border
-		if(this.x > left) {this.x = left;} // left world border 
-		if(this.x < right) {this.x = right;} // right world border
+	
+	private void updateBorderCollisions(int bottom) {
+		if((this.y+this.yMod) > bottom) {this.yMod = 0; this.y = bottom; this.drag = Game.DRAG/100; this.vy = 0;} // bottom world border 
 	}
 	
 	private WorldElement closestElement() {
@@ -50,31 +50,39 @@ public class Projectile {
 			if(closest == null) {
 				closest = e;
 			}
-			float distance = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, closest.actX, closest.actY);
-			float distanceTest = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, e.actX, e.actY);
+			float distance = HvlMath.distance(this.actX, this.actY, closest.actX, closest.actY);
+			float distanceTest = HvlMath.distance(this.actX, this.actY, e.actX, e.actY);
 			if(distanceTest < distance) {
 				closest = e;
 			}
+			
 		}
 		return closest;
 	}
 	
 	private void updateElementCollisions() {
 		WorldElement closest = closestElement();
+		//System.out.println(this.actY + "\t" + closest.actY);
 		//CHECKING PLATFORM COLLISIONS
 		if(closest instanceof Platform) {
-			if(this.y < -(closest.y + 32) + this.sizeX/2 && this.y > -(closest.y - 32) - this.sizeX/2 && 
-					((this.x + (this.sizeX/4) > closest.x - closest.sizeX*32 && this.x - (this.sizeX/4) < closest.x + closest.sizeX*32) || 
-							(this.x - (this.sizeX/4) < -(closest.x - closest.sizeX*32) && this.x + (this.sizeX/4) > -(closest.x + closest.sizeX*32)) )){
+			if((this.actX + (this.sizeX/4) > closest.actX - closest.sizeX*32 && this.actX - (this.sizeX/4) < closest.actX + closest.sizeX*32 || 
+					this.actX - (this.sizeX/4) < -(closest.actX - closest.sizeX*32) && this.actX + (this.sizeX/4) > -(closest.actX + closest.sizeX*32))
+					&& this.actY > closest.actY - 32 && this.actY < closest.actY + 32) {
 				if(this.vy < 0) {
 					this.vy = 0;
-					this.y = -(closest.y + 32) + this.sizeX/2;
+					this.drag = Game.DRAG/100;
+					this.actY = closest.actY + 32 + this.sizeY/2;
 				} else if (this.vy > 0) {
-					this.vy = -1;
-					this.y = -(closest.y - 32) -this.sizeX/2;
+					this.vy = 0;
+					this.drag = Game.DRAG/10;
+					this.actY = closest.actY - 32 - this.sizeY/2;
 				}
 			}
 		}
 	}
-	*/
+	
+	public void remove() {
+		MenuManager.currentLevel.projs.remove(this);
+	}
+	
 }

@@ -185,7 +185,7 @@ public class Player {
 			}
 		}
 		if(this.playerWeapon != null) {
-			this.playerWeapon.drawOn(this.vx);
+			this.playerWeapon.drawOn(this.x, this.y, this.vx, this);
 		}
 	}
 	

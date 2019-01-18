@@ -44,7 +44,7 @@ public class WordManager {
 	
 	public static void updateWords(float delta) {
 		wordTimer -= delta;
-		if(wordTimer <= 0) {
+		if(wordTimer <= 0 && MenuManager.currentLevel.words.size() < 10) {
 			float x, y;
 			WorldElement spawnOn = MenuManager.currentLevel.elements.get(HvlMath.randomIntBetween(0, MenuManager.currentLevel.elements.size()));
 			if(spawnOn instanceof Platform && !spawnOn.wordOn && !spawnOn.weaponOn) {

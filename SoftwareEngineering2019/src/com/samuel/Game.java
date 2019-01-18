@@ -36,16 +36,16 @@ public class Game {
 	}
 	
 	public static void drawUI(Player player) {
-		Main.font.drawWord("Player "+(player.id+1), 20, 20, Color.black, 0.3f);
+		Main.font.drawWord("Player "+(player.id+1), 20, 20, MenuManager.currentLevel.textColor, 0.3f);
 		if(player.playerWords.size() == 1) {
-			Main.font.drawWord(player.playerWords.get(0).text, Display.getWidth()-300, 20, Color.black, 0.3f);
+			Main.font.drawWord(player.playerWords.get(0).text, Display.getWidth()-300, 20, MenuManager.currentLevel.textColor, 0.3f);
 		}else if(player.playerWords.size() == 2) {
-			Main.font.drawWord(player.playerWords.get(0).text, Display.getWidth()-300, 20, Color.black, 0.3f);
-			Main.font.drawWord(player.playerWords.get(1).text, Display.getWidth()-300, 70, Color.black, 0.3f);
+			Main.font.drawWord(player.playerWords.get(0).text, Display.getWidth()-300, 20, MenuManager.currentLevel.textColor, 0.3f);
+			Main.font.drawWord(player.playerWords.get(1).text, Display.getWidth()-300, 70, MenuManager.currentLevel.textColor, 0.3f);
 		}else if(player.playerWords.size() >= 3) {
-			Main.font.drawWord(player.playerWords.get(0).text, Display.getWidth()-300, 20, Color.black, 0.3f);
-			Main.font.drawWord(player.playerWords.get(1).text, Display.getWidth()-300, 70, Color.black, 0.3f);
-			Main.font.drawWord(player.playerWords.get(2).text, Display.getWidth()-300, 120, Color.black, 0.3f);
+			Main.font.drawWord(player.playerWords.get(0).text, Display.getWidth()-300, 20, MenuManager.currentLevel.textColor, 0.3f);
+			Main.font.drawWord(player.playerWords.get(1).text, Display.getWidth()-300, 70, MenuManager.currentLevel.textColor, 0.3f);
+			Main.font.drawWord(player.playerWords.get(2).text, Display.getWidth()-300, 120, MenuManager.currentLevel.textColor, 0.3f);
 		}
 	}
 
@@ -79,9 +79,6 @@ public class Game {
 				player2.drawPlayer(player1);
 				player3.drawPlayer(player1);
 				player4.drawPlayer(player1);
-				//hvlDrawQuadc(player1.get_x() + -player2.get_x() + FIXED_X, player1.get_y() + -player2.get_y() + FIXED_Y, player2.get_width(), Player.PLAYER_SIZE, player2.currentAnimation); //render player 2
-			//	hvlDrawQuadc(player1.get_x() + -player3.get_x() + FIXED_X, player1.get_y() + -player3.get_y() + FIXED_Y, player3.get_width(), Player.PLAYER_SIZE, player3.currentAnimation); //render player 3
-				//hvlDrawQuadc(player1.get_x() + -player4.get_x() + FIXED_X, player1.get_y() + -player4.get_y() + FIXED_Y, player4.get_width(), Player.PLAYER_SIZE, player4.currentAnimation);//render player 4
 				player1.update(delta);
 			}
 		});
@@ -93,9 +90,6 @@ public class Game {
 				player1.drawPlayer(player2);
 				player3.drawPlayer(player2);
 				player4.drawPlayer(player2);
-				//hvlDrawQuadc(player2.get_x() + -player1.get_x() + FIXED_X, player2.get_y() + -player1.get_y() + FIXED_Y, player1.get_width(), Player.PLAYER_SIZE, player1.currentAnimation); //render player 1
-				//hvlDrawQuadc(player2.get_x() + -player3.get_x() + FIXED_X, player2.get_y() + -player3.get_y() + FIXED_Y, player3.get_width(), Player.PLAYER_SIZE, player3.currentAnimation); //render player 3
-				//hvlDrawQuadc(player2.get_x() + -player4.get_x() + FIXED_X, player2.get_y() + -player4.get_y() + FIXED_Y, player4.get_width(), Player.PLAYER_SIZE, player4.currentAnimation); //render player 4
 				player2.update(delta);
 			}
 		});
@@ -107,9 +101,6 @@ public class Game {
 				player1.drawPlayer(player3);
 				player2.drawPlayer(player3);
 				player4.drawPlayer(player3);
-				//hvlDrawQuadc(player3.get_x() + -player2.get_x() + FIXED_X, player3.get_y() + -player2.get_y() + FIXED_Y, player2.get_width(), Player.PLAYER_SIZE, player2.currentAnimation); //render player 2
-				//hvlDrawQuadc(player3.get_x() + -player1.get_x() + FIXED_X, player3.get_y() + -player1.get_y() + FIXED_Y, player1.get_width(), Player.PLAYER_SIZE, player1.currentAnimation); //render player 1
-				//hvlDrawQuadc(player3.get_x() + -player4.get_x() + FIXED_X, player3.get_y() + -player4.get_y() + FIXED_Y, player4.get_width(), Player.PLAYER_SIZE, player4.currentAnimation); //render player 4
 				player3.update(delta);
 			}
 		});
@@ -121,9 +112,6 @@ public class Game {
 				player1.drawPlayer(player4);
 				player2.drawPlayer(player4);
 				player3.drawPlayer(player4);
-				//hvlDrawQuadc(player4.get_x() + -player2.get_x() + FIXED_X, player4.get_y() + -player2.get_y() + FIXED_Y, player2.get_width(), Player.PLAYER_SIZE, player2.currentAnimation); //render player 2
-				//hvlDrawQuadc(player4.get_x() + -player1.get_x() + FIXED_X, player4.get_y() + -player1.get_y() + FIXED_Y, player1.get_width(), Player.PLAYER_SIZE, player1.currentAnimation); //render player 1
-				//hvlDrawQuadc(player4.get_x() + -player3.get_x() + FIXED_X, player4.get_y() + -player3.get_y() + FIXED_Y, player3.get_width(), Player.PLAYER_SIZE, player3.currentAnimation); //render player 3
 				player4.update(delta);
 			}
 		});

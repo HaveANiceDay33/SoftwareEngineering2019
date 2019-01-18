@@ -5,8 +5,9 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 import org.lwjgl.opengl.Display;
 
 public class Platform extends WorldElement{
-	public Platform(float x, float y, float sizeX) {
-		super(x, y, Main.getTexture(Main.CRATE_INDEX));
+	
+	public Platform(float x, float y, float sizeX, int textureIndex) {
+		super(x, y, Main.getTexture(textureIndex));
 		this.sizeY = 1;
 		this.sizeX = sizeX;
 		wordOn = false;

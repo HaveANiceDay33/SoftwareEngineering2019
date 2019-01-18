@@ -10,12 +10,18 @@ import com.samuel.Weapon;
 import com.samuel.Projectiles.Coconut;
 
 public class CoconutLauncher extends Weapon {
+	private static int size = 128;
+	private static int launchSpeed = 200;
 	public CoconutLauncher(float x, float y) {
-		super(Main.getTexture(Main.LAUNCHER_INDEX), x, y, 128, 128);
+		super(Main.getTexture(Main.LAUNCHER_INDEX), x, y, size, size);
 	}
 	
 	public void fire(Player owner) {
-		Projectile coco = new Coconut((owner.vx <= 0 ? this.weapX + this.sizeX - 650 : this.weapX - this.sizeX - 650), this.weapY, owner.vx <= 0 ? 200 : -200, owner);
+		if(Main.options.soundEffectsEnabled) {
+			Main.getSound(Main.COCONUT_LAUNCH_INDEX).playAsSoundEffect(1, 1, false);
+		}
+		
+		Projectile coco = new Coconut((owner.vx <= 0 ? -(owner.x - this.sizeX) : -(owner.x + this.sizeX)), this.weapY, owner.vx <= 0 ? launchSpeed - owner.vx/10 : -launchSpeed - owner.vx/10, owner);
 		MenuManager.currentLevel.projs.add(coco);
 	}
 }

@@ -30,7 +30,9 @@ public class Weapon {
 		hvlDrawQuadc((vx <= 0 ? this.weapX+this.sizeX/2 : this.weapX-this.sizeX/2), this.weapY, (vx <= 0 ? this.sizeX : -this.sizeX), this.sizeY, this.weapon);
 	}
 
-	public void drawOn(float pvx) {
+	public void drawOn(float xPlay, float yPlay, float pvx, Player owner) {
+		this.weapX = xPlay;
+		this.weapY = yPlay;
 		hvlDrawQuadc((pvx <= 0 ? Game.FIXED_X+this.sizeX/2 : Game.FIXED_X-this.sizeX/2), Game.FIXED_Y, (pvx <= 0 ? this.sizeX : -this.sizeX), this.sizeY, this.weapon);
 	}
 	

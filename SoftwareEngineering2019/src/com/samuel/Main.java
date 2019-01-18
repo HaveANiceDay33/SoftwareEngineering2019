@@ -26,7 +26,7 @@ public class Main extends HvlTemplateInteg2D{
 		super(144, 1280, 720, "Message Melee", "Icon32", new HvlDisplayModeDefault());
 	}
 	
-	public static final int NUM_TEXTURES = 39;
+	public static final int NUM_TEXTURES = 44;
 
 	public static final int
 	LEVEL_ONE_INDEX = 0,
@@ -67,7 +67,12 @@ public class Main extends HvlTemplateInteg2D{
 	COCONUT_INDEX = 35,
 	PAUSE_BACK_INDEX = 36,
 	MENU_B_INDEX = 37,
-	CONT_INDEX = 38;
+	CONT_INDEX = 38,
+	LEVEL_2_INDEX = 39,
+	PINE_INDEX = 40,
+	SLING_INDEX = 41,
+	MENU_SPACE_INDEX = 42,
+	SPACE_CRATE_INDEX = 43;
 	
 	public static final int NUM_SOUNDS = 7;
 	
@@ -87,7 +92,7 @@ public class Main extends HvlTemplateInteg2D{
 	static HvlFontPainter2D font;
 	public static HvlAnimatedTextureUV loadingAnimation, blueRunning, blueStanding, blueJumping, blackRunning, 
 	blackStanding, blackJumping, redRunning, redStanding, redJumping, greenRunning, greenStanding, greenJumping,
-	level1;
+	level1, level2;
 	public static AnimatedTextureGroup blue, black, red, green;
 	
 	public static void saveConfig(){
@@ -122,7 +127,7 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("Jump2");
 		getTextureLoader().loadResource("Jump3");
 		getTextureLoader().loadResource("1");
-		getTextureLoader().loadResource("Logo");
+		getTextureLoader().loadResource("Logo2");
 		getTextureLoader().loadResource("CreditsButton");
 		getTextureLoader().loadResource("ExitButton");
 		getTextureLoader().loadResource("OptionsButton");
@@ -135,6 +140,11 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("PauseBackground");
 		getTextureLoader().loadResource("Menu");
 		getTextureLoader().loadResource("ContinueButton");
+		getTextureLoader().loadResource("SpaceSheet");
+		getTextureLoader().loadResource("pinapple");
+		getTextureLoader().loadResource("slingshot");
+		getTextureLoader().loadResource("spacebackM");
+		getTextureLoader().loadResource("SpaceCrate");
 		
 		getSoundLoader().loadResource("gears");//0
 		getSoundLoader().loadResource("forward");//1
@@ -177,6 +187,7 @@ public class Main extends HvlTemplateInteg2D{
 		green = new AnimatedTextureGroup(greenStanding, greenRunning, greenJumping);
 		
 		level1 = new HvlAnimatedTextureUV(getTexture(LEVEL_ONE_INDEX), 2048, 26, 2f);
+		level2 = new HvlAnimatedTextureUV(getTexture(LEVEL_2_INDEX), 2048, 26, 2f);
 		
 		File config = new File(PATH_SETTINGS);
 		if(config.exists()){

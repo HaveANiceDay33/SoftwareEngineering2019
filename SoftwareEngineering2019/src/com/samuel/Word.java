@@ -21,7 +21,12 @@ public class Word{
 	public void draw(float xPlay, float yPlay) {
 		actX = this.x + xPlay + Game.FIXED_X;
 		actY = this.y + yPlay + Game.FIXED_Y;
-		Main.font.drawWordc(this.text, actX, actY, Color.black, 0.4f);
+		if(MenuManager.currentLevel.background == Main.level1) {
+			Main.font.drawWordc(this.text, actX, actY, Color.black, 0.4f);
+		} else if (MenuManager.currentLevel.background == Main.level2) {
+			Main.font.drawWordc(this.text, actX, actY, Color.white, 0.4f);
+		}
+		
 	}
 	public void remove(WorldElement toRemove, boolean onPlat) {
 		MenuManager.currentLevel.words.remove(this);

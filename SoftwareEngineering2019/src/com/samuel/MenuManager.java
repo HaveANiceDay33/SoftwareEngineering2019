@@ -9,7 +9,6 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.HvlMath;
-import com.osreboot.ridhvl.action.HvlAction0;
 import com.osreboot.ridhvl.action.HvlAction1;
 import com.osreboot.ridhvl.input.HvlInput;
 import com.osreboot.ridhvl.menu.HvlButtonMenuLink;
@@ -20,9 +19,10 @@ import com.osreboot.ridhvl.menu.component.HvlArrangerBox.ArrangementStyle;
 import com.osreboot.ridhvl.menu.component.HvlButton;
 import com.osreboot.ridhvl.menu.component.HvlSpacer;
 import com.osreboot.ridhvl.menu.component.collection.HvlLabeledButton;
-import com.osreboot.ridhvl.painter.HvlCursor;
 import com.osreboot.ridhvl.painter.HvlRenderFrame;
 import com.samuel.LevelProfiles.Battlefield;
+import com.samuel.LevelProfiles.HomeBase;
+import com.samuel.LevelProfiles.Overworld;
 import com.samuel.LevelProfiles.Skyrise;
 
 public class MenuManager {
@@ -135,7 +135,7 @@ public class MenuManager {
 		
 		menu.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.START_INDEX, Color.white)).
-				setOnDrawable(new ImageDrawable(Main.START_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.START_INDEX, Color.lightGray)).setClickedCommand(new HvlAction1<HvlButton>(){
+				setOnDrawable(new ImageDrawable(Main.START_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.START_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
 				playForward();
@@ -146,7 +146,7 @@ public class MenuManager {
 		}).build());
 		menu.getFirstArrangerBox().add(new HvlSpacer(0,20));
 		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.OPTIONS_INDEX, Color.white)).
-				setOnDrawable(new ImageDrawable(Main.OPTIONS_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.OPTIONS_INDEX, Color.lightGray)).setClickedCommand(new HvlAction1<HvlButton>(){
+				setOnDrawable(new ImageDrawable(Main.OPTIONS_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.OPTIONS_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
 				playForward();
@@ -155,7 +155,7 @@ public class MenuManager {
 		}).build());
 		menu.getFirstArrangerBox().add(new HvlSpacer(0,20));
 		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.CREDITS_INDEX, Color.white)).
-				setOnDrawable(new ImageDrawable(Main.CREDITS_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.CREDITS_INDEX, Color.lightGray)).setClickedCommand(new HvlAction1<HvlButton>(){
+				setOnDrawable(new ImageDrawable(Main.CREDITS_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.CREDITS_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
 				playForward();
@@ -164,7 +164,7 @@ public class MenuManager {
 		}).build());
 		menu.getFirstArrangerBox().add(new HvlSpacer(0,20));
 		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.white)).
-				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.lightGray)).setClickedCommand(new HvlAction1<HvlButton>(){
+				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
 				playBack();
@@ -175,7 +175,7 @@ public class MenuManager {
 		options.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build()); //A
 		options.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setTextScale(0.16f).
 				setOffDrawable(new ImageDrawable(Main.EFFECTS_INDEX, Color.white)).
-				setOnDrawable(new ImageDrawable(Main.EFFECTS_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.EFFECTS_INDEX, Color.lightGray)).setClickedCommand(new HvlAction1<HvlButton>(){
+				setOnDrawable(new ImageDrawable(Main.EFFECTS_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.EFFECTS_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg) {
 				playForward();
@@ -184,7 +184,7 @@ public class MenuManager {
 		}).build());
 		options.getFirstArrangerBox().add(new HvlSpacer(0, 10)); //X
 		options.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setTextScale(0.16f).setOffDrawable(new ImageDrawable(Main.B_MUSIC_INDEX, Color.white)).
-				setOnDrawable(new ImageDrawable(Main.B_MUSIC_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.B_MUSIC_INDEX, Color.lightGray)).setClickedCommand(new HvlAction1<HvlButton>(){
+				setOnDrawable(new ImageDrawable(Main.B_MUSIC_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.B_MUSIC_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg) {
 				playForward();
@@ -195,7 +195,7 @@ public class MenuManager {
 		options.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		options.getChildOfType(HvlArrangerBox.class, 1).add(new HvlSpacer(0, 500));
 		options.getChildOfType(HvlArrangerBox.class, 1).add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.white)).
-				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.lightGray)).setClickedCommand(new HvlAction1<HvlButton>(){
+				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg) {
 				playBack();
@@ -207,7 +207,7 @@ public class MenuManager {
 		credits.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		credits.getFirstArrangerBox().add(new HvlSpacer(0, 500));
 		credits.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.white)).
-				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.lightGray)).setClickedCommand(new HvlAction1<HvlButton>(){
+				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg) {
 				playBack();
@@ -217,17 +217,17 @@ public class MenuManager {
 		
 		pause.add(new HvlArrangerBox.Builder().setxAlign(0.5f).build());
 		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.CONT_INDEX, Color.white)).
-				setOnDrawable(new ImageDrawable(Main.CONT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.CONT_INDEX, Color.lightGray)).setClickedCommand(new HvlButtonMenuLink(game)).build());
+				setOnDrawable(new ImageDrawable(Main.CONT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.CONT_INDEX, Color.gray)).setClickedCommand(new HvlButtonMenuLink(game)).build());
 		pause.getFirstArrangerBox().add(new HvlSpacer(0, 30));
 		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.MENU_B_INDEX, Color.white)).
-				setOnDrawable(new ImageDrawable(Main.MENU_B_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.MENU_B_INDEX, Color.lightGray)).setClickedCommand(new HvlAction1<HvlButton>(){
+				setOnDrawable(new ImageDrawable(Main.MENU_B_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.MENU_B_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
 				HvlMenu.setCurrent(menu);
 			}
 		}).build());
 		
-		pickLevel = HvlMath.randomIntBetween(0, 2);
+		pickLevel = HvlMath.randomIntBetween(0, 4);
 		
 		switch(pickLevel) {
 			case 0:
@@ -235,6 +235,12 @@ public class MenuManager {
 				break;
 			case 1:
 				currentLevel = new Skyrise();
+				break;
+			case 2:
+				currentLevel = new HomeBase();
+				break;
+			case 3:
+				currentLevel = new Overworld();
 				break;
 			default:
 				currentLevel = new Battlefield();
@@ -293,8 +299,8 @@ public class MenuManager {
 			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 1280, 720, Main.getTexture(Main.CVILLE_INDEX), new Color(1f, 1f, 1f, alpha));
 		}
 		else if(HvlMenu.getCurrent() == menu) {
-			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.MENU_BACK_INDEX));
-			hvlDrawQuadc(800, Display.getHeight()/2, 640, 360, Main.getTexture(Main.NAME_INDEX));
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
+			hvlDrawQuadc(800, Display.getHeight()/2, 640, 360, Main.getTexture(Main.NAME_INDEX), new Color(1f, 1f, 1f, 1f));
 			buttonWait-=delta;
 			if(Controllers.allA[4] == 1 && buttonWait <= 0) {
 				currentPlayer = 0;
@@ -308,11 +314,11 @@ public class MenuManager {
 			if(Controllers.allX[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(credits); buttonWait = BUTTON_WAIT_TIME;}
 		}
 		else if(HvlMenu.getCurrent() == options) {
-			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.MENU_BACK_INDEX));
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
 			buttonWait -= delta;
-			Main.font.drawWordc("Options", Display.getWidth()/2, 100, Color.black, 0.3f);
-			Main.font.drawWord((Main.options.soundEffectsEnabled ? "ON" : "OFF"), 380, 300, Color.black, 0.18f);
-			Main.font.drawWord((Main.options.backgroundMusicEnabled ? "ON" : "OFF"), 380, 390, Color.black, 0.18f);
+			Main.font.drawWordc("Options", Display.getWidth()/2, 100, currentLevel.textColor, 0.3f);
+			Main.font.drawWord((Main.options.soundEffectsEnabled ? "ON" : "OFF"), 380, 300, currentLevel.textColor, 0.18f);
+			Main.font.drawWord((Main.options.backgroundMusicEnabled ? "ON" : "OFF"), 380, 390, currentLevel.textColor, 0.18f);
 			if(Controllers.allA[4] == 1 && buttonWait <= 0) {
 				playForward();
 				Main.options.soundEffectsEnabled = !Main.options.soundEffectsEnabled;
@@ -331,9 +337,9 @@ public class MenuManager {
 			}
 		}
 		else if(HvlMenu.getCurrent() == credits) {
-			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.MENU_BACK_INDEX));
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
 			buttonWait -= delta;
-			Main.font.drawWordc("Credits", Display.getWidth()/2, 100, Color.black, 0.3f);
+			Main.font.drawWordc("Credits", Display.getWidth()/2, 100, currentLevel.textColor, 0.3f);
 			if(Controllers.allB[4] == 1 && buttonWait <= 0) {
 				playBack();
 				buttonWait = BUTTON_WAIT_TIME;
@@ -341,13 +347,13 @@ public class MenuManager {
 			}
 		}
 		else if(HvlMenu.getCurrent() == controllerInit) {
-			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.MENU_BACK_INDEX));
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
 			controllerTimer -= delta;
 			buttonWait -= delta;
 			
-			Main.font.drawWordc("Player "+ (currentPlayer != 4 ? (currentPlayer+1) : currentPlayer) +":", Display.getWidth()/2,100, Color.black, 0.3f);
-			Main.font.drawWordc("Press A on Xbox controller or W on Keyboard", Display.getWidth()/2, 150, Color.black, 0.22f);
-			Main.font.drawWordc("Press B (Xbox) or D (Keyboard) to skip", Display.getWidth()/2, 200, Color.red, 0.15f);
+			Main.font.drawWordc("Player "+ (currentPlayer != 4 ? (currentPlayer+1) : currentPlayer) +":", Display.getWidth()/2,100,currentLevel.textColor, 0.3f);
+			Main.font.drawWordc("Press A on Xbox controller or W on Keyboard", Display.getWidth()/2, 150, currentLevel.textColor, 0.22f);
+			Main.font.drawWordc("Press B (Xbox) or D (Keyboard) to skip", Display.getWidth()/2, 200, currentLevel.textColor, 0.15f);
 
 			timerBar(controllerTimer/CONTROLLER_TIME);
 			if(currentPlayer == 0 && buttonWait <= 0) {
@@ -390,7 +396,7 @@ public class MenuManager {
 			}
 
 		}else if(HvlMenu.getCurrent() == charSelect) {
-			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.MENU_BACK_INDEX));
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
 			controllerTimer -= delta;
 			buttonWait -= delta;
 			hvlDrawQuadc(256, 500, 50, 50, Main.getTexture(Main.Y_INDEX));
@@ -409,13 +415,13 @@ public class MenuManager {
 			hvlDrawQuadc(1024, 560, 50, 50, Main.getTexture(Main.D_INDEX));
 			hvlDrawQuadc(1024, Display.getHeight()/2+50, -170, 170, Main.red.standing);
 			
-			Main.font.drawWord("Player 1: ", 10, 20, Color.black, 0.2f);
+			Main.font.drawWord("Player 1: ", 10, 20, currentLevel.textColor, 0.2f);
 			hvlDrawQuad(160, -5, 75, 75, p1A.standing);
-			Main.font.drawWord("Player 2: ", 10, 85, Color.black, 0.2f);
+			Main.font.drawWord("Player 2: ", 10, 85, currentLevel.textColor, 0.2f);
 			hvlDrawQuad(160, 60, 75, 75, p2A.standing);
-			Main.font.drawWord("Player 3: ", 10, 150, Color.black, 0.2f);
+			Main.font.drawWord("Player 3: ", 10, 150, currentLevel.textColor, 0.2f);
 			hvlDrawQuad(160, 125, 75, 75, p3A.standing);
-			Main.font.drawWord("Player 4: ", 10, 215, Color.black, 0.2f);
+			Main.font.drawWord("Player 4: ", 10, 215, currentLevel.textColor, 0.2f);
 			hvlDrawQuad(160, 190, 75, 75, p4A.standing);
 			
 			timerBar(controllerTimer/CONTROLLER_TIME);
