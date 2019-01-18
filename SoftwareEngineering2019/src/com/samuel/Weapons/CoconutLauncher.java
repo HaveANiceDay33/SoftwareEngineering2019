@@ -15,7 +15,7 @@ public class CoconutLauncher extends Weapon {
 	}
 	
 	public void fire(Player owner) {
-		Projectile coco = new Coconut((owner.vx <= 0 ? this.weapX + this.sizeX - Display.getWidth()/2 : this.weapX - this.sizeX - Display.getWidth()/2), this.weapY, owner.vx <= 0 ? 200 : -200, owner);
+		Projectile coco = new Coconut((owner.vx <= 0 ? this.weapX + this.sizeX - 650 : this.weapX - this.sizeX - 650), this.weapY, owner.vx <= 0 ? 200 : -200, owner);
 		MenuManager.currentLevel.projs.add(coco);
 	}
 }

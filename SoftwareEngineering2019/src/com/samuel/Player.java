@@ -188,12 +188,11 @@ public class Player {
 			this.playerWeapon.drawOn(this.vx);
 		}
 	}
-	float ree = 0;
+	
 	public void drawPlayer(Player player) {
 		hvlDrawQuadc(player.get_x() + -this.get_x() + Game.FIXED_X, player.get_y() + -this.get_y() + Game.FIXED_Y, this.get_width(), Player.PLAYER_SIZE, this.currentAnimation);
 		if(this.playerWeapon != null) {
-			ree+=0.01;
-			this.playerWeapon.drawOther(player.get_x() + -this.get_x() + Game.FIXED_X + ree, player.get_y() + -this.get_y() + Game.FIXED_Y, this.vx);
+			this.playerWeapon.drawOther(player.get_x() + -this.get_x() + Game.FIXED_X, player.get_y() + -this.get_y() + Game.FIXED_Y, this.vx);
 		}
 	}
 	

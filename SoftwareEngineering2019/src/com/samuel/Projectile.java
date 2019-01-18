@@ -8,7 +8,7 @@ import com.osreboot.ridhvl.HvlMath;
 
 public class Projectile {
 	public Texture pro;
-	public float x, y, sizeX, sizeY, actX, actY, vx, vy;
+	public float x, y, sizeX, sizeY, actX, actY, vx, vy, xMod=0, yMod=0;
 	public Player owner;
 	public Projectile(Texture pro, float x, float y, float sizeX, float sizeY, float initVX, Player owner) {
 		this.pro = pro;
@@ -21,13 +21,17 @@ public class Projectile {
 		this.owner = owner;
 	}
 	
-	public void update(float delta, float xPlay, float yPlay) {
-		actX = this.x + xPlay + Game.FIXED_X;
-		actY = this.y + yPlay + Game.FIXED_Y;
+	public void update(float delta) {
 		this.vy += Game.GRAVITY/100 * delta;
 		this.vx = HvlMath.stepTowards(this.vx, Game.DRAG/1000*delta, 0);
-		//this.x += this.vx * delta; //positions are modified by velocities
-		//this.y += this.vy * delta;
+		this.xMod += this.vx * delta; //positions are modified by velocities
+		this.yMod += this.vy * delta;
+	}
+	
+	public void draw(float xPlay, float yPlay, float delta) {
+		this.update(delta);
+		actX = this.x + xPlay + Game.FIXED_X + xMod;
+		actY = this.y + yPlay + Game.FIXED_Y + yMod;
 		//updateElementCollisions();
 		//updateBorderCollisions(Game.BORDER_TOP, Game.BORDER_BOTTOM, Game.BORDER_LEFT, Game.BORDER_RIGHT);
 		hvlDrawQuadc(actX, actY, this.sizeX, this.sizeY, this.pro);
