@@ -108,13 +108,16 @@ public class MenuManager {
 			@Override
 			public void run(HvlInput a) {
 				if(HvlMenu.getCurrent() == pause) {
+					playBack();
 					resetGame();
 				} else if(HvlMenu.getCurrent() == credits || HvlMenu.getCurrent() == options) {
+					playBack();
 					HvlMenu.setCurrent(menu);
 				} else if(HvlMenu.getCurrent() == menu) {
+					playBack();
 					System.exit(0);
 				}
-				playBack();
+				
 			}
 		});
 		
@@ -304,6 +307,7 @@ public class MenuManager {
 				currentPlayer = 0;
 				controllerTimer = CONTROLLER_TIME;
 				buttonWait = BUTTON_WAIT_TIME;
+				playForward();
 				HvlMenu.setCurrent(controllerInit);
 			}
 			
@@ -326,22 +330,13 @@ public class MenuManager {
 				Main.options.backgroundMusicEnabled = !Main.options.backgroundMusicEnabled;
 				buttonWait = BUTTON_WAIT_TIME;
 			}
-			if(Controllers.allB[4] == 1 && buttonWait <= 0) {
-				playBack();
-				buttonWait = BUTTON_WAIT_TIME;
-				Main.saveConfig();
-				HvlMenu.setCurrent(menu);
-			}
 		}
 		else if(HvlMenu.getCurrent() == credits) {
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
-			buttonWait -= delta;
-			Main.font.drawWordc("Credits", Display.getWidth()/2, 100, currentLevel.textColor, 0.3f);
-			if(Controllers.allB[4] == 1 && buttonWait <= 0) {
-				playBack();
-				buttonWait = BUTTON_WAIT_TIME;
-				HvlMenu.setCurrent(menu);
-			}
+			Main.font.drawWordc("Samuel Munro - Programming", Display.getWidth()/2, 150, currentLevel.textColor, 0.2f);
+			Main.font.drawWordc("George Bolmida - Art and Sound Effects", Display.getWidth()/2, 250, currentLevel.textColor, 0.2f);
+			Main.font.drawWordc("Ben Matos - Music", Display.getWidth()/2, 350, currentLevel.textColor, 0.2f);
+			Main.font.drawWordc("Shane Pritchard - Visual Assets", Display.getWidth()/2, 450, currentLevel.textColor, 0.2f);
 		}
 		else if(HvlMenu.getCurrent() == controllerInit) {
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
@@ -354,29 +349,29 @@ public class MenuManager {
 
 			timerBar(controllerTimer/CONTROLLER_TIME);
 			if(currentPlayer == 0 && buttonWait <= 0) {
-				if(Controllers.allA[0] == 1) {p1index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Controllers.allA[1] == 1) {p1index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Controllers.allA[2] == 1) {p1index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Controllers.allA[3] == 1) {p1index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p1index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[0] == 1) {p1index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Controllers.allA[1] == 1) {p1index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Controllers.allA[2] == 1) {p1index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Controllers.allA[3] == 1) {p1index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p1index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
 			} else if (currentPlayer == 1 && buttonWait <= 0) {
-				if(Controllers.allA[0] == 1) {p2index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Controllers.allA[1] == 1) {p2index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Controllers.allA[2] == 1) {p2index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Controllers.allA[3] == 1) {p2index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p2index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[0] == 1) {p2index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Controllers.allA[1] == 1) {p2index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Controllers.allA[2] == 1) {p2index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Controllers.allA[3] == 1) {p2index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p2index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
 			} else if (currentPlayer == 2 && buttonWait <= 0) {
-				if(Controllers.allA[0] == 1) {p3index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Controllers.allA[1] == 1) {p3index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Controllers.allA[2] == 1) {p3index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Controllers.allA[3] == 1) {p3index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p3index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[0] == 1) {p3index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Controllers.allA[1] == 1) {p3index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Controllers.allA[2] == 1) {p3index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Controllers.allA[3] == 1) {p3index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p3index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
 			} else if (currentPlayer == 3 && buttonWait <= 0) {
-				if(Controllers.allA[0] == 1) {p4index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Controllers.allA[1] == 1) {p4index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Controllers.allA[2] == 1) {p4index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Controllers.allA[3] == 1) {p4index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
-				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p4index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME;}
+				if(Controllers.allA[0] == 1) {p4index = 0; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Controllers.allA[1] == 1) {p4index = 1; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Controllers.allA[2] == 1) {p4index = 2; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Controllers.allA[3] == 1) {p4index = 3; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
+				if(Keyboard.isKeyDown(Keyboard.KEY_W)) {p4index = 4; currentPlayer++; controllerTimer = CONTROLLER_TIME; buttonWait = BUTTON_WAIT_TIME; playForward();}
 			} else if (currentPlayer > 3) {
 				currentPlayer = 0;
 				controllerTimer = CONTROLLER_TIME;
@@ -385,9 +380,11 @@ public class MenuManager {
 			if(((Controllers.allB[p1index] == 1 && p1index < 4) || Keyboard.isKeyDown(Keyboard.KEY_D))  && buttonWait <= 0) {
 				controllerTimer = CONTROLLER_TIME;
 				buttonWait = BUTTON_WAIT_TIME;
+				playBack();
 				currentPlayer++;
 			}
 			if(controllerTimer <= 0) {
+				playBack();
 				currentPlayer++;
 				controllerTimer = CONTROLLER_TIME;
 			}
@@ -424,41 +421,41 @@ public class MenuManager {
 			timerBar(controllerTimer/CONTROLLER_TIME);
 			Main.font.drawWordc("Select your characters!", Display.getWidth()/2, 680, Color.black, 0.24f);
 			
-			if(Controllers.allX[p1index] == 1 && buttonWait <= 0) {p1A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allX[p2index] == 1 && buttonWait <= 0) {p2A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allX[p3index] == 1 && buttonWait <= 0) {p3A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allX[p4index] == 1 && buttonWait <= 0) {p4A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
-			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p1A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
-			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p2A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
-			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p3A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
-			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p4A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allX[p1index] == 1 && buttonWait <= 0) {p1A = Main.blue; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(Controllers.allX[p2index] == 1 && buttonWait <= 0) {p2A = Main.blue; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(Controllers.allX[p3index] == 1 && buttonWait <= 0) {p3A = Main.blue; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(Controllers.allX[p4index] == 1 && buttonWait <= 0) {p4A = Main.blue; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p1A = Main.blue; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p2A = Main.blue; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p3A = Main.blue; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p4A = Main.blue; buttonWait = BUTTON_WAIT_TIME; playForward();}
 			
-			if(Controllers.allY[p1index] == 1 && buttonWait <= 0) {p1A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allY[p2index] == 1 && buttonWait <= 0) {p2A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allY[p3index] == 1 && buttonWait <= 0) {p3A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allY[p4index] == 1 && buttonWait <= 0) {p4A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p1A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p2A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p3A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p4A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allY[p1index] == 1 && buttonWait <= 0) {p1A = Main.black; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(Controllers.allY[p2index] == 1 && buttonWait <= 0) {p2A = Main.black; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(Controllers.allY[p3index] == 1 && buttonWait <= 0) {p3A = Main.black; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(Controllers.allY[p4index] == 1 && buttonWait <= 0) {p4A = Main.black; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p1A = Main.black; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p2A = Main.black; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p3A = Main.black; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p4A = Main.black; buttonWait = BUTTON_WAIT_TIME; playForward();}
 			
-			if(Controllers.allB[p1index] == 1 && buttonWait <= 0) {p1A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allB[p2index] == 1 && buttonWait <= 0) {p2A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allB[p3index] == 1 && buttonWait <= 0) {p3A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allB[p4index] == 1 && buttonWait <= 0) {p4A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
-			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p1A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
-			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p2A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
-			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p3A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
-			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p4A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allB[p1index] == 1 && buttonWait <= 0) {p1A = Main.red; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(Controllers.allB[p2index] == 1 && buttonWait <= 0) {p2A = Main.red; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(Controllers.allB[p3index] == 1 && buttonWait <= 0) {p3A = Main.red; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(Controllers.allB[p4index] == 1 && buttonWait <= 0) {p4A = Main.red; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p1A = Main.red; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p2A = Main.red; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p3A = Main.red; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D)) {p4A = Main.red; buttonWait = BUTTON_WAIT_TIME; playForward();}
 			
-			if(Controllers.allA[p1index] == 1 && buttonWait <= 0) {p1A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allA[p2index] == 1 && buttonWait <= 0) {p2A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allA[p3index] == 1 && buttonWait <= 0) {p3A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allA[p4index] == 1 && buttonWait <= 0) {p4A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
-			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p1A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
-			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p2A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
-			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p3A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
-			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p4A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allA[p1index] == 1 && buttonWait <= 0) {p1A = Main.green; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(Controllers.allA[p2index] == 1 && buttonWait <= 0) {p2A = Main.green; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(Controllers.allA[p3index] == 1 && buttonWait <= 0) {p3A = Main.green; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(Controllers.allA[p4index] == 1 && buttonWait <= 0) {p4A = Main.green; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p1A = Main.green; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p2A = Main.green; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p3A = Main.green; buttonWait = BUTTON_WAIT_TIME; playForward();}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p4A = Main.green; buttonWait = BUTTON_WAIT_TIME; playForward();}
 			if(controllerTimer <= 0) {
 				Game.initGame(p1index, p2index, p3index, p4index, p1A, p2A, p3A, p4A);
 				Main.getSound(songs[currentSong]).stop();
