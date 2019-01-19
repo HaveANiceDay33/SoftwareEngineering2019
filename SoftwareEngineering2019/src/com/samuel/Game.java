@@ -13,17 +13,20 @@ import com.osreboot.ridhvl.painter.HvlRenderFrame;
 import com.osreboot.ridhvl.painter.HvlRenderFrame.FBOUnsupportedException;
 
 public class Game {
-	static final public int BACK_X = 5500; //5760
-	static final public int BACK_Y = 5500; //3240
+	static final public int BACK_X = 5500;
+	static final public int BACK_Y = 5500; 
 	static final public float GRAVITY = 7000; //Gravity value, constantly modifies y-velocity
 	static final public float DRAG = 6000;//Similar to gravity, but affects x-velocity
 	static final public int BORDER_TOP = 1670;
 	static final public int BORDER_BOTTOM = -500;
-	static final public int BORDER_RIGHT = -1920; //+1920
+	static final public int BORDER_RIGHT = -1920;
 	static final public int BORDER_LEFT = 1920;
 	static final private int BORDER_WIDTH = 6;
+	static final private float GAME_TIME = 90f;
 	static final public float FIXED_X = Display.getWidth()/2;
 	static final public float FIXED_Y = Display.getHeight()/2+100;
+	
+	public static float gameTimer = GAME_TIME;
 	
 	public static Player player1, player2, player3, player4;
 	static HvlRenderFrame p1R;
