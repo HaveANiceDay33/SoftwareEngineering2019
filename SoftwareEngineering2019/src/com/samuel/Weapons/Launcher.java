@@ -9,10 +9,10 @@ import com.samuel.Projectile;
 import com.samuel.Weapon;
 import com.samuel.Projectiles.Coconut;
 
-public class CoconutLauncher extends Weapon {
+public class Launcher extends Weapon {
 	private static int size = 128;
 	private static int launchSpeed = 200;
-	public CoconutLauncher(float x, float y) {
+	public Launcher(float x, float y) {
 		super(Main.getTexture(Main.LAUNCHER_INDEX), x, y, size, size);
 	}
 	

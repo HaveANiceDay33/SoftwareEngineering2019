@@ -1,7 +1,8 @@
 package com.samuel;
 
 import com.osreboot.ridhvl.HvlMath;
-import com.samuel.Weapons.CoconutLauncher;
+import com.samuel.Weapons.Cannon;
+import com.samuel.Weapons.Launcher;
 import com.samuel.Weapons.Slingshot;
 
 public class WeaponManager {
@@ -25,16 +26,19 @@ public class WeaponManager {
 				y = Game.FIXED_Y;
 			}
 			Weapon newWeap;
-			ranWeapon = HvlMath.randomIntBetween(0, 2);
+			ranWeapon = HvlMath.randomIntBetween(0, 3);
 			switch(ranWeapon) {
 			case 0:
-				newWeap = new CoconutLauncher(x, y);
+				newWeap = new Launcher(x, y);
 				break;
 			case 1:
 				newWeap = new Slingshot(x, y);
 				break;
+			case 2:
+				newWeap = new Cannon(x, y);
+				break;
 			default:
-				newWeap = new CoconutLauncher(x, y);
+				newWeap = new Launcher(x, y);
 				break;
 			}
 			MenuManager.currentLevel.weapons.add(newWeap);
