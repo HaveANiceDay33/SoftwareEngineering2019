@@ -21,7 +21,7 @@ public class Level {
 			textColor = Color.black;
 			menuBackground = Main.getTexture(Main.MENU_BACK_INDEX);
 		} else {
-			textColor = Color.lightGray;
+			textColor = new Color(128, 128, 128, 1f);
 			menuBackground = Main.getTexture(Main.MENU_SPACE_INDEX);
 		}
 		elements = new ArrayList<>();

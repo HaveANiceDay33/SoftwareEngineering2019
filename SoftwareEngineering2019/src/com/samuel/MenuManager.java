@@ -3,6 +3,8 @@ package com.samuel;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
+import java.util.ArrayList;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -30,7 +32,7 @@ public class MenuManager {
 	private static final float CONTROLLER_TIME = 5f;
 	private static final float BUTTON_WAIT_TIME = 0.25f;
 	
-	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, credits, pause, genre;
+	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, credits, pause, genre, singing;
 	private static float whiteFade = 0;
 	
 	static boolean playedIntroSound = false;
@@ -137,6 +139,7 @@ public class MenuManager {
 		credits = new HvlMenu();
 		pause = new HvlMenu();
 		genre = new HvlMenu();
+		singing = new HvlMenu();
 		
 		menu.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.START_INDEX, Color.white)).
@@ -466,7 +469,8 @@ public class MenuManager {
 				chosenGenre = genres[gen];
 				HvlMenu.setCurrent(genre);
 			}
-		}else if (HvlMenu.getCurrent() == genre){
+		}
+		else if (HvlMenu.getCurrent() == genre){
 			genreTimer -= delta;
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
 			Main.font.drawWordc("Your Genre is:", Display.getWidth()/2, 100, currentLevel.textColor, 0.8f);
@@ -482,6 +486,32 @@ public class MenuManager {
 		else if(HvlMenu.getCurrent() == game) {
 			Game.updateGame(delta);
 		}
+		else if(HvlMenu.getCurrent() == singing) {
+			hvlDrawQuad((currentLevel.background == Main.level2 ? 0 : -64), (currentLevel.background == Main.level2 ? 0 : -350), (currentLevel.background == Main.level2 ? Display.getWidth() : Display.getWidth() + 128), (currentLevel.background == Main.level2 ? Display.getHeight() : Display.getWidth()+128), currentLevel.background);
+			for(int i = 0; i < 4; i++) {
+				if(i == 0) {
+					hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player1.animations.standing);
+					hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
+					sing(Game.player1.playerWords);
+				}
+				if(i == 1) {
+					hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player2.animations.standing);
+					hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
+					sing(Game.player2.playerWords);
+				}
+				if(i == 2) {
+					hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player3.animations.standing);
+					hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
+					sing(Game.player3.playerWords);
+				}
+				if(i == 3) {
+					hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player4.animations.standing);
+					hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
+					sing(Game.player4.playerWords);
+				}
+			}
+		}
+		
 		
 		if(HvlMenu.getCurrent() == menu || HvlMenu.getCurrent() == controllerInit || HvlMenu.getCurrent() == charSelect || HvlMenu.getCurrent() == game || HvlMenu.getCurrent() == genre) {
 			if(Main.options.backgroundMusicEnabled && playedMenuMusic == false) {
@@ -495,6 +525,10 @@ public class MenuManager {
 		}
 		
 		HvlMenu.updateMenus(delta);
+	}
+	
+	public static void sing(ArrayList<Word> words) {
+		
 	}
 	
 	public static void resetGame() {
@@ -522,6 +556,7 @@ public class MenuManager {
 				currentLevel = new Battlefield();
 				break;
 		}
+		currentLevel = new Overworld();
 		genreTimer = 3f;
 		HvlMenu.setCurrent(menu);
 	}

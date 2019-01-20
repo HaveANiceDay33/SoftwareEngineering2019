@@ -24,7 +24,7 @@ public class Word{
 		if(MenuManager.currentLevel.background == Main.level1) {
 			Main.font.drawWordc(this.text, actX, actY, Color.black, 0.4f);
 		} else if (MenuManager.currentLevel.background == Main.level2) {
-			Main.font.drawWordc(this.text, actX, actY, Color.white, 0.4f);
+			Main.font.drawWordc(this.text, actX, actY, new Color(128, 128, 128, 1f), 0.4f);
 		}
 		
 	}

@@ -9,6 +9,7 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.action.HvlAction0;
+import com.osreboot.ridhvl.menu.HvlMenu;
 import com.osreboot.ridhvl.painter.HvlRenderFrame;
 import com.osreboot.ridhvl.painter.HvlRenderFrame.FBOUnsupportedException;
 
@@ -22,7 +23,7 @@ public class Game {
 	static final public int BORDER_RIGHT = -1920;
 	static final public int BORDER_LEFT = 1920;
 	static final private int BORDER_WIDTH = 6;
-	static final private float GAME_TIME = 90f;
+	static final private float GAME_TIME = 5f;
 	static final public float FIXED_X = Display.getWidth()/2;
 	static final public float FIXED_Y = Display.getHeight()/2+100;
 	
@@ -53,6 +54,7 @@ public class Game {
 		if(player.playerWeapon != null) {
 			Main.font.drawWord("Ammo: "+player.playerWeapon.ammo, 20, 100, MenuManager.currentLevel.textColor, 0.3f);
 		}
+		Main.font.drawWordc("Time: "+ String.format("%.1f" ,gameTimer), Display.getWidth()/2, Display.getHeight()-50, MenuManager.currentLevel.textColor, 0.35f);
 	}
 
 	public static void initGame(int p1, int p2, int p3 ,int p4, 
@@ -72,11 +74,17 @@ public class Game {
 		}catch (FBOUnsupportedException e){
 			throw new RuntimeException("Your PC does not have Frame Buffer Support, do you live in the 80's?");
 		}
+		
+		gameTimer = GAME_TIME;
 	}
 	
 	public static void updateGame(float delta) {
 		WordManager.updateWords(delta);
 		WeaponManager.updateWeapons(delta);
+		gameTimer -= delta;
+		if(gameTimer <= 0) {
+			HvlMenu.setCurrent(MenuManager.singing);
+		}
 		p1R.doCapture(new HvlAction0() { //player 1 
 			@Override
 			public void run() {
