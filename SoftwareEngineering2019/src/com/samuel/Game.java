@@ -23,7 +23,7 @@ public class Game {
 	static final public int BORDER_RIGHT = -1920;
 	static final public int BORDER_LEFT = 1920;
 	static final private int BORDER_WIDTH = 6;
-	static final private float GAME_TIME = 5f;
+	static final private float GAME_TIME = 90f;
 	static final public float FIXED_X = Display.getWidth()/2;
 	static final public float FIXED_Y = Display.getHeight()/2+100;
 	

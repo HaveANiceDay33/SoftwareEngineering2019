@@ -15,7 +15,7 @@ public class Cannon extends Weapon {
 	private static int size = 50;
 	private static int launchSpeed = 250;
 	public Cannon(float x, float y) {
-		super(Main.getTexture(Main.SLING_INDEX), x, y, size*3, size);
+		super(Main.getTexture(Main.CANNON_INDEX), x, y, size*3, size);
 	}
 	
 	public void fire(Player owner) {

@@ -7,14 +7,14 @@ import com.samuel.Weapons.Slingshot;
 
 public class WeaponManager {
 	
-	private static final float WEAP_TIME = 20f;
+	private static final float WEAP_TIME = 10f;
 	
 	public static float weaponTimer;
 	public static int ranWeapon;
 	
 	public static void updateWeapons(float delta) {
 		weaponTimer -= delta;
-		if(weaponTimer <= 0) {
+		if(weaponTimer <= 0 && MenuManager.currentLevel.weapons.size() < 3) {
 			float x, y;
 			WorldElement spawnOn = MenuManager.currentLevel.elements.get(HvlMath.randomIntBetween(0, MenuManager.currentLevel.elements.size()));
 			if(spawnOn instanceof Platform && !spawnOn.wordOn && !spawnOn.weaponOn) {

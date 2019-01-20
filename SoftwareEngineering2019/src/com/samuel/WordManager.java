@@ -9,7 +9,7 @@ import com.osreboot.ridhvl.HvlMath;
 
 public class WordManager {
 	
-	private static final float WORD_TIME = 2f;
+	private static final float WORD_TIME = 3f;
 	
 	public static ArrayList<String> nouns = new ArrayList<>();
 	public static ArrayList<String> verbs = new ArrayList<>();

@@ -149,8 +149,8 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("spacebackM");
 		getTextureLoader().loadResource("SpaceCrate");
 		getTextureLoader().loadResource("MIC");
-		getTextureLoader().loadResource("cheese");
 		getTextureLoader().loadResource("cannon");
+		getTextureLoader().loadResource("cheese");
 		
 		getSoundLoader().loadResource("gears");//0
 		getSoundLoader().loadResource("forward");//1
