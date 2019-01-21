@@ -27,6 +27,8 @@ import com.osreboot.ridhvl.menu.component.collection.HvlLabeledButton;
 import com.osreboot.ridhvl.painter.HvlRenderFrame;
 import com.samuel.LevelProfiles.Battlefield;
 import com.samuel.LevelProfiles.HomeBase;
+import com.samuel.LevelProfiles.MoonRise;
+import com.samuel.LevelProfiles.Omega;
 import com.samuel.LevelProfiles.Overworld;
 import com.samuel.LevelProfiles.Skyrise;
 
@@ -252,6 +254,12 @@ public class MenuManager {
 				break;
 			case 3:
 				currentLevel = new Skyrise();
+				break;
+			case 4:
+				currentLevel = new MoonRise();
+				break;
+			case 5:
+				currentLevel = new Omega();
 				break;
 			default:
 				currentLevel = new Overworld();
@@ -600,11 +608,9 @@ public class MenuManager {
 		}
 		
 		for(int j = 0; j < newWords.length; j++) {
-			System.out.println(newWords[j]);
 			newSong += newWords[j];
 		}
-		TTSReader.read(newSong);
-		
+		TTSReader.read(newSong);	
 	}
 	
 	public static void resetGame() {
@@ -613,7 +619,7 @@ public class MenuManager {
 		currentLevel.weapons.clear();
 		currentLevel.words.clear();
 		WordManager.initWords();
-		pickLevel = HvlMath.randomIntBetween(0, 4);
+		pickLevel = HvlMath.randomIntBetween(0, 6);
 		p1index = 3;
 		p2index = 3;
 		p3index = 3; 
@@ -630,6 +636,12 @@ public class MenuManager {
 				break;
 			case 3:
 				currentLevel = new Skyrise();
+				break;
+			case 4:
+				currentLevel = new MoonRise();
+				break;
+			case 5:
+				currentLevel = new Omega();
 				break;
 			default:
 				currentLevel = new Overworld();

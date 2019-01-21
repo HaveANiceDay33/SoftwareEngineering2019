@@ -5,7 +5,7 @@ import com.samuel.MenuManager;
 import com.samuel.Player;
 import com.samuel.Projectile;
 import com.samuel.Weapon;
-import com.samuel.Projectiles.Cantelope;
+import com.samuel.Projectiles.Watermelon;
 
 public class Trumpet extends Weapon{
 	private static int size = 150;
@@ -22,7 +22,7 @@ public class Trumpet extends Weapon{
 			Main.getSound(Main.GUMMY_SHOT_INDEX).playAsSoundEffect(1, 1, false);
 		}
 		*/
-		Projectile cant = new Cantelope((owner.vx <= 0 ? -(owner.x - this.sizeX) : -(owner.x + this.sizeX)), this.weapY, owner.vx <= 0 ? launchSpeedX - owner.vx/10 : -launchSpeedX - owner.vx/10, launchSpeedY, owner, rotRate);
+		Projectile cant = new Watermelon((owner.vx <= 0 ? -(owner.x - this.sizeX) : -(owner.x + this.sizeX)), this.weapY, owner.vx <= 0 ? launchSpeedX - owner.vx/10 : -launchSpeedX - owner.vx/10, launchSpeedY, owner, rotRate);
 		MenuManager.currentLevel.projs.add(cant);
 	}
 }

@@ -81,7 +81,7 @@ public class Main extends HvlTemplateInteg2D{
 	BLASTER_INDEX = 49,
 	GUMMY_INDEX = 50,
 	TRUM_INDEX = 51,
-	CANT_INDEX = 52;
+	WAT_INDEX = 52;
 	
 	public static final int NUM_SOUNDS = 14;
 	
