@@ -242,19 +242,19 @@ public class MenuManager {
 		
 		switch(pickLevel) {
 			case 0:
-				currentLevel = new Battlefield();
-				break;
-			case 1:
-				currentLevel = new Skyrise();
-				break;
-			case 2:
 				currentLevel = new HomeBase();
 				break;
-			case 3:
+			case 1:
 				currentLevel = new Overworld();
 				break;
-			default:
+			case 2:
 				currentLevel = new Battlefield();
+				break;
+			case 3:
+				currentLevel = new Skyrise();
+				break;
+			default:
+				currentLevel = new Overworld();
 				break;
 		}
 		
@@ -614,25 +614,27 @@ public class MenuManager {
 		currentLevel.words.clear();
 		WordManager.initWords();
 		pickLevel = HvlMath.randomIntBetween(0, 4);
-		
+		p1index = 3;
+		p2index = 3;
+		p3index = 3; 
+		p4index = 3;
 		switch(pickLevel) {
 			case 0:
-				currentLevel = new Battlefield();
-				break;
-			case 1:
-				currentLevel = new Skyrise();
-				break;
-			case 2:
 				currentLevel = new HomeBase();
 				break;
-			case 3:
+			case 1:
 				currentLevel = new Overworld();
 				break;
-			default:
+			case 2:
 				currentLevel = new Battlefield();
 				break;
+			case 3:
+				currentLevel = new Skyrise();
+				break;
+			default:
+				currentLevel = new Overworld();
+				break;
 		}
-		currentLevel = new Overworld();
 		genreTimer = 3f;
 		HvlMenu.setCurrent(menu);
 	}

@@ -130,9 +130,10 @@ public class Player {
 			distanceFrom = HvlMath.distance(Game.FIXED_X, Game.FIXED_Y, closest.actX, closest.actY);
 			if(closest.owner != this && distanceFrom < PLAYER_SIZE/1.5 && closest.vx != 0 && closest.vy > 0) {
 				this.vy = 1500;
-				Main.getSound(Main.HIT_SOUND_INDEX).playAsSoundEffect(1, 1, false);
+				
 				if(this.playerWords.size() > 0) {
 					this.playerWords.remove(0);
+					Main.getSound(Main.HIT_SOUND_INDEX).playAsSoundEffect(1, 1, false);
 					closest.remove();
 				}
 			}
