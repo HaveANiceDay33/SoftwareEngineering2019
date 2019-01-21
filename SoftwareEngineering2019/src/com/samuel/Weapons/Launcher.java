@@ -11,7 +11,9 @@ import com.samuel.Projectiles.Coconut;
 
 public class Launcher extends Weapon {
 	private static int size = 128;
-	private static int launchSpeed = 200;
+	private static int launchSpeedX = 200;
+	private static int launchSpeedY = -100;
+	private static int rotRate = 5;
 	public Launcher(float x, float y) {
 		super(Main.getTexture(Main.LAUNCHER_INDEX), x, y, size, size);
 	}
@@ -21,7 +23,7 @@ public class Launcher extends Weapon {
 			Main.getSound(Main.COCONUT_LAUNCH_INDEX).playAsSoundEffect(1, 1, false);
 		}
 		
-		Projectile coco = new Coconut((owner.vx <= 0 ? -(owner.x - this.sizeX) : -(owner.x + this.sizeX)), this.weapY, owner.vx <= 0 ? launchSpeed - owner.vx/10 : -launchSpeed - owner.vx/10, owner);
+		Projectile coco = new Coconut((owner.vx <= 0 ? -(owner.x - this.sizeX) : -(owner.x + this.sizeX)), this.weapY, owner.vx <= 0 ? launchSpeedX - owner.vx/10 : -launchSpeedX - owner.vx/10, launchSpeedY, owner, rotRate);
 		MenuManager.currentLevel.projs.add(coco);
 	}
 }

@@ -1,8 +1,10 @@
 package com.samuel;
 
 import com.osreboot.ridhvl.HvlMath;
+import com.samuel.Weapons.Blaster;
 import com.samuel.Weapons.Cannon;
 import com.samuel.Weapons.Launcher;
+import com.samuel.Weapons.Rifle;
 import com.samuel.Weapons.Slingshot;
 
 public class WeaponManager {
@@ -26,7 +28,7 @@ public class WeaponManager {
 				y = Game.FIXED_Y;
 			}
 			Weapon newWeap;
-			ranWeapon = HvlMath.randomIntBetween(0, 3);
+			ranWeapon = HvlMath.randomIntBetween(0, 5);
 			switch(ranWeapon) {
 			case 0:
 				newWeap = new Launcher(x, y);
@@ -36,6 +38,12 @@ public class WeaponManager {
 				break;
 			case 2:
 				newWeap = new Cannon(x, y);
+				break;
+			case 3:
+				newWeap = new Rifle(x, y);
+				break;
+			case 4:
+				newWeap = new Blaster(x, y);
 				break;
 			default:
 				newWeap = new Launcher(x, y);

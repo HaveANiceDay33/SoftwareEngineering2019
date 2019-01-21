@@ -12,18 +12,19 @@ import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
 
 public class Projectile {
 	public Texture pro;
-	public float x, y, sizeX, sizeY, actX, actY, vx, vy, xMod=0, yMod=0, rot = 0, rotSpeed = 3;
+	public float x, y, sizeX, sizeY, actX, actY, vx, vy, xMod=0, yMod=0, rot = 0, rotSpeed;
 	public Player owner;
 	public float drag = Game.DRAG/1000;
-	public Projectile(Texture pro, float x, float y, float sizeX, float sizeY, float initVX, Player owner) {
+	public Projectile(Texture pro, float x, float y, float sizeX, float sizeY, float initVX, float initVY, Player owner, float rotSpeed) {
 		this.pro = pro;
 		this.x = x;
 		this.y = y;
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		this.vx = initVX;
+		this.vy = initVY;
 		this.owner = owner;
-		this.vy = -100;
+		this.rotSpeed = rotSpeed;
 	}
 	
 	public void update(float delta) {
@@ -31,7 +32,7 @@ public class Projectile {
 		this.vx = HvlMath.stepTowards(this.vx, this.drag*delta, 0);
 		this.xMod += this.vx * delta; //positions are modified by velocities
 		this.yMod += this.vy * delta;
-		this.rot += rotSpeed;
+		this.rot += this.rotSpeed;
 	}
 	
 	public void draw(float xPlay, float yPlay, float delta) {

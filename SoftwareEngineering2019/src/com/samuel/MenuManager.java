@@ -40,7 +40,7 @@ public class MenuManager {
 	public static Level currentLevel;
 	static int pickLevel;
 	
-	static String[] genres = {"Funk", "Jazz"};
+	static String[] genres = {"Funk", "Jazz", "Metal"};
 	static String chosenGenre;
 	
 	public static HvlRenderFrame pauseFrame;

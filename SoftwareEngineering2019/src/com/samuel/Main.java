@@ -26,7 +26,7 @@ public class Main extends HvlTemplateInteg2D{
 		super(144, 1280, 720, "Message Melee", "Icon32", new HvlDisplayModeDefault());
 	}
 	
-	public static final int NUM_TEXTURES = 47;
+	public static final int NUM_TEXTURES = 51;
 
 	public static final int
 	LEVEL_ONE_INDEX = 0,
@@ -75,9 +75,13 @@ public class Main extends HvlTemplateInteg2D{
 	SPACE_CRATE_INDEX = 43,
 	MIC_INDEX = 44,
 	CANNON_INDEX = 45,
-	CHEESE_INDEX = 46;
+	CHEESE_INDEX = 46,
+	RIFLE_INDEX = 47,
+	CARROT_INDEX = 48,
+	BLASTER_INDEX = 49,
+	GUMMY_INDEX = 50;
 	
-	public static final int NUM_SOUNDS = 7;
+	public static final int NUM_SOUNDS = 10;
 	
 	public static final int
 	GEAR_RUN_INDEX = 0,
@@ -86,7 +90,10 @@ public class Main extends HvlTemplateInteg2D{
 	MENU_SONG_INDEX = 3,
 	MENU_SONG_2_INDEX = 4,
 	COCONUT_LAUNCH_INDEX = 5,
-	MENU_SONG_3_INDEX = 6;
+	MENU_SONG_3_INDEX = 6,
+	FUNKY_INDEX = 7,
+	JAZZ_INDEX = 8,
+	METAL_INDEX = 9;
 	
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 	
@@ -151,14 +158,21 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("MIC");
 		getTextureLoader().loadResource("cannon");
 		getTextureLoader().loadResource("cheese");
+		getTextureLoader().loadResource("rifle");
+		getTextureLoader().loadResource("carrot");
+		getTextureLoader().loadResource("blaster");
+		getTextureLoader().loadResource("gummy");
 		
-		getSoundLoader().loadResource("gears");//0
-		getSoundLoader().loadResource("forward");//1
-		getSoundLoader().loadResource("back");//2
-		getSoundLoader().loadResource("Song2");//3
-		getSoundLoader().loadResource("Song3");//4
-		getSoundLoader().loadResource("coconutLaunch");//5
-		getSoundLoader().loadResource("Song1");//6
+		getSoundLoader().loadResource("gears");
+		getSoundLoader().loadResource("forward");
+		getSoundLoader().loadResource("back");
+		getSoundLoader().loadResource("Song2");
+		getSoundLoader().loadResource("Song3");
+		getSoundLoader().loadResource("coconutLaunch");
+		getSoundLoader().loadResource("Song1");
+		getSoundLoader().loadResource("funkyBeat");
+		getSoundLoader().loadResource("jazzBeat");
+		getSoundLoader().loadResource("metalBeat");
 		
 		if(getTextureLoader().getResources().size() != NUM_TEXTURES)
 			throw new RuntimeException("Textures and/or sounds not loaded, try running the application in the same directory as the 'res' folder.");

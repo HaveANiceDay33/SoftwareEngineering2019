@@ -13,7 +13,9 @@ import com.samuel.Projectiles.Pinapple;
 
 public class Cannon extends Weapon {
 	private static int size = 50;
-	private static int launchSpeed = 250;
+	private static int launchSpeedX = 250;
+	private static int launchSpeedY = -100;
+	private static int rotRate = 3;
 	public Cannon(float x, float y) {
 		super(Main.getTexture(Main.CANNON_INDEX), x, y, size*3, size);
 	}
@@ -24,7 +26,7 @@ public class Cannon extends Weapon {
 			Main.getSound(Main.COCONUT_LAUNCH_INDEX).playAsSoundEffect(1, 1, false);
 		}
 		*/
-		MoonCheese cheese = new MoonCheese((owner.vx <= 0 ? -(owner.x - this.sizeX) : -(owner.x + this.sizeX)), this.weapY, owner.vx <= 0 ? launchSpeed - owner.vx/10 : -launchSpeed - owner.vx/10, owner);
+		MoonCheese cheese = new MoonCheese((owner.vx <= 0 ? -(owner.x - this.sizeX) : -(owner.x + this.sizeX)), this.weapY, owner.vx <= 0 ? launchSpeedX - owner.vx/10 : -launchSpeedX - owner.vx/10, launchSpeedY, owner, rotRate);
 		MenuManager.currentLevel.projs.add(cheese);
 	}
 }
