@@ -15,8 +15,6 @@ public class WordManager {
 	public static ArrayList<String> verbs = new ArrayList<>();
 	public static ArrayList<String> adjs = new ArrayList<>();
 	public static ArrayList<String> adverbs = new ArrayList<>();
-	public static ArrayList<String> conjs = new ArrayList<>();
-	public static ArrayList<String> preps = new ArrayList<>();
 	
 	public static float wordTimer;
 	
@@ -36,8 +34,10 @@ public class WordManager {
 	}
 	
 	public static void initWords() {
-		saveTextData("res/nouns.txt", nouns);
-		saveTextData("res/verbs.txt", verbs);
+		saveTextData("wordLists/nouns.txt", nouns);
+		saveTextData("wordLists/verbs.txt", verbs);
+		saveTextData("wordLists/adjectives.txt", adjs);
+		saveTextData("wordLists/adverbs.txt", adverbs);
 		wordTimer = 0;
 		MenuManager.currentLevel.words.add(new Word(0, Game.FIXED_X, Game.FIXED_Y + 10000));
 	}
@@ -55,7 +55,7 @@ public class WordManager {
 				x = HvlMath.randomIntBetween(Game.BORDER_RIGHT, Game.BORDER_LEFT);
 				y = Game.FIXED_Y;
 			}
-			Word newWord = new Word(HvlMath.randomIntBetween(0, 1), x, y);
+			Word newWord = new Word(HvlMath.randomIntBetween(0, 4), x, y);
 			MenuManager.currentLevel.words.add(newWord);
 			wordTimer = WORD_TIME;
 		}

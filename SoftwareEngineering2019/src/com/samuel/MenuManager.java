@@ -269,6 +269,7 @@ public class MenuManager {
 	public static int currentPlayer = 0;
 	public static int[] songs = {Main.MENU_SONG_INDEX, Main.MENU_SONG_2_INDEX, Main.MENU_SONG_3_INDEX};
 	public static int currentSong = HvlMath.randomIntBetween(0, 2);
+	public static boolean beatPlayed = false;
 	
 	public static void update(float delta){
 		

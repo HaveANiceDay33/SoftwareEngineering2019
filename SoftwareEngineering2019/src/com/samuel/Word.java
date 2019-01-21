@@ -14,6 +14,15 @@ public class Word{
 			case 0:
 				this.text = WordManager.nouns.get(HvlMath.randomIntBetween(0, WordManager.nouns.size()));
 				break;
+			case 1:
+				this.text = WordManager.verbs.get(HvlMath.randomIntBetween(0, WordManager.verbs.size()));
+				break;
+			case 2:
+				this.text = WordManager.adjs.get(HvlMath.randomIntBetween(0, WordManager.adjs.size()));
+				break;
+			case 3:
+				this.text = WordManager.adverbs.get(HvlMath.randomIntBetween(0, WordManager.adverbs.size()));
+				break;
 			default:
 				this.text = "NO";
 		}
