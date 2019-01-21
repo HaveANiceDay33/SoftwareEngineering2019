@@ -6,11 +6,13 @@ import com.osreboot.ridhvl.HvlMath;
 
 public class Word{
 	public String text;
+	public int type;
 	public float x, y, actX, actY;
 	public Word(int type, float x, float y) {
 		this.x = x;
 		this.y = y;
-		switch(type) {
+		this.type = type;
+		switch(this.type) {
 			case 0:
 				this.text = WordManager.nouns.get(HvlMath.randomIntBetween(0, WordManager.nouns.size()));
 				break;

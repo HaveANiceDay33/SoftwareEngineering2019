@@ -3,7 +3,10 @@ package com.samuel;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -268,8 +271,10 @@ public class MenuManager {
 	public static AnimatedTextureGroup p1A = Main.blue, p2A = Main.blue, p3A = Main.blue, p4A = Main.blue; //default character
 	public static int currentPlayer = 0;
 	public static int[] songs = {Main.MENU_SONG_INDEX, Main.MENU_SONG_2_INDEX, Main.MENU_SONG_3_INDEX};
+	public static String[] lyrics = {"lyricSheets/lyrics1.txt"};
 	public static int currentSong = HvlMath.randomIntBetween(0, 2);
 	public static boolean beatPlayed = false;
+	public static int singingPlayer = 0;
 	
 	public static void update(float delta){
 		
@@ -488,29 +493,31 @@ public class MenuManager {
 			Game.updateGame(delta);
 		}
 		else if(HvlMenu.getCurrent() == singing) {
-			hvlDrawQuad((currentLevel.background == Main.level2 ? 0 : -64), (currentLevel.background == Main.level2 ? 0 : -350), (currentLevel.background == Main.level2 ? Display.getWidth() : Display.getWidth() + 128), (currentLevel.background == Main.level2 ? Display.getHeight() : Display.getWidth()+128), currentLevel.background);
-			for(int i = 0; i < 4; i++) {
-				if(i == 0) {
-					hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player1.animations.standing);
-					hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
-					sing(Game.player1.playerWords);
-				}
-				if(i == 1) {
-					hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player2.animations.standing);
-					hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
-					sing(Game.player2.playerWords);
-				}
-				if(i == 2) {
-					hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player3.animations.standing);
-					hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
-					sing(Game.player3.playerWords);
-				}
-				if(i == 3) {
-					hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player4.animations.standing);
-					hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
-					sing(Game.player4.playerWords);
-				}
+			hvlDrawQuad((currentLevel.background == Main.level2 ? 0 : -64), (currentLevel.background == Main.level2 ? 0 : -350), (currentLevel.background == Main.level2 ? Display.getWidth() : Display.getWidth() + 128),
+					(currentLevel.background == Main.level2 ? Display.getHeight() : Display.getWidth()+128), currentLevel.background);
+			if(singingPlayer == 0) {
+				hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player1.animations.standing);
+				hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
+				sing(Game.player1.playerWords, lyrics[HvlMath.randomIntBetween(0, lyrics.length)]);
+				singingPlayer++;
 			}
+			/*
+			if(i == 1) {
+				hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player2.animations.standing);
+				hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
+				//sing(Game.player2.playerWords);
+			}
+			if(i == 2) {
+				hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player3.animations.standing);
+				hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
+				//sing(Game.player3.playerWords);
+			}
+			if(i == 3) {
+				hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player4.animations.standing);
+				hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
+				//sing(Game.player4.playerWords);
+			}
+			*/
 		}
 		
 		
@@ -527,8 +534,76 @@ public class MenuManager {
 		
 		HvlMenu.updateMenus(delta);
 	}
-	
-	public static void sing(ArrayList<Word> words) {
+
+	public static void sing(ArrayList<Word> words, String lyrics) {
+		if(Main.getSound(Main.JAZZ_INDEX).isPlaying()) {Main.getSound(Main.JAZZ_INDEX).stop();}
+		if(Main.getSound(Main.METAL_INDEX).isPlaying()) {Main.getSound(Main.METAL_INDEX).stop();}
+		if(Main.getSound(Main.FUNKY_INDEX).isPlaying()) {Main.getSound(Main.FUNKY_INDEX).stop();}
+		if(chosenGenre.equals("Jazz")) {
+			Main.getSound(Main.JAZZ_INDEX).playAsSoundEffect(1, 1, false);
+		} else if(chosenGenre.equals("Funk")) { 
+			Main.getSound(Main.FUNKY_INDEX).playAsSoundEffect(1, 1, false);
+		}else if(chosenGenre.equals("Metal")) { 
+			Main.getSound(Main.METAL_INDEX).playAsSoundEffect(1, 1, false);
+		}
+		Scanner lyricReader;
+		String song;
+		String newSong = "";
+		int countDown = 1;
+		try {
+			lyricReader = new Scanner(new FileInputStream(lyrics));
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException("Lyric Sheet not found!");
+		}
+		song = lyricReader.nextLine();
+		String [] lyricWords = song.split(" ");
+		String [] newWords = new String[lyricWords.length];
+		ArrayList<String> nouns = new ArrayList<>();
+		ArrayList<String> verbs = new ArrayList<>();
+		ArrayList<String> adjs = new ArrayList<>();
+		ArrayList<String> advs = new ArrayList<>();
+		
+		for(int i = 0; i < words.size(); i++) {
+			String word = words.get(i).text;
+			switch(words.get(i).type) {
+				case 0:
+					nouns.add(word);
+					break;
+				case 1:
+					verbs.add(word);
+					break;
+				case 2:
+					adjs.add(word);
+					break;
+				case 3:
+					advs.add(word);
+					break;
+			}
+		}
+		
+		for(int k = 0; k < lyricWords.length; k++) {
+			if(lyricWords[k].equals("n") && nouns.size() > 0) {
+				newWords[k] = nouns.get(nouns.size()-1);
+				nouns.remove(nouns.size()-1);
+			} else if(lyricWords[k].equals("v") && verbs.size() > 0) {
+				newWords[k] = verbs.get(verbs.size()-1);
+				verbs.remove(verbs.size()-1);
+			}else if(lyricWords[k].equals("adj") && adjs.size() > 0) {
+				newWords[k] = adjs.get(adjs.size()-1);
+				adjs.remove(adjs.size()-1);
+			}else if(lyricWords[k].equals("adv") && advs.size() > 0) {
+				newWords[k] = advs.get(advs.size()-1);
+				advs.remove(advs.size()-1);
+			}else {
+				newWords[k] = lyricWords[k];
+			}
+		}
+		
+		for(int j = 0; j < newWords.length; j++) {
+			System.out.println(newWords[j]);
+			newSong += newWords[j];
+		}
+		TTSReader.read(newSong);
 		
 	}
 	
