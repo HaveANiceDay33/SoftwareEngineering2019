@@ -6,6 +6,7 @@ import com.samuel.Weapons.Cannon;
 import com.samuel.Weapons.Launcher;
 import com.samuel.Weapons.Rifle;
 import com.samuel.Weapons.Slingshot;
+import com.samuel.Weapons.Trumpet;
 
 public class WeaponManager {
 	
@@ -28,7 +29,7 @@ public class WeaponManager {
 				y = Game.FIXED_Y;
 			}
 			Weapon newWeap;
-			ranWeapon = HvlMath.randomIntBetween(0, 5);
+			ranWeapon = HvlMath.randomIntBetween(0, 6);
 			switch(ranWeapon) {
 			case 0:
 				newWeap = new Launcher(x, y);
@@ -44,6 +45,9 @@ public class WeaponManager {
 				break;
 			case 4:
 				newWeap = new Blaster(x, y);
+				break;
+			case 5:
+				newWeap = new Trumpet(x, y);
 				break;
 			default:
 				newWeap = new Launcher(x, y);

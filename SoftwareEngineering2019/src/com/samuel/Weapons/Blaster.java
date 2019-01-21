@@ -18,11 +18,11 @@ public class Blaster extends Weapon{
 	}
 	
 	public void fire(Player owner) {
-		/*
+		
 		if(Main.options.soundEffectsEnabled) {
-			Main.getSound(Main.COCONUT_LAUNCH_INDEX).playAsSoundEffect(1, 1, false);
+			Main.getSound(Main.GUMMY_SHOT_INDEX).playAsSoundEffect(1, 1, false);
 		}
-		*/
+		
 		Projectile gummy = new GummyBear((owner.vx <= 0 ? -(owner.x - this.sizeX) : -(owner.x + this.sizeX)), this.weapY, owner.vx <= 0 ? launchSpeedX - owner.vx/10 : -launchSpeedX - owner.vx/10, launchSpeedY, owner, rotRate);
 		MenuManager.currentLevel.projs.add(gummy);
 	}
