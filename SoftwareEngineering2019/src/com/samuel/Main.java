@@ -44,14 +44,14 @@ public class Main extends HvlTemplateInteg2D{
 	D_INDEX = 12,
 	S_INDEX = 13,
 	W_INDEX = 14,
-	BLACK_RUNNING_INDEX = 15,
-	BLACK_STILL_INDEX = 16,
+	YELLOW_RUNNING_INDEX = 15,
+	YELLOW_STILL_INDEX = 16,
 	RED_RUNNING_INDEX = 17,
 	RED_STILL_INDEX = 18,
 	GREEN_RUNNING_INDEX = 19,
 	GREEN_STILL_INDEX = 20,
 	BLUE_JUMP_INDEX = 21,
-	BLACK_JUMP_INDEX = 22,
+	YELLOW_JUMP_INDEX = 22,
 	RED_JUMP_INDEX = 23,
 	GREEN_JUMP_INDEX = 24,
 	MENU_BACK_INDEX = 25,
@@ -107,10 +107,10 @@ public class Main extends HvlTemplateInteg2D{
 	public static Options options;
 	
 	static HvlFontPainter2D font;
-	public static HvlAnimatedTextureUV loadingAnimation, blueRunning, blueStanding, blueJumping, blackRunning, 
-	blackStanding, blackJumping, redRunning, redStanding, redJumping, greenRunning, greenStanding, greenJumping,
+	public static HvlAnimatedTextureUV loadingAnimation, blueRunning, blueStanding, blueJumping, yellowRunning, 
+	yellowStanding, yellowJumping, redRunning, redStanding, redJumping, greenRunning, greenStanding, greenJumping,
 	level1, level2;
-	public static AnimatedTextureGroup blue, black, red, green;
+	public static AnimatedTextureGroup blue, yellow, red, green;
 	
 	public static void saveConfig(){
 		HvlConfig.saveToFile(options, PATH_SETTINGS);
@@ -205,10 +205,10 @@ public class Main extends HvlTemplateInteg2D{
 		blueJumping = new HvlAnimatedTextureUV(getTexture(BLUE_JUMP_INDEX), 512, 26, 0.1f);
 		blue = new AnimatedTextureGroup(blueStanding, blueRunning, blueJumping);
 		
-		blackStanding = new HvlAnimatedTextureUV(getTexture(BLACK_STILL_INDEX), 512, 26, 0.1f);
-		blackRunning = new HvlAnimatedTextureUV(getTexture(BLACK_RUNNING_INDEX), 512, 26, 0.1f);
-		blackJumping = new HvlAnimatedTextureUV(getTexture(BLACK_JUMP_INDEX), 512, 26, 0.1f);
-		black = new AnimatedTextureGroup(blackStanding, blackRunning, blackJumping);
+		yellowStanding = new HvlAnimatedTextureUV(getTexture(YELLOW_STILL_INDEX), 512, 26, 0.1f);
+		yellowRunning = new HvlAnimatedTextureUV(getTexture(YELLOW_RUNNING_INDEX), 512, 26, 0.1f);
+		yellowJumping = new HvlAnimatedTextureUV(getTexture(YELLOW_JUMP_INDEX), 512, 26, 0.1f);
+		yellow = new AnimatedTextureGroup(yellowStanding, yellowRunning, yellowJumping);
 		
 		redStanding = new HvlAnimatedTextureUV(getTexture(RED_STILL_INDEX), 512, 26, 0.1f);
 		redRunning = new HvlAnimatedTextureUV(getTexture(RED_RUNNING_INDEX), 512, 26, 0.1f);

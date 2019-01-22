@@ -75,7 +75,6 @@ beds
 bee
 beef
 beetle
-beggar
 beginner
 behavior
 belief
@@ -98,7 +97,6 @@ board
 boat
 boats 
 body
-bomb
 bone
 book
 books 
@@ -217,8 +215,6 @@ country
 cover
 cow
 cows 
-crack
-cracker
 crate
 crayon
 cream
@@ -330,7 +326,6 @@ field
 fifth
 fight
 finger
-finger
 fire 
 fireman
 fish
@@ -353,7 +348,6 @@ fork
 form
 fowl
 frame
-friction
 friend
 friends 
 frog
@@ -394,7 +388,6 @@ group
 growth
 guide
 guitar
-gun
 hair
 haircut
 hall
@@ -404,7 +397,6 @@ hands
 harbor
 harmony
 hat
-hate
 head
 health
 hearing
@@ -473,7 +465,6 @@ knife
 knot
 knowledge
 laborer
-lace
 ladybug
 lake
 lamp
@@ -571,7 +562,6 @@ nose
 note
 notebook
 number
-nut
 oatmeal
 observation
 ocean
@@ -632,7 +622,6 @@ plastic
 plate
 play
 playground
-pleasure
 plot
 plough
 pocket
@@ -738,7 +727,6 @@ seed
 selection
 self
 sense
-servant
 shade
 shake
 shame
@@ -763,10 +751,8 @@ sister
 sisters 
 size
 skate
-skin
 skirt
 sky
-slave
 sleep
 sleet
 slip
@@ -774,7 +760,6 @@ slope
 smash
 smell
 smile
-smoke
 snail
 snails 
 snake
@@ -817,7 +802,6 @@ stew
 stick
 sticks 
 stitch
-stocking
 stomach
 stone
 stop
@@ -864,7 +848,6 @@ things
 thought
 thread
 thrill
-throat
 throne
 thumb
 thunder
@@ -874,8 +857,6 @@ time
 tin
 title
 toad
-toe
-toes
 tomatoes 
 tongue
 tooth
@@ -899,7 +880,6 @@ trees
 trick
 trip
 trouble
-trousers
 truck
 trucks 
 tub
@@ -909,7 +889,6 @@ twig
 twist
 umbrella
 uncle
-underwear
 unit
 use
 vacation

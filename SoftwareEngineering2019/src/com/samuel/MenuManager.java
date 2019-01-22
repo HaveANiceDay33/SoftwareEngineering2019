@@ -38,7 +38,7 @@ public class MenuManager {
 	private static final float BUTTON_WAIT_TIME = 0.25f;
 	private static final float SONG_TIME = 30f;
 	
-	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, credits, pause, genre, singing;
+	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, credits, pause, genre, singing, voting;
 	private static float whiteFade = 0;
 	
 	static boolean playedIntroSound = false;
@@ -146,6 +146,7 @@ public class MenuManager {
 		pause = new HvlMenu();
 		genre = new HvlMenu();
 		singing = new HvlMenu();
+		voting = new HvlMenu();
 		
 		menu.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.START_INDEX, Color.white)).
@@ -269,7 +270,7 @@ public class MenuManager {
 		
 		WordManager.initWords();
 		Controllers.initControllers();
-		HvlMenu.setCurrent(intro);
+		HvlMenu.setCurrent(voting);
 	}
 	
 	private static float introProgress = 0f;
@@ -287,6 +288,7 @@ public class MenuManager {
 	public static float singTimer = SONG_TIME;
 	public static boolean playerSang = false;
 	public static String TTSWord = "";
+	public static int redVote, blueVote, yellowVote, greenVote;
 	
 	public static void update(float delta){
 		
@@ -421,7 +423,7 @@ public class MenuManager {
 			buttonWait -= delta;
 			hvlDrawQuadc(256, 500, 50, 50, Main.getTexture(Main.Y_INDEX));
 			hvlDrawQuadc(256, 560, 50, 50, Main.getTexture(Main.W_INDEX));
-			hvlDrawQuadc(256, Display.getHeight()/2+50, -170, 170, Main.black.standing);
+			hvlDrawQuadc(256, Display.getHeight()/2+50, -170, 170, Main.yellow.standing);
 			
 			hvlDrawQuadc(512, 500, 50, 50, Main.getTexture(Main.X_INDEX));
 			hvlDrawQuadc(512, 560, 50, 50, Main.getTexture(Main.A_KEY_INDEX));
@@ -456,14 +458,14 @@ public class MenuManager {
 			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p3A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
 			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A)) {p4A = Main.blue; buttonWait = BUTTON_WAIT_TIME;}
 			
-			if(Controllers.allY[p1index] == 1 && buttonWait <= 0) {p1A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allY[p2index] == 1 && buttonWait <= 0) {p2A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allY[p3index] == 1 && buttonWait <= 0) {p3A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(Controllers.allY[p4index] == 1 && buttonWait <= 0) {p4A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p1A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p2A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p3A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
-			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p4A = Main.black; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allY[p1index] == 1 && buttonWait <= 0) {p1A = Main.yellow; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allY[p2index] == 1 && buttonWait <= 0) {p2A = Main.yellow; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allY[p3index] == 1 && buttonWait <= 0) {p3A = Main.yellow; buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allY[p4index] == 1 && buttonWait <= 0) {p4A = Main.yellow; buttonWait = BUTTON_WAIT_TIME;}
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p1A = Main.yellow; buttonWait = BUTTON_WAIT_TIME;}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p2A = Main.yellow; buttonWait = BUTTON_WAIT_TIME;}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p3A = Main.yellow; buttonWait = BUTTON_WAIT_TIME;}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W)) {p4A = Main.yellow; buttonWait = BUTTON_WAIT_TIME;}
 			
 			if(Controllers.allB[p1index] == 1 && buttonWait <= 0) {p1A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
 			if(Controllers.allB[p2index] == 1 && buttonWait <= 0) {p2A = Main.red; buttonWait = BUTTON_WAIT_TIME;}
@@ -525,23 +527,77 @@ public class MenuManager {
 					singingPlayer++;
 				}
 			}
-			/*
-			if(i == 1) {
+			if(singingPlayer == 1) {
 				hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player2.animations.standing);
 				hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
-				//sing(Game.player2.playerWords);
+				if(!playerSang) {
+					sing(Game.player2.playerWords, lyrics[HvlMath.randomIntBetween(0, lyrics.length)]);
+					playerSang = true;
+				}
+				
+				if(singTimer <= 0) {
+					singTimer = SONG_TIME;
+					playerSang = false;
+					TTSWord = "";
+					singingPlayer++;
+				}
 			}
-			if(i == 2) {
+			if(singingPlayer == 2) {
 				hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player3.animations.standing);
 				hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
-				//sing(Game.player3.playerWords);
+				if(!playerSang) {
+					sing(Game.player3.playerWords, lyrics[HvlMath.randomIntBetween(0, lyrics.length)]);
+					playerSang = true;
+				}
+				
+				if(singTimer <= 0) {
+					singTimer = SONG_TIME;
+					playerSang = false;
+					TTSWord = "";
+					singingPlayer++;
+				}
 			}
-			if(i == 3) {
+			if(singingPlayer == 3) {
 				hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player4.animations.standing);
 				hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
-				//sing(Game.player4.playerWords);
+				if(!playerSang) {
+					sing(Game.player4.playerWords, lyrics[HvlMath.randomIntBetween(0, lyrics.length)]);
+					playerSang = true;
+				}
+				
+				if(singTimer <= 0) {
+					singTimer = SONG_TIME;
+					playerSang = false;
+					TTSWord = "";
+					HvlMenu.setCurrent(voting);
+				}
 			}
-			*/
+		} else if(HvlMenu.getCurrent() == voting) {
+			hvlDrawQuad((currentLevel.background == Main.level2 ? 0 : -64), (currentLevel.background == Main.level2 ? 0 : -350), (currentLevel.background == Main.level2 ? Display.getWidth() : Display.getWidth() + 128),
+					(currentLevel.background == Main.level2 ? Display.getHeight() : Display.getWidth()+128), currentLevel.background);
+			hvlDrawQuadc(256, 500, 50, 50, Main.getTexture(Main.Y_INDEX));
+			hvlDrawQuadc(256, 560, 50, 50, Main.getTexture(Main.W_INDEX));
+			Main.yellow.jumping.setRunning(true);
+			hvlDrawQuadc(256, Display.getHeight()/2+50, -170, 170, Game.player1.animations.jumping);
+			
+			hvlDrawQuadc(512, 500, 50, 50, Main.getTexture(Main.X_INDEX));
+			hvlDrawQuadc(512, 560, 50, 50, Main.getTexture(Main.A_KEY_INDEX));
+			Main.blue.jumping.setRunning(true);
+			hvlDrawQuadc(512, Display.getHeight()/2+50, -170, 170, Game.player2.animations.jumping);
+			
+			hvlDrawQuadc(768, 500, 50, 50, Main.getTexture(Main.A_INDEX));
+			hvlDrawQuadc(768, 560, 50, 50, Main.getTexture(Main.S_INDEX));
+			Main.green.jumping.setRunning(true);
+			hvlDrawQuadc(768, Display.getHeight()/2+50, -170, 170, Game.player3.animations.jumping);
+			
+			hvlDrawQuadc(1024, 500, 50, 50, Main.getTexture(Main.B_INDEX));
+			hvlDrawQuadc(1024, 560, 50, 50, Main.getTexture(Main.D_INDEX));
+			Main.red.jumping.setRunning(true);
+			hvlDrawQuadc(1024, Display.getHeight()/2+50, -170, 170, Game.player4.animations.jumping);
+			
+			
+			
+			Main.font.drawWordc("Vote For Your Favorite!", Display.getWidth()/2, 680, Color.black, 0.4f);
 		}
 		
 		
@@ -606,6 +662,18 @@ public class MenuManager {
 		}
 		
 		for(int k = 0; k < lyricWords.length; k++) {
+			if(nouns.size() == 0 && lyricWords[k].equals("n")) {
+				newWords[k] = "jibbrish";
+			}
+			if(verbs.size() == 0 && lyricWords[k].equals("v")) {
+				newWords[k] = "jibbrish";
+			}
+			if(adjs.size() == 0 && lyricWords[k].equals("adj")) {
+				newWords[k] = "jibbrish";
+			}
+			if(advs.size() == 0 && lyricWords[k].equals("adv")) {
+				newWords[k] = "jibbrish";
+			}
 			if(lyricWords[k].equals("n") && nouns.size() > 0) {
 				newWords[k] = nouns.get(nouns.size()-1);
 				nouns.remove(nouns.size()-1);

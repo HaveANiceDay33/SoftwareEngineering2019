@@ -6,9 +6,7 @@ asked
 asked
 attack
 attacked
-attacked
 awaken
-awakened
 awakened
 bear
 bore
@@ -16,9 +14,6 @@ born
 begin
 began
 begun
-blow
-blew
-blown
 break
 broke
 broken
@@ -46,13 +41,9 @@ drew
 drawn
 drink
 drank
-drunk
 drive
 drove
 driven
-drown
-drowned
-drowned
 eat 
 ate
 eaten
@@ -70,7 +61,6 @@ froze
 frozen
 get
 got
-got 
 gotten
 give
 gave
@@ -82,7 +72,6 @@ grow
 grew
 grown
 hang
-hung
 hang
 hanged
 happen
@@ -102,7 +91,6 @@ loosened
 lose
 lost
 pay
-paid
 paid
 ride
 rode
@@ -151,7 +139,6 @@ stolen
 sting
 stung
 stink
-stank
 stunk
 strive
 strove

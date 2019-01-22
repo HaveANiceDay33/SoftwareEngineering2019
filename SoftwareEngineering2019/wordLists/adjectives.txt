@@ -34,7 +34,6 @@ significant
 successful
 electrical
 expensive
-pregnant
 intelligent
 interesting
 poor
@@ -261,7 +260,6 @@ unique
 classic
 final
 overall
-private
 separate
 western
 alone
@@ -334,7 +332,6 @@ nearby
 proud
 spiritual
 wild
-adult
 apart
 brief
 crazy
@@ -365,7 +362,6 @@ upstairs
 usual
 brave
 calm
-dirty
 downtown
 grand
 honest
@@ -374,13 +370,10 @@ male
 quiet
 brilliant
 dear
-drunk
 empty
 female
 inevitable
 neat
-ok
-representative
 silly
 slight
 smart
@@ -506,7 +499,6 @@ mountain
 patient
 proof
 west
-wine
 expert
 native
 opening
