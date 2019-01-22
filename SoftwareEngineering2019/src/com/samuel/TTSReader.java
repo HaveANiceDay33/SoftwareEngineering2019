@@ -26,7 +26,7 @@ public class TTSReader implements Runnable{
 	        voice.allocate();
 	        for(int i = 0; i < words.length; i++) {
 	        	currentWord = words[i] + " ";
-	        	font.drawWordc(currentWord, Display.getWidth()/2, Display.getHeight()/2 , MenuManager.currentLevel.textColor);
+	        	//Main.font.drawWordc(currentWord, Display.getWidth()/2, Display.getHeight()/2 , MenuManager.currentLevel.textColor);
 	        	voice.speak(words[i]);
 			}
 	       
