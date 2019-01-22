@@ -21,13 +21,13 @@ public class TTSReader implements Runnable{
 	    {	
 	        VoiceManager vm = VoiceManager.getInstance();
 	        Voice voice = vm.getVoice("kevin16");
-	        voice.setRate(80);
-	        voice.setPitch(110);
+	        voice.setRate(250);
+	        voice.setPitch(130);
 	        voice.allocate();
 	        for(int i = 0; i < words.length; i++) {
-	        	//voice.speak(words[i] + " ");
 	        	currentWord = words[i] + " ";
-	        	System.out.println(currentWord);
+	        	font.drawWordc(currentWord, Display.getWidth()/2, Display.getHeight()/2 , MenuManager.currentLevel.textColor);
+	        	voice.speak(words[i]);
 			}
 	       
 	    }  
@@ -36,9 +36,5 @@ public class TTSReader implements Runnable{
 	    { 
 	    	throw new RuntimeException("Error with text to speech engine");
 	    }
-	}
-	
-	public String get_word() {
-		return currentWord;
 	}
 }

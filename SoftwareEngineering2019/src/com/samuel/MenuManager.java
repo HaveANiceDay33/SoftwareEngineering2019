@@ -370,7 +370,7 @@ public class MenuManager {
 			
 			Main.font.drawWordc("Player "+ (currentPlayer != 4 ? (currentPlayer+1) : currentPlayer) +":", Display.getWidth()/2,100,currentLevel.textColor, 0.3f);
 			Main.font.drawWordc("Press A on Xbox controller or W on Keyboard", Display.getWidth()/2, 150, currentLevel.textColor, 0.22f);
-			Main.font.drawWordc("Press B (Xbox) or D (Keyboard) to skip", Display.getWidth()/2, 200, currentLevel.textColor, 0.15f);
+			Main.font.drawWordc("Press B (Xbox) or D (Keyboard) to skip", Display.getWidth()/2, 200, Color.red, 0.15f);
 
 			timerBar(controllerTimer/CONTROLLER_TIME);
 			if(currentPlayer == 0 && buttonWait <= 0) {
@@ -621,7 +621,7 @@ public class MenuManager {
 		}
 		
 		for(int j = 0; j < newWords.length; j++) {
-			newSong += newWords[j];
+			newSong += (newWords[j] + " ");
 		}
 		Runnable talk = new TTSReader(newSong);
 		new Thread(talk).start();
