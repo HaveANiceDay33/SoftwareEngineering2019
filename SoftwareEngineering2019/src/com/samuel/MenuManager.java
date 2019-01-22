@@ -270,7 +270,7 @@ public class MenuManager {
 		
 		WordManager.initWords();
 		Controllers.initControllers();
-		HvlMenu.setCurrent(voting);
+		HvlMenu.setCurrent(intro);
 	}
 	
 	private static float introProgress = 0f;
