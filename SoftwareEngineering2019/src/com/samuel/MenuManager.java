@@ -36,6 +36,7 @@ public class MenuManager {
 	public static final float BUTTON_WIDTH = 254f, BUTTON_HEIGHT = 78f;
 	private static final float CONTROLLER_TIME = 5f;
 	private static final float BUTTON_WAIT_TIME = 0.25f;
+	private static final float SONG_TIME = 30f;
 	
 	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, credits, pause, genre, singing;
 	private static float whiteFade = 0;
@@ -283,6 +284,8 @@ public class MenuManager {
 	public static int currentSong = HvlMath.randomIntBetween(0, 2);
 	public static boolean beatPlayed = false;
 	public static int singingPlayer = 0;
+	public static float singTimer = SONG_TIME;
+	public static boolean playerSang = false;
 	
 	public static void update(float delta){
 		
@@ -503,11 +506,21 @@ public class MenuManager {
 		else if(HvlMenu.getCurrent() == singing) {
 			hvlDrawQuad((currentLevel.background == Main.level2 ? 0 : -64), (currentLevel.background == Main.level2 ? 0 : -350), (currentLevel.background == Main.level2 ? Display.getWidth() : Display.getWidth() + 128),
 					(currentLevel.background == Main.level2 ? Display.getHeight() : Display.getWidth()+128), currentLevel.background);
+			Main.font.drawWordc("Player " + (singingPlayer+1), Display.getWidth()/2, 100, currentLevel.textColor, 0.8f);
+			singTimer -= delta;
 			if(singingPlayer == 0) {
 				hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player1.animations.standing);
 				hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
-				sing(Game.player1.playerWords, lyrics[HvlMath.randomIntBetween(0, lyrics.length)]);
-				singingPlayer++;
+				if(!playerSang) {
+					sing(Game.player1.playerWords, lyrics[HvlMath.randomIntBetween(0, lyrics.length)]);
+					playerSang = true;
+				}
+				
+				if(singTimer <= 0) {
+					singTimer = SONG_TIME;
+					playerSang = false;
+					singingPlayer++;
+				}
 			}
 			/*
 			if(i == 1) {
@@ -544,9 +557,9 @@ public class MenuManager {
 	}
 
 	public static void sing(ArrayList<Word> words, String lyrics) {
-		if(Main.getSound(Main.JAZZ_INDEX).isPlaying()) {Main.getSound(Main.JAZZ_INDEX).stop();}
-		if(Main.getSound(Main.METAL_INDEX).isPlaying()) {Main.getSound(Main.METAL_INDEX).stop();}
-		if(Main.getSound(Main.FUNKY_INDEX).isPlaying()) {Main.getSound(Main.FUNKY_INDEX).stop();}
+		Main.getSound(Main.JAZZ_INDEX).stop();
+		Main.getSound(Main.METAL_INDEX).stop();
+		Main.getSound(Main.FUNKY_INDEX).stop();
 		if(chosenGenre.equals("Jazz")) {
 			Main.getSound(Main.JAZZ_INDEX).playAsSoundEffect(1, 1, false);
 		} else if(chosenGenre.equals("Funk")) { 
@@ -610,7 +623,8 @@ public class MenuManager {
 		for(int j = 0; j < newWords.length; j++) {
 			newSong += newWords[j];
 		}
-		TTSReader.read(newSong);	
+		Runnable talk = new TTSReader(newSong);
+		new Thread(talk).start();
 	}
 	
 	public static void resetGame() {
