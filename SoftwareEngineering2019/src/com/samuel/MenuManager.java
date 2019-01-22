@@ -286,6 +286,7 @@ public class MenuManager {
 	public static int singingPlayer = 0;
 	public static float singTimer = SONG_TIME;
 	public static boolean playerSang = false;
+	public static String TTSWord = "";
 	
 	public static void update(float delta){
 		
@@ -507,6 +508,7 @@ public class MenuManager {
 			hvlDrawQuad((currentLevel.background == Main.level2 ? 0 : -64), (currentLevel.background == Main.level2 ? 0 : -350), (currentLevel.background == Main.level2 ? Display.getWidth() : Display.getWidth() + 128),
 					(currentLevel.background == Main.level2 ? Display.getHeight() : Display.getWidth()+128), currentLevel.background);
 			Main.font.drawWordc("Player " + (singingPlayer+1), Display.getWidth()/2, 100, currentLevel.textColor, 0.8f);
+			Main.font.drawWordc(TTSWord, Display.getWidth()/2, Display.getHeight()/2, currentLevel.textColor, 0.5f);
 			singTimer -= delta;
 			if(singingPlayer == 0) {
 				hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player1.animations.standing);
@@ -519,6 +521,7 @@ public class MenuManager {
 				if(singTimer <= 0) {
 					singTimer = SONG_TIME;
 					playerSang = false;
+					TTSWord = "";
 					singingPlayer++;
 				}
 			}

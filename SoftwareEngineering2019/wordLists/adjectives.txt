@@ -120,7 +120,6 @@ impressive
 informal
 inner
 pleasant
-sexual
 sudden
 terrible
 unable
@@ -144,7 +143,6 @@ tiny
 more
 some
 one
-al
 many
 most
 other
@@ -397,7 +395,6 @@ time
 these
 work
 no
-ony
 then
 first
 money
