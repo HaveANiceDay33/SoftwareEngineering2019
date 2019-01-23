@@ -718,7 +718,7 @@ public class MenuManager {
 	}
 
 	public static void sing(ArrayList<Word> words, String lyrics) {
-		float volume = 0.5f;
+		float volume = 0.2f;
 		Main.getSound(Main.JAZZ_INDEX).stop();
 		Main.getSound(Main.METAL_INDEX).stop();
 		Main.getSound(Main.FUNKY_INDEX).stop();

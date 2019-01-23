@@ -16,7 +16,7 @@ public class Main extends HvlTemplateInteg2D{
 		try {
 			new Main();
 		} catch (Exception e){
-			JOptionPane.showMessageDialog(null, e.getClass().getSimpleName() + " - " + e.getMessage(), "Message Melee Exception", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, e.getClass().getSimpleName() + " - " + e.getMessage() + "\n" + e.getStackTrace(), "Message Melee Exception", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 			System.exit(0);
 		}

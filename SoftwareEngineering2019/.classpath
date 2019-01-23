@@ -3,15 +3,14 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Ridhvl"/>
-	<classpathentry kind="lib" path="TTSJars/cmu_time_awb.jar"/>
-	<classpathentry kind="lib" path="TTSJars/cmu_us_kal.jar"/>
-	<classpathentry kind="lib" path="TTSJars/cmudict04.jar"/>
-	<classpathentry kind="lib" path="TTSJars/cmulex.jar"/>
-	<classpathentry kind="lib" path="TTSJars/cmutimelex.jar"/>
-	<classpathentry kind="lib" path="TTSJars/en_us.jar"/>
-	<classpathentry kind="lib" path="TTSJars/freetts-jsapi10.jar"/>
-	<classpathentry kind="lib" path="TTSJars/freetts.jar"/>
-	<classpathentry kind="lib" path="TTSJars/jsapi.jar"/>
-	<classpathentry kind="lib" path="TTSJars/mbrola.jar"/>
+	<classpathentry kind="lib" path="C:/Users/munro/git/SoftwareEngineering2019/SoftwareEngineering2019/TTSJars/cmu_time_awb.jar"/>
+	<classpathentry kind="lib" path="C:/Users/munro/git/SoftwareEngineering2019/SoftwareEngineering2019/TTSJars/cmu_us_kal.jar"/>
+	<classpathentry kind="lib" path="C:/Users/munro/git/SoftwareEngineering2019/SoftwareEngineering2019/TTSJars/cmudict04.jar"/>
+	<classpathentry kind="lib" path="C:/Users/munro/git/SoftwareEngineering2019/SoftwareEngineering2019/TTSJars/cmulex.jar"/>
+	<classpathentry kind="lib" path="C:/Users/munro/git/SoftwareEngineering2019/SoftwareEngineering2019/TTSJars/cmutimelex.jar"/>
+	<classpathentry kind="lib" path="C:/Users/munro/git/SoftwareEngineering2019/SoftwareEngineering2019/TTSJars/en_us.jar"/>
+	<classpathentry kind="lib" path="C:/Users/munro/git/SoftwareEngineering2019/SoftwareEngineering2019/TTSJars/freetts.jar"/>
+	<classpathentry kind="lib" path="C:/Users/munro/git/SoftwareEngineering2019/SoftwareEngineering2019/TTSJars/freetts-jsapi10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/munro/git/SoftwareEngineering2019/SoftwareEngineering2019/TTSJars/jsapi.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
