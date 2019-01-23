@@ -23,12 +23,8 @@ public class TTSReader implements Runnable{
 	    {	
 	        VoiceManager vm = VoiceManager.getInstance();
 	        Voice voice = vm.getVoice("kevin16");
-	        
-	        if(genre.equals("Funk")) {
-	        	voice.setRate(250);
-		        voice.setPitch(130);
-	        }
-	        
+	        voice.setRate(150);
+		    voice.setPitch(80);
 	        voice.allocate();
 	        for(int i = 0; i < words.length; i++) {
 	        	currentWord = words[i] + " ";

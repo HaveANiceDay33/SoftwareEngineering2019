@@ -6,6 +6,10 @@ import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import org.lwjgl.input.Keyboard;
@@ -37,6 +41,7 @@ public class MenuManager {
 	private static final float CONTROLLER_TIME = 5f;
 	private static final float BUTTON_WAIT_TIME = 0.25f;
 	private static final float SONG_TIME = 30f;
+	private static final float VOTE_TIME = 5f;
 	
 	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, credits, pause, genre, singing, voting;
 	private static float whiteFade = 0;
@@ -290,7 +295,9 @@ public class MenuManager {
 	public static float singTimer = SONG_TIME;
 	public static boolean playerSang = false;
 	public static String TTSWord = "";
-	public static int redVote, blueVote, yellowVote, greenVote;
+	public static int p1V = 0, p2V = 0, p3V = 0, p4V = 0;
+	public static boolean p1Voted = false, p2Voted = false, p3Voted = false, p4Voted = false;
+	public static float voteTimer = VOTE_TIME;
 	
 	public static void update(float delta){
 		
@@ -575,29 +582,92 @@ public class MenuManager {
 				}
 			}
 		} else if(HvlMenu.getCurrent() == voting) {
+			buttonWait -= delta;
+			voteTimer -= delta;
 			hvlDrawQuad((currentLevel.background == Main.level2 ? 0 : -64), (currentLevel.background == Main.level2 ? 0 : -350), (currentLevel.background == Main.level2 ? Display.getWidth() : Display.getWidth() + 128),
 					(currentLevel.background == Main.level2 ? Display.getHeight() : Display.getWidth()+128), currentLevel.background);
+			
+			Main.yellow.jumping.setRunning(true);
+			Main.red.jumping.setRunning(true);
+			Main.blue.jumping.setRunning(true);
+			Main.green.jumping.setRunning(true);
 			hvlDrawQuadc(256, 500, 50, 50, Main.getTexture(Main.Y_INDEX));
 			hvlDrawQuadc(256, 560, 50, 50, Main.getTexture(Main.W_INDEX));
-			Main.yellow.jumping.setRunning(true);
 			hvlDrawQuadc(256, Display.getHeight()/2+50, -170, 170, Game.player1.animations.jumping);
 			
 			hvlDrawQuadc(512, 500, 50, 50, Main.getTexture(Main.X_INDEX));
 			hvlDrawQuadc(512, 560, 50, 50, Main.getTexture(Main.A_KEY_INDEX));
-			Main.blue.jumping.setRunning(true);
 			hvlDrawQuadc(512, Display.getHeight()/2+50, -170, 170, Game.player2.animations.jumping);
 			
 			hvlDrawQuadc(768, 500, 50, 50, Main.getTexture(Main.A_INDEX));
 			hvlDrawQuadc(768, 560, 50, 50, Main.getTexture(Main.S_INDEX));
-			Main.green.jumping.setRunning(true);
 			hvlDrawQuadc(768, Display.getHeight()/2+50, -170, 170, Game.player3.animations.jumping);
 			
 			hvlDrawQuadc(1024, 500, 50, 50, Main.getTexture(Main.B_INDEX));
 			hvlDrawQuadc(1024, 560, 50, 50, Main.getTexture(Main.D_INDEX));
-			Main.red.jumping.setRunning(true);
 			hvlDrawQuadc(1024, Display.getHeight()/2+50, -170, 170, Game.player4.animations.jumping);
+			Main.font.drawWordc("Vote For Your Favorite!", Display.getWidth()/2, 680, Color.black, 0.3f);
+			timerBar(voteTimer/VOTE_TIME);
 			
-			Main.font.drawWordc("Vote For Your Favorite!", Display.getWidth()/2, 680, Color.black, 0.4f);
+			if(Controllers.allA[p1index] == 1 && buttonWait <= 0 && !p1Voted) {p3V++; buttonWait = BUTTON_WAIT_TIME; p1Voted = true;}
+			if(Controllers.allX[p1index] == 1 && buttonWait <= 0 && !p1Voted) {p2V++; buttonWait = BUTTON_WAIT_TIME; p1Voted = true;}
+			if(Controllers.allY[p1index] == 1 && buttonWait <= 0 && !p1Voted) {p1V++; buttonWait = BUTTON_WAIT_TIME; p1Voted = true;}
+			if(Controllers.allB[p1index] == 1 && buttonWait <= 0 && !p1Voted) {p4V++; buttonWait = BUTTON_WAIT_TIME; p1Voted = true;}
+			
+			if(Controllers.allX[p2index] == 1 && buttonWait <= 0 && !p2Voted) {p2V++; buttonWait = BUTTON_WAIT_TIME; p2Voted = true;}
+			if(Controllers.allA[p2index] == 1 && buttonWait <= 0 && !p2Voted) {p3V++; buttonWait = BUTTON_WAIT_TIME; p2Voted = true;}
+			if(Controllers.allB[p2index] == 1 && buttonWait <= 0 && !p2Voted) {p4V++; buttonWait = BUTTON_WAIT_TIME; p2Voted = true;}
+			if(Controllers.allY[p2index] == 1 && buttonWait <= 0 && !p2Voted) {p1V++; buttonWait = BUTTON_WAIT_TIME; p2Voted = true;}
+			
+			if(Controllers.allB[p3index] == 1 && buttonWait <= 0 && !p3Voted) {p4V++; buttonWait = BUTTON_WAIT_TIME; p3Voted = true;}
+			if(Controllers.allY[p3index] == 1 && buttonWait <= 0 && !p3Voted) {p1V++; buttonWait = BUTTON_WAIT_TIME; p3Voted = true;}
+			if(Controllers.allX[p3index] == 1 && buttonWait <= 0 && !p3Voted) {p2V++; buttonWait = BUTTON_WAIT_TIME; p3Voted = true;}
+			if(Controllers.allA[p3index] == 1 && buttonWait <= 0 && !p3Voted) {p3V++; buttonWait = BUTTON_WAIT_TIME; p3Voted = true;}
+			
+			if(Controllers.allA[p4index] == 1 && buttonWait <= 0 && !p4Voted) {p3V++; buttonWait = BUTTON_WAIT_TIME; p4Voted = true;}
+			if(Controllers.allB[p4index] == 1 && buttonWait <= 0 && !p4Voted) {p4V++; buttonWait = BUTTON_WAIT_TIME; p4Voted = true;}
+			if(Controllers.allY[p4index] == 1 && buttonWait <= 0 && !p4Voted) {p1V++; buttonWait = BUTTON_WAIT_TIME; p4Voted = true;}
+			if(Controllers.allX[p4index] == 1 && buttonWait <= 0 && !p4Voted) {p2V++; buttonWait = BUTTON_WAIT_TIME; p4Voted = true;}
+			
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A) && !p1Voted) {p2V++; buttonWait = BUTTON_WAIT_TIME; p1Voted = true;}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A) && !p2Voted) {p2V++; buttonWait = BUTTON_WAIT_TIME; p2Voted = true;}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A) && !p3Voted) {p2V++; buttonWait = BUTTON_WAIT_TIME; p3Voted = true;}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_A) && !p4Voted) {p2V++; buttonWait = BUTTON_WAIT_TIME; p4Voted = true;}
+			
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W) && !p1Voted) {p1V++; buttonWait = BUTTON_WAIT_TIME; p1Voted = true;}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W) && !p2Voted) {p1V++; buttonWait = BUTTON_WAIT_TIME; p2Voted = true;}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W) && !p3Voted) {p1V++; buttonWait = BUTTON_WAIT_TIME; p3Voted = true;}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_W) && !p4Voted) {p1V++; buttonWait = BUTTON_WAIT_TIME; p4Voted = true;}
+		
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D) && !p1Voted) {p4V++; buttonWait = BUTTON_WAIT_TIME; p1Voted = true;}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D) && !p2Voted) {p4V++; buttonWait = BUTTON_WAIT_TIME; p2Voted = true;}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D) && !p3Voted) {p4V++; buttonWait = BUTTON_WAIT_TIME; p3Voted = true;}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_D) && !p4Voted) {p4V++; buttonWait = BUTTON_WAIT_TIME; p4Voted = true;}
+		
+			if(p1index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S) && !p1Voted) {p3V++; buttonWait = BUTTON_WAIT_TIME; p1Voted = true;}
+			if(p2index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S) && !p2Voted) {p3V++; buttonWait = BUTTON_WAIT_TIME; p2Voted = true;}
+			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S) && !p3Voted) {p3V++; buttonWait = BUTTON_WAIT_TIME; p3Voted = true;}
+			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S) && !p4Voted) {p3V++; buttonWait = BUTTON_WAIT_TIME; p4Voted = true;}
+			
+			if(voteTimer <= 0) {
+				Map<String, Integer> scores = new HashMap<String, Integer>();
+				scores.put("Player 1", p1V);
+				scores.put("Player 2", p2V);
+				scores.put("Player 3", p3V);
+				scores.put("Player 4", p4V);
+				
+				String winner = "";
+				
+				int maxValueInMap=(Collections.max(scores.values()));  // This will return max value in the Hashmap
+		        for (Entry<String, Integer> entry : scores.entrySet()) {  // Itrate through hashmap
+		            if (entry.getValue()==maxValueInMap) {
+		                winner = entry.getKey();     // Print the key with max value
+		            }
+		        }
+				Main.font.drawWordc(winner + " Wins!" , Display.getWidth()/2, 100, currentLevel.textColor, 0.8f);
+			}
+			
+
 		}
 		
 		
@@ -701,6 +771,7 @@ public class MenuManager {
 		p2index = 3;
 		p3index = 3; 
 		p4index = 3;
+		
 		switch(pickLevel) {
 			case 0:
 				currentLevel = new HomeBase();
