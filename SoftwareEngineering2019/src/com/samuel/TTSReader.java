@@ -35,7 +35,7 @@ public class TTSReader implements Runnable{
 	        	MenuManager.TTSWord = words[i];
 	        	voice.speak(words[i]);
 			}
-	       
+	        
 	    }  
 	
 	    catch (Exception e)  
