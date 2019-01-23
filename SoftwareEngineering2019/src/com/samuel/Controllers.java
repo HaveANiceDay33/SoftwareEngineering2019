@@ -12,6 +12,8 @@ public class Controllers {
 	public static float [] allX = new float[5];
 	public static float [] allStart = new float[5];
 	public static float [] joy1x = new float[4];
+	public static float [] allUp = new float[5];
+	public static float [] allDown = new float[5];
 	
 	public static void initControllers() {
 		conts = new HvlCPG_Gamepad();
@@ -52,5 +54,17 @@ public class Controllers {
 		joy1x[1] = conts.getValue(HvlCPG_Gamepad.JOY1X, 1);
 		joy1x[2] = conts.getValue(HvlCPG_Gamepad.JOY1X, 2);
 		joy1x[3] = conts.getValue(HvlCPG_Gamepad.JOY1X, 3);
+		
+		allUp[0] = conts.getValue(HvlCPG_Gamepad.DIRECTION_UP, 0);
+		allUp[1] = conts.getValue(HvlCPG_Gamepad.DIRECTION_UP, 1);
+		allUp[2] = conts.getValue(HvlCPG_Gamepad.DIRECTION_UP, 2);
+		allUp[3] = conts.getValue(HvlCPG_Gamepad.DIRECTION_UP, 3);
+		allUp[4] = conts.getValue(HvlCPG_Gamepad.DIRECTION_UP);
+		
+		allDown[0] = conts.getValue(HvlCPG_Gamepad.DIRECTION_DOWN, 0);
+		allDown[1] = conts.getValue(HvlCPG_Gamepad.DIRECTION_DOWN, 1);
+		allDown[2] = conts.getValue(HvlCPG_Gamepad.DIRECTION_DOWN, 2);
+		allDown[3] = conts.getValue(HvlCPG_Gamepad.DIRECTION_DOWN, 3);
+		allDown[4] = conts.getValue(HvlCPG_Gamepad.DIRECTION_DOWN);
 	}
 }

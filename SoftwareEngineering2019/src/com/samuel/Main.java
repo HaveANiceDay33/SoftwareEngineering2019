@@ -26,7 +26,7 @@ public class Main extends HvlTemplateInteg2D{
 		super(144, 1280, 720, "Message Melee", "Icon32", new HvlDisplayModeDefault());
 	}
 	
-	public static final int NUM_TEXTURES = 53;
+	public static final int NUM_TEXTURES = 54;
 
 	public static final int
 	LEVEL_ONE_INDEX = 0,
@@ -81,7 +81,8 @@ public class Main extends HvlTemplateInteg2D{
 	BLASTER_INDEX = 49,
 	GUMMY_INDEX = 50,
 	TRUM_INDEX = 51,
-	WAT_INDEX = 52;
+	WAT_INDEX = 52,
+	INSTR_INDEX = 53;
 	
 	public static final int NUM_SOUNDS = 17;
 	
@@ -173,6 +174,7 @@ public class Main extends HvlTemplateInteg2D{
 		getTextureLoader().loadResource("gummy");
 		getTextureLoader().loadResource("trumpet");
 		getTextureLoader().loadResource("cant");
+		getTextureLoader().loadResource("Instructions");
 		
 		getSoundLoader().loadResource("gears");
 		getSoundLoader().loadResource("forward");

@@ -43,7 +43,7 @@ public class MenuManager {
 	private static final float SONG_TIME = 30f;
 	private static final float VOTE_TIME = 5f;
 	
-	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, credits, pause, genre, singing, voting;
+	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, credits, pause, genre, singing, voting, instr;
 	private static float whiteFade = 0;
 	
 	static boolean playedIntroSound = false;
@@ -126,7 +126,7 @@ public class MenuManager {
 				if(HvlMenu.getCurrent() == pause) {
 					playBack();
 					resetGame();
-				} else if(HvlMenu.getCurrent() == credits || HvlMenu.getCurrent() == options) {
+				} else if(HvlMenu.getCurrent() == credits || HvlMenu.getCurrent() == options || HvlMenu.getCurrent() == instr) {
 					playBack();
 					HvlMenu.setCurrent(menu);
 				} else if(HvlMenu.getCurrent() == menu) {
@@ -152,6 +152,7 @@ public class MenuManager {
 		genre = new HvlMenu();
 		singing = new HvlMenu();
 		voting = new HvlMenu();
+		instr = new HvlMenu();
 		
 		menu.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.START_INDEX, Color.white)).
@@ -180,6 +181,15 @@ public class MenuManager {
 			public void run(HvlButton aArg){
 				playForward();
 				HvlMenu.setCurrent(credits);
+			}
+		}).build());
+		menu.getFirstArrangerBox().add(new HvlSpacer(0,20));
+		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.CREDITS_INDEX, Color.white)).
+				setOnDrawable(new ImageDrawable(Main.CREDITS_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.CREDITS_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
+			@Override
+			public void run(HvlButton aArg){
+				playForward();
+				HvlMenu.setCurrent(instr);
 			}
 		}).build());
 		menu.getFirstArrangerBox().add(new HvlSpacer(0,20));
@@ -227,6 +237,17 @@ public class MenuManager {
 		credits.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		credits.getFirstArrangerBox().add(new HvlSpacer(0, 500));
 		credits.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.white)).
+				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
+			@Override
+			public void run(HvlButton aArg) {
+				playBack();
+				HvlMenu.setCurrent(menu);
+			}
+		}).build());
+		
+		instr.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
+		instr.getFirstArrangerBox().add(new HvlSpacer(0, 500));
+		instr.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.white)).
 				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg) {
@@ -298,6 +319,7 @@ public class MenuManager {
 	public static int p1V = 0, p2V = 0, p3V = 0, p4V = 0;
 	public static boolean p1Voted = false, p2Voted = false, p3Voted = false, p4Voted = false;
 	public static float voteTimer = VOTE_TIME;
+	public static float endTimer = 3f;
 	
 	public static void update(float delta){
 		
@@ -350,6 +372,7 @@ public class MenuManager {
 			
 			if(Controllers.allY[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(options); buttonWait = BUTTON_WAIT_TIME;}
 			if(Controllers.allX[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(credits); buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allUp[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(instr); buttonWait = BUTTON_WAIT_TIME;}
 		}
 		else if(HvlMenu.getCurrent() == options) {
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
@@ -607,7 +630,7 @@ public class MenuManager {
 			hvlDrawQuadc(1024, 560, 50, 50, Main.getTexture(Main.D_INDEX));
 			hvlDrawQuadc(1024, Display.getHeight()/2+50, -170, 170, Game.player4.animations.jumping);
 			Main.font.drawWordc("Vote For Your Favorite!", Display.getWidth()/2, 680, Color.black, 0.3f);
-			timerBar(voteTimer/VOTE_TIME);
+			
 			
 			if(Controllers.allA[p1index] == 1 && buttonWait <= 0 && !p1Voted) {p3V++; buttonWait = BUTTON_WAIT_TIME; p1Voted = true;}
 			if(Controllers.allX[p1index] == 1 && buttonWait <= 0 && !p1Voted) {p2V++; buttonWait = BUTTON_WAIT_TIME; p1Voted = true;}
@@ -650,6 +673,7 @@ public class MenuManager {
 			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S) && !p4Voted) {p3V++; buttonWait = BUTTON_WAIT_TIME; p4Voted = true;}
 			
 			if(voteTimer <= 0) {
+				endTimer -= delta;
 				Map<String, Integer> scores = new HashMap<String, Integer>();
 				scores.put("Player 1", p1V);
 				scores.put("Player 2", p2V);
@@ -665,13 +689,21 @@ public class MenuManager {
 		            }
 		        }
 				Main.font.drawWordc(winner + " Wins!" , Display.getWidth()/2, 100, currentLevel.textColor, 0.8f);
+				
+				if(endTimer <= 0) {
+					resetGame();
+				}
+			} else {
+				timerBar(voteTimer/VOTE_TIME);
 			}
 			
 
+		} else if(HvlMenu.getCurrent() == instr) {
+			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.INSTR_INDEX));
 		}
 		
 		
-		if(HvlMenu.getCurrent() == menu || HvlMenu.getCurrent() == controllerInit || HvlMenu.getCurrent() == charSelect || HvlMenu.getCurrent() == game || HvlMenu.getCurrent() == genre) {
+		if(HvlMenu.getCurrent() == menu || HvlMenu.getCurrent() == controllerInit || HvlMenu.getCurrent() == charSelect || HvlMenu.getCurrent() == game || HvlMenu.getCurrent() == genre || HvlMenu.getCurrent() == instr) {
 			if(Main.options.backgroundMusicEnabled && playedMenuMusic == false) {
 				Main.getSound(songs[currentSong]).playAsSoundEffect(1f, 1f, false);
 				playedMenuMusic = true;
