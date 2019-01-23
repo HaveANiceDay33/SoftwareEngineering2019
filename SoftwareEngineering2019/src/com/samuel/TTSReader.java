@@ -10,9 +10,11 @@ public class TTSReader implements Runnable{
 	public String toRead;
 	public String[] words;
 	public String currentWord = "";
+	public String genre;
 	public TTSReader(String toRead) {
 		this.toRead = toRead;
 		words = toRead.split(" ");
+		genre = MenuManager.chosenGenre;
 	}
 
 	@Override
@@ -21,8 +23,12 @@ public class TTSReader implements Runnable{
 	    {	
 	        VoiceManager vm = VoiceManager.getInstance();
 	        Voice voice = vm.getVoice("kevin16");
-	        voice.setRate(250);
-	        voice.setPitch(130);
+	        
+	        if(genre.equals("Funk")) {
+	        	voice.setRate(250);
+		        voice.setPitch(130);
+	        }
+	        
 	        voice.allocate();
 	        for(int i = 0; i < words.length; i++) {
 	        	currentWord = words[i] + " ";

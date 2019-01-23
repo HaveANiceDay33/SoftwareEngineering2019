@@ -46,7 +46,7 @@ public class MenuManager {
 	public static Level currentLevel;
 	static int pickLevel;
 	
-	static String[] genres = {"Funk", "Jazz", "Metal"};
+	static String[] genres = {"Funk", "Jazz", "Metal", "Hip Hop"};
 	static String chosenGenre;
 	
 	public static HvlRenderFrame pauseFrame;
@@ -281,7 +281,7 @@ public class MenuManager {
 	public static AnimatedTextureGroup p1A = Main.blue, p2A = Main.blue, p3A = Main.blue, p4A = Main.blue; //default character
 	public static int currentPlayer = 0;
 	public static int[] songs = {Main.MENU_SONG_INDEX, Main.MENU_SONG_2_INDEX, Main.MENU_SONG_3_INDEX};
-	public static String[] lyrics = {"lyricSheets/lyrics1.txt"};
+	public static String[] lyrics = {"lyricSheets/lyrics1.txt", "lyricSheets/hail.txt", "lyricSheets/JollyFellow.txt", "lyricSheets/yankeedoodle.txt"};
 	public static int currentSong = HvlMath.randomIntBetween(0, 2);
 	public static boolean beatPlayed = false;
 	public static int singingPlayer = 0;
@@ -595,8 +595,6 @@ public class MenuManager {
 			Main.red.jumping.setRunning(true);
 			hvlDrawQuadc(1024, Display.getHeight()/2+50, -170, 170, Game.player4.animations.jumping);
 			
-			
-			
 			Main.font.drawWordc("Vote For Your Favorite!", Display.getWidth()/2, 680, Color.black, 0.4f);
 		}
 		
@@ -619,12 +617,15 @@ public class MenuManager {
 		Main.getSound(Main.JAZZ_INDEX).stop();
 		Main.getSound(Main.METAL_INDEX).stop();
 		Main.getSound(Main.FUNKY_INDEX).stop();
+		Main.getSound(Main.HIP_HOP_INDEX).stop();
 		if(chosenGenre.equals("Jazz")) {
 			Main.getSound(Main.JAZZ_INDEX).playAsSoundEffect(1, 1, false);
 		} else if(chosenGenre.equals("Funk")) { 
 			Main.getSound(Main.FUNKY_INDEX).playAsSoundEffect(1, 1, false);
 		}else if(chosenGenre.equals("Metal")) { 
 			Main.getSound(Main.METAL_INDEX).playAsSoundEffect(1, 1, false);
+		}else if(chosenGenre.equals("Hip Hop")) { 
+			Main.getSound(Main.HIP_HOP_INDEX).playAsSoundEffect(1, 1, false);
 		}
 		Scanner lyricReader;
 		String song;
@@ -662,18 +663,6 @@ public class MenuManager {
 		}
 		
 		for(int k = 0; k < lyricWords.length; k++) {
-			if(nouns.size() == 0 && lyricWords[k].equals("n")) {
-				newWords[k] = "jibbrish";
-			}
-			if(verbs.size() == 0 && lyricWords[k].equals("v")) {
-				newWords[k] = "jibbrish";
-			}
-			if(adjs.size() == 0 && lyricWords[k].equals("adj")) {
-				newWords[k] = "jibbrish";
-			}
-			if(advs.size() == 0 && lyricWords[k].equals("adv")) {
-				newWords[k] = "jibbrish";
-			}
 			if(lyricWords[k].equals("n") && nouns.size() > 0) {
 				newWords[k] = nouns.get(nouns.size()-1);
 				nouns.remove(nouns.size()-1);

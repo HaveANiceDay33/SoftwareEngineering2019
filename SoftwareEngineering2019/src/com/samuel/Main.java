@@ -83,7 +83,7 @@ public class Main extends HvlTemplateInteg2D{
 	TRUM_INDEX = 51,
 	WAT_INDEX = 52;
 	
-	public static final int NUM_SOUNDS = 15;
+	public static final int NUM_SOUNDS = 17;
 	
 	public static final int
 	GEAR_RUN_INDEX = 0,
@@ -100,7 +100,9 @@ public class Main extends HvlTemplateInteg2D{
 	CHEESE_SHOT_INDEX = 11,
 	HIT_SOUND_INDEX = 12,
 	GUMMY_SHOT_INDEX = 13,
-	PINE_SHOT_INDEX = 14;
+	PINE_SHOT_INDEX = 14,
+	HIP_HOP_INDEX = 15,
+	TRUM_SHOT_INDEX = 16;
 	
 	public static final String PATH_SETTINGS = "res\\settings.cfg";
 	
@@ -187,6 +189,8 @@ public class Main extends HvlTemplateInteg2D{
 		getSoundLoader().loadResource("hit_sound");
 		getSoundLoader().loadResource("Gummy_Bear");
 		getSoundLoader().loadResource("Slingshot");
+		getSoundLoader().loadResource("hiphopbeat");
+		getSoundLoader().loadResource("trumSound");
 		
 		if(getTextureLoader().getResources().size() != NUM_TEXTURES)
 			throw new RuntimeException("Textures and/or sounds not loaded, try running the application in the same directory as the 'res' folder.");
