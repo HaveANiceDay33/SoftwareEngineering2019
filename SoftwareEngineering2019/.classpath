@@ -4,5 +4,13 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Ridhvl"/>
 	<classpathentry kind="lib" path="TTSJars/freetts.jar"/>
+	<classpathentry kind="lib" path="TTSJars/cmu_time_awb.jar"/>
+	<classpathentry kind="lib" path="TTSJars/cmu_us_kal.jar"/>
+	<classpathentry kind="lib" path="TTSJars/cmudict04.jar"/>
+	<classpathentry kind="lib" path="TTSJars/cmulex.jar"/>
+	<classpathentry kind="lib" path="TTSJars/cmutimelex.jar"/>
+	<classpathentry kind="lib" path="TTSJars/en_us.jar"/>
+	<classpathentry kind="lib" path="TTSJars/freetts-jsapi10.jar"/>
+	<classpathentry kind="lib" path="TTSJars/jsapi.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
