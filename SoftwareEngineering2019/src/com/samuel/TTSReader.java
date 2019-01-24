@@ -1,12 +1,11 @@
-package com.samuel;
 
-import org.lwjgl.opengl.Display;
+package com.samuel;
 
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
 
 public class TTSReader implements Runnable{
-	
+
 	public String toRead;
 	public String[] words;
 	public String currentWord = "";
@@ -40,3 +39,4 @@ public class TTSReader implements Runnable{
 	    }
 	}
 }
+

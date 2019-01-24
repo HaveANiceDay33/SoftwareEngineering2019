@@ -184,8 +184,8 @@ public class MenuManager {
 			}
 		}).build());
 		menu.getFirstArrangerBox().add(new HvlSpacer(0,20));
-		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.CREDITS_INDEX, Color.white)).
-				setOnDrawable(new ImageDrawable(Main.CREDITS_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.CREDITS_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
+		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.INSTR_BUTTON_INDEX, Color.white)).
+				setOnDrawable(new ImageDrawable(Main.INSTR_BUTTON_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.INSTR_BUTTON_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
 				playForward();
