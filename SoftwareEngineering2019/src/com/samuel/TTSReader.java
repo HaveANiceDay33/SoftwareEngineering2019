@@ -20,11 +20,13 @@ public class TTSReader implements Runnable{
 	public void run() {
 		try 
 	    {	
+			System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
 	        VoiceManager vm = VoiceManager.getInstance();
 	        Voice voice = vm.getVoice("kevin16");
 	        voice.setRate(200);
 		    voice.setPitch(80);
 	        voice.allocate();
+	        MenuManager.TTSWord = "Hello There!";
 	        for(int i = 0; i < words.length; i++) {
 	        	currentWord = words[i] + " ";
 	        	MenuManager.TTSWord = words[i];

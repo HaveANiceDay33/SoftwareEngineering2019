@@ -544,6 +544,7 @@ public class MenuManager {
 			Main.font.drawWordc("Player " + (singingPlayer+1), Display.getWidth()/2, 100, currentLevel.textColor, 0.8f);
 			Main.font.drawWordc(TTSWord, Display.getWidth()/2, Display.getHeight()/2, currentLevel.textColor, 0.5f);
 			singTimer -= delta;
+			timerBar(singTimer/SONG_TIME);
 			if(singingPlayer == 0) {
 				hvlDrawQuadc(Display.getWidth()/2 + 100, Display.getHeight() - 200, 250, 250, Game.player1.animations.standing);
 				hvlDrawQuadc(Display.getWidth()/2 + 80, Display.getHeight() - 180, 80, 80, Main.getTexture(Main.MIC_INDEX));
@@ -614,6 +615,7 @@ public class MenuManager {
 			Main.red.jumping.setRunning(true);
 			Main.blue.jumping.setRunning(true);
 			Main.green.jumping.setRunning(true);
+			
 			hvlDrawQuadc(256, 500, 50, 50, Main.getTexture(Main.Y_INDEX));
 			hvlDrawQuadc(256, 560, 50, 50, Main.getTexture(Main.W_INDEX));
 			hvlDrawQuadc(256, Display.getHeight()/2+50, -170, 170, Game.player1.animations.jumping);
@@ -718,7 +720,7 @@ public class MenuManager {
 	}
 
 	public static void sing(ArrayList<Word> words, String lyrics) {
-		float volume = 0.2f;
+		float volume = 0.5f;
 		Main.getSound(Main.JAZZ_INDEX).stop();
 		Main.getSound(Main.METAL_INDEX).stop();
 		Main.getSound(Main.FUNKY_INDEX).stop();
