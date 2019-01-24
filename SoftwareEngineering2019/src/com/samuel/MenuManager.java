@@ -3,15 +3,22 @@ package com.samuel;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
+import java.awt.Dimension;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -45,7 +52,7 @@ public class MenuManager {
 	private static final float VOTE_TIME = 5f;
 	
 	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, 
-	credits, pause, genre, singing, voting, instr, create;
+	credits, pause, genre, singing, voting, instr;
 	private static float whiteFade = 0;
 	
 	static boolean playedIntroSound = false;
@@ -77,6 +84,32 @@ public class MenuManager {
 	private static void playBack() {
 		if(Main.options.soundEffectsEnabled) {
 			Main.getSound(Main.BACK_INDEX).playAsSoundEffect(1, 10f, false);
+		}
+	}
+	
+	private static void writeSong() {
+		String songName = "song" + HvlMath.randomIntBetween(0, 65565);
+		
+		UIManager.put("OptionPane.minimumSize",new Dimension(700,200)); 
+		String song = JOptionPane.showInputDialog(null, "Write a Song! Use:\n\n'Uhhhh' for nouns\n'Hmmmm' for adjs\n'Blehh' for verbs\n'Ooyy' for adverbs\n\n"
+				+ "Songs are saved to the 'lyricSheets' folder, where you can remove them at will.\n\nTo be safe, restart the game to have the chance to play your song!"
+				+ "\nSongs are chosen at random, so you may not get it on the first try.\n", 
+				"Write a song!", JOptionPane.PLAIN_MESSAGE);
+		if(song != null) {
+			for(File f : lyrics) {
+				if(f.getName().equals(songName)) {
+					songName = "song" + HvlMath.randomIntBetween(0, 65565);
+				}
+			}
+			File file = new File("lyricSheets/" + songName);
+			
+			try {
+				BufferedWriter songWriter = new BufferedWriter(new FileWriter(file));
+				songWriter.write(song);
+				songWriter.close();
+			} catch (IOException e) {
+				throw new RuntimeException("Cannot write new song! Make sure the lyricSheets folder is in the same directory as the game!");
+			}
 		}
 	}
 	
@@ -132,7 +165,7 @@ public class MenuManager {
 					playBack();
 					resetGame();
 				} else if(HvlMenu.getCurrent() == credits || HvlMenu.getCurrent() == options ||
-						HvlMenu.getCurrent() == instr || HvlMenu.getCurrent() == create) {
+						HvlMenu.getCurrent() == instr) {
 					playBack();
 					HvlMenu.setCurrent(menu);
 				} else if(HvlMenu.getCurrent() == menu) {
@@ -159,7 +192,6 @@ public class MenuManager {
 		singing = new HvlMenu();
 		voting = new HvlMenu();
 		instr = new HvlMenu();
-		create = new HvlMenu();
 		
 		menu.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.START_INDEX, Color.white)).
@@ -195,8 +227,8 @@ public class MenuManager {
 				setOnDrawable(new ImageDrawable(Main.CREATE_BUTTON_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.CREATE_BUTTON_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
 			@Override
 			public void run(HvlButton aArg){
+				writeSong();
 				playForward();
-				HvlMenu.setCurrent(create);
 			}
 		}).build());
 		menu.getFirstArrangerBox().add(new HvlSpacer(0,20));
@@ -268,18 +300,6 @@ public class MenuManager {
 			@Override
 			public void run(HvlButton aArg) {
 				playBack();
-				HvlMenu.setCurrent(menu);
-			}
-		}).build());
-		
-		create.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
-		create.getFirstArrangerBox().add(new HvlSpacer(0, 500));
-		create.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.white)).
-				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
-			@Override
-			public void run(HvlButton aArg) {
-				playBack();
-				lyrics = f.listFiles();
 				HvlMenu.setCurrent(menu);
 			}
 		}).build());
@@ -400,6 +420,7 @@ public class MenuManager {
 			if(Controllers.allY[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(options); buttonWait = BUTTON_WAIT_TIME;}
 			if(Controllers.allX[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(credits); buttonWait = BUTTON_WAIT_TIME;}
 			if(Controllers.allUp[4] == 1 && buttonWait <= 0) {playForward(); HvlMenu.setCurrent(instr); buttonWait = BUTTON_WAIT_TIME;}
+			if(Controllers.allDown[4] == 1 && buttonWait <= 0) {playForward(); writeSong(); buttonWait = BUTTON_WAIT_TIME;}
 		}
 		else if(HvlMenu.getCurrent() == options) {
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
@@ -729,8 +750,6 @@ public class MenuManager {
 
 		} else if(HvlMenu.getCurrent() == instr) {
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.INSTR_INDEX));
-		} else if(HvlMenu.getCurrent() == create) {
-			hvlDrawQuadc(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.background);
 		}
 		
 		
