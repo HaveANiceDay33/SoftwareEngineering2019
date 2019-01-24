@@ -22,7 +22,7 @@ public class TTSReader implements Runnable{
 	    {	
 	        VoiceManager vm = VoiceManager.getInstance();
 	        Voice voice = vm.getVoice("kevin16");
-	        voice.setRate(250);
+	        voice.setRate(200);
 		    voice.setPitch(80);
 	        voice.allocate();
 	        for(int i = 0; i < words.length; i++) {
