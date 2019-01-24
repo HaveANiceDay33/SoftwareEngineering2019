@@ -3,6 +3,7 @@ package com.samuel;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuad;
 import static com.osreboot.ridhvl.painter.painter2d.HvlPainter2D.hvlDrawQuadc;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -43,7 +44,8 @@ public class MenuManager {
 	private static final float SONG_TIME = 30f;
 	private static final float VOTE_TIME = 5f;
 	
-	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, credits, pause, genre, singing, voting, instr;
+	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, 
+	credits, pause, genre, singing, voting, instr, create;
 	private static float whiteFade = 0;
 	
 	static boolean playedIntroSound = false;
@@ -53,6 +55,9 @@ public class MenuManager {
 	
 	static String[] genres = {"Funk", "Jazz", "Metal", "Hip Hop"};
 	static String chosenGenre;
+	
+	public static File f = new File("lyricSheets");
+	public static File[] lyrics;
 	
 	public static HvlRenderFrame pauseFrame;
 	
@@ -126,7 +131,8 @@ public class MenuManager {
 				if(HvlMenu.getCurrent() == pause) {
 					playBack();
 					resetGame();
-				} else if(HvlMenu.getCurrent() == credits || HvlMenu.getCurrent() == options || HvlMenu.getCurrent() == instr) {
+				} else if(HvlMenu.getCurrent() == credits || HvlMenu.getCurrent() == options ||
+						HvlMenu.getCurrent() == instr || HvlMenu.getCurrent() == create) {
 					playBack();
 					HvlMenu.setCurrent(menu);
 				} else if(HvlMenu.getCurrent() == menu) {
@@ -153,6 +159,7 @@ public class MenuManager {
 		singing = new HvlMenu();
 		voting = new HvlMenu();
 		instr = new HvlMenu();
+		create = new HvlMenu();
 		
 		menu.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.START_INDEX, Color.white)).
@@ -181,6 +188,15 @@ public class MenuManager {
 			public void run(HvlButton aArg){
 				playForward();
 				HvlMenu.setCurrent(credits);
+			}
+		}).build());
+		menu.getFirstArrangerBox().add(new HvlSpacer(0,20));
+		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.CREATE_BUTTON_INDEX, Color.white)).
+				setOnDrawable(new ImageDrawable(Main.CREATE_BUTTON_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.CREATE_BUTTON_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
+			@Override
+			public void run(HvlButton aArg){
+				playForward();
+				HvlMenu.setCurrent(create);
 			}
 		}).build());
 		menu.getFirstArrangerBox().add(new HvlSpacer(0,20));
@@ -256,6 +272,18 @@ public class MenuManager {
 			}
 		}).build());
 		
+		create.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
+		create.getFirstArrangerBox().add(new HvlSpacer(0, 500));
+		create.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.white)).
+				setOnDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.EXIT_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
+			@Override
+			public void run(HvlButton aArg) {
+				playBack();
+				lyrics = f.listFiles();
+				HvlMenu.setCurrent(menu);
+			}
+		}).build());
+		
 		pause.add(new HvlArrangerBox.Builder().setxAlign(0.5f).build());
 		pause.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.CONT_INDEX, Color.white)).
 				setOnDrawable(new ImageDrawable(Main.CONT_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.CONT_INDEX, Color.gray)).setClickedCommand(new HvlButtonMenuLink(game)).build());
@@ -294,6 +322,8 @@ public class MenuManager {
 				break;
 		}
 		
+		lyrics = f.listFiles();
+		
 		WordManager.initWords();
 		Controllers.initControllers();
 		HvlMenu.setCurrent(intro);
@@ -307,9 +337,6 @@ public class MenuManager {
 	public static AnimatedTextureGroup p1A = Main.blue, p2A = Main.blue, p3A = Main.blue, p4A = Main.blue; //default character
 	public static int currentPlayer = 0;
 	public static int[] songs = {Main.MENU_SONG_INDEX, Main.MENU_SONG_2_INDEX, Main.MENU_SONG_3_INDEX};
-	public static String[] lyrics = {"lyricSheets/lyrics1.txt", "lyricSheets/hail.txt", "lyricSheets/JollyFellow.txt", "lyricSheets/yankeedoodle.txt",
-			"lyricSheets/poptheweasel.txt", "lyricSheets/tiskettasket.txt", "lyricSheets/imanut.txt", "lyricSheets/blindmice.txt", "lyricSheets/jackandjill.txt",
-			"lyricSheets/oldmacdonald.txt"};
 	public static int currentSong = HvlMath.randomIntBetween(0, 2);
 	public static boolean beatPlayed = false;
 	public static int singingPlayer = 0;
@@ -702,6 +729,8 @@ public class MenuManager {
 
 		} else if(HvlMenu.getCurrent() == instr) {
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), Main.getTexture(Main.INSTR_INDEX));
+		} else if(HvlMenu.getCurrent() == create) {
+			hvlDrawQuadc(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.background);
 		}
 		
 		
@@ -719,7 +748,7 @@ public class MenuManager {
 		HvlMenu.updateMenus(delta);
 	}
 
-	public static void sing(ArrayList<Word> words, String lyrics) {
+	public static void sing(ArrayList<Word> words, File lyrics) {
 		float volume = 0.5f;
 		Main.getSound(Main.JAZZ_INDEX).stop();
 		Main.getSound(Main.METAL_INDEX).stop();
@@ -770,16 +799,16 @@ public class MenuManager {
 		}
 		
 		for(int k = 0; k < lyricWords.length; k++) {
-			if(lyricWords[k].equals("n") && nouns.size() > 0) {
+			if(lyricWords[k].equals("Uhhhh") && nouns.size() > 0) {
 				newWords[k] = nouns.get(nouns.size()-1);
 				nouns.remove(nouns.size()-1);
-			} else if(lyricWords[k].equals("v") && verbs.size() > 0) {
+			} else if(lyricWords[k].equals("Hmmmm") && verbs.size() > 0) {
 				newWords[k] = verbs.get(verbs.size()-1);
 				verbs.remove(verbs.size()-1);
-			}else if(lyricWords[k].equals("adj") && adjs.size() > 0) {
+			}else if(lyricWords[k].equals("Blehh") && adjs.size() > 0) {
 				newWords[k] = adjs.get(adjs.size()-1);
 				adjs.remove(adjs.size()-1);
-			}else if(lyricWords[k].equals("adv") && advs.size() > 0) {
+			}else if(lyricWords[k].equals("Ooyy") && advs.size() > 0) {
 				newWords[k] = advs.get(advs.size()-1);
 				advs.remove(advs.size()-1);
 			}else {
