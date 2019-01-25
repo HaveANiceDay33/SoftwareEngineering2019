@@ -48,7 +48,7 @@ public class MenuManager {
 	public static final float BUTTON_WIDTH = 254f, BUTTON_HEIGHT = 78f;
 	private static final float CONTROLLER_TIME = 5f;
 	private static final float BUTTON_WAIT_TIME = 0.25f;
-	private static final float SONG_TIME = 30f;
+	private static final float SONG_TIME = 35f;
 	private static final float VOTE_TIME = 5f;
 	
 	public static HvlMenu intro, intro2, menu, controllerInit, charSelect, game, options, 
@@ -60,7 +60,7 @@ public class MenuManager {
 	public static Level currentLevel;
 	static int pickLevel;
 	
-	static String[] genres = {"Funk", "Jazz", "Metal", "Hip Hop"};
+	static String[] genres = {"Funk", "Jazz", "Metal", "Hip Hop", "Latin"};
 	static String chosenGenre;
 	
 	public static File f = new File("lyricSheets");
@@ -441,10 +441,10 @@ public class MenuManager {
 		}
 		else if(HvlMenu.getCurrent() == credits) {
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
-			Main.font.drawWordc("Samuel Munro - Programming", Display.getWidth()/2, 150, currentLevel.textColor, 0.2f);
+			Main.font.drawWordc("Samuel Munro - Programming and Design", Display.getWidth()/2, 150, currentLevel.textColor, 0.2f);
 			Main.font.drawWordc("George Bolmida - Art and Sound Effects", Display.getWidth()/2, 250, currentLevel.textColor, 0.2f);
-			Main.font.drawWordc("Ben Matos - Music", Display.getWidth()/2, 350, currentLevel.textColor, 0.2f);
-			Main.font.drawWordc("Shane Pritchard - Visual Assets", Display.getWidth()/2, 450, currentLevel.textColor, 0.2f);
+			Main.font.drawWordc("Ben Matos - Music and Backbeats", Display.getWidth()/2, 350, currentLevel.textColor, 0.2f);
+			Main.font.drawWordc("Shane Pritchard - Visual Assets and Sound Effects", Display.getWidth()/2, 450, currentLevel.textColor, 0.2f);
 		}
 		else if(HvlMenu.getCurrent() == controllerInit) {
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
@@ -667,18 +667,22 @@ public class MenuManager {
 			hvlDrawQuadc(256, 500, 50, 50, Main.getTexture(Main.Y_INDEX));
 			hvlDrawQuadc(256, 560, 50, 50, Main.getTexture(Main.W_INDEX));
 			hvlDrawQuadc(256, Display.getHeight()/2+50, -170, 170, Game.player1.animations.jumping);
+			Main.font.drawWordc("Player 1", 256, Display.getHeight()/2-50, currentLevel.textColor, 0.25f);
 			
 			hvlDrawQuadc(512, 500, 50, 50, Main.getTexture(Main.X_INDEX));
 			hvlDrawQuadc(512, 560, 50, 50, Main.getTexture(Main.A_KEY_INDEX));
 			hvlDrawQuadc(512, Display.getHeight()/2+50, -170, 170, Game.player2.animations.jumping);
+			Main.font.drawWordc("Player 2", 512, Display.getHeight()/2-50, currentLevel.textColor, 0.25f);
 			
 			hvlDrawQuadc(768, 500, 50, 50, Main.getTexture(Main.A_INDEX));
 			hvlDrawQuadc(768, 560, 50, 50, Main.getTexture(Main.S_INDEX));
 			hvlDrawQuadc(768, Display.getHeight()/2+50, -170, 170, Game.player3.animations.jumping);
+			Main.font.drawWordc("Player 3", 768, Display.getHeight()/2-50, currentLevel.textColor, 0.25f);
 			
 			hvlDrawQuadc(1024, 500, 50, 50, Main.getTexture(Main.B_INDEX));
 			hvlDrawQuadc(1024, 560, 50, 50, Main.getTexture(Main.D_INDEX));
 			hvlDrawQuadc(1024, Display.getHeight()/2+50, -170, 170, Game.player4.animations.jumping);
+			Main.font.drawWordc("Player 4", 1024, Display.getHeight()/2-50, currentLevel.textColor, 0.25f);
 			Main.font.drawWordc("Vote For Your Favorite!", Display.getWidth()/2, 680, Color.black, 0.3f);
 			
 			
@@ -773,6 +777,7 @@ public class MenuManager {
 		Main.getSound(Main.METAL_INDEX).stop();
 		Main.getSound(Main.FUNKY_INDEX).stop();
 		Main.getSound(Main.HIP_HOP_INDEX).stop();
+		Main.getSound(Main.LATIN_INDEX).stop();
 		if(chosenGenre.equals("Jazz")) {
 			Main.getSound(Main.JAZZ_INDEX).playAsSoundEffect(1, volume, false);
 		} else if(chosenGenre.equals("Funk")) { 
@@ -781,6 +786,8 @@ public class MenuManager {
 			Main.getSound(Main.METAL_INDEX).playAsSoundEffect(1, volume, false);
 		}else if(chosenGenre.equals("Hip Hop")) { 
 			Main.getSound(Main.HIP_HOP_INDEX).playAsSoundEffect(1, volume, false);
+		}else if(chosenGenre.equals("Latin")) { 
+			Main.getSound(Main.LATIN_INDEX).playAsSoundEffect(1, volume, false);
 		}
 		Scanner lyricReader;
 		String song;
@@ -849,10 +856,9 @@ public class MenuManager {
 		currentLevel.words.clear();
 		WordManager.initWords();
 		pickLevel = HvlMath.randomIntBetween(0, 6);
-		p1index = 3;
-		p2index = 3;
-		p3index = 3; 
-		p4index = 3;
+		p1index = 3; p2index = 3; p3index = 3; p4index = 3;  
+		p1V = 0; p2V = 0; p3V = 0; p4V = 0;
+		p1Voted = false; p2Voted = false; p3Voted = false; p4Voted = false;
 		
 		switch(pickLevel) {
 			case 0:
@@ -878,6 +884,16 @@ public class MenuManager {
 				break;
 		}
 		genreTimer = 3f;
+		singTimer = SONG_TIME;
+		voteTimer = VOTE_TIME;
+		controllerTimer = CONTROLLER_TIME;
+		buttonWait = BUTTON_WAIT_TIME;
+		currentPlayer = 0;
+		beatPlayed = false;
+		playerSang = false;
+		singingPlayer = 0;
+		endTimer = 3f;
+		
 		HvlMenu.setCurrent(menu);
 	}
 }

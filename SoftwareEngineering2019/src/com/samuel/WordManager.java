@@ -9,7 +9,7 @@ import com.osreboot.ridhvl.HvlMath;
 
 public class WordManager {
 	
-	private static final float WORD_TIME = 1.5f;
+	private static final float WORD_TIME = 1f;
 	
 	public static ArrayList<String> nouns = new ArrayList<>();
 	public static ArrayList<String> verbs = new ArrayList<>();
@@ -44,7 +44,7 @@ public class WordManager {
 	
 	public static void updateWords(float delta) {
 		wordTimer -= delta;
-		if(wordTimer <= 0 && MenuManager.currentLevel.words.size() < 17) {
+		if(wordTimer <= 0 && MenuManager.currentLevel.words.size() < 11) {
 			float x, y;
 			WorldElement spawnOn = MenuManager.currentLevel.elements.get(HvlMath.randomIntBetween(0, MenuManager.currentLevel.elements.size()));
 			if(spawnOn instanceof Platform && !spawnOn.wordOn && !spawnOn.weaponOn) {
