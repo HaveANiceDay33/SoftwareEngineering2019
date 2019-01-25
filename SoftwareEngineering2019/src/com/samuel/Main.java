@@ -10,8 +10,33 @@ import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
 import com.osreboot.ridhvl.painter.painter2d.HvlFontPainter2D;
 import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 
+/**
+ * @author Samuel Munro
+ *
+ * The Main Class
+ * 
+ * <p>The Main class' main function is to load in game assets and
+ * initialize animations. It does this with the use of the 
+ * <code>getTextureLoader.loadResource(String fileName)</code> 
+ * function, part of LWJGL. There is error checking built in, 
+ * throwing an exception if the correct number of assets are not
+ * loaded or detected.</p>
+ * 
+ * <p>The Main Class also creates the settings.cfg file, which stores 
+ * data from the in-game options menu. This flatfile allows the user to
+ * turn off sound effects and background music. More on that in the 
+ * Options.java class </p>
+ */
+
 public class Main extends HvlTemplateInteg2D{
-	
+	/**
+	 * The main method
+	 * 
+	 * The main method provides running the game, as well as the error
+	 * checking system. Any error that is thrown at any point of the game is
+	 * caught by this method, which then displays a window describing the nature 
+	 * of the error, and closes the game.
+	 */
 	public static void main(String [] args){
 		try {
 			new Main();
@@ -27,7 +52,7 @@ public class Main extends HvlTemplateInteg2D{
 	}
 	
 	public static final int NUM_TEXTURES = 56;
-
+	//These final ints are used to identify textures and sounds throughout the game
 	public static final int
 	LEVEL_ONE_INDEX = 0,
 	CRATE_INDEX = 1,
@@ -87,7 +112,7 @@ public class Main extends HvlTemplateInteg2D{
 	CREATE_BUTTON_INDEX = 55;
 	
 	public static final int NUM_SOUNDS = 18;
-	
+	//Same thing as ^^ with sounds 
 	public static final int
 	GEAR_RUN_INDEX = 0,
 	FORWARD_INDEX = 1,
@@ -108,9 +133,9 @@ public class Main extends HvlTemplateInteg2D{
 	TRUM_SHOT_INDEX = 16,
 	LATIN_INDEX = 17;
 	
-	public static final String PATH_SETTINGS = "res\\settings.cfg";
+	public static final String PATH_SETTINGS = "res\\settings.cfg"; //settings file location
 	
-	public static Options options;
+	public static Options options; //Options initialization
 	
 	static HvlFontPainter2D font;
 	public static HvlAnimatedTextureUV loadingAnimation, blueRunning, blueStanding, blueJumping, yellowRunning, 
@@ -121,6 +146,15 @@ public class Main extends HvlTemplateInteg2D{
 	public static void saveConfig(){
 		HvlConfig.saveToFile(options, PATH_SETTINGS);
 	}
+	
+	/**
+	 * The initialize method
+	 * 
+	 * The init method loads all in-game assets, instantiates 
+	 * all in-game animations, as well as creating a settings.cfg file 
+	 * if none already exists. It also calls MenuManager.init(), which gets the
+	 * game running.
+	 */
 	
 	@Override
 	public void initialize() {
@@ -245,6 +279,12 @@ public class Main extends HvlTemplateInteg2D{
 		
 		MenuManager.initialize();
 	}
+   	/**
+    	* The update method
+    	* 
+    	* This method updates the Controller inputs as well as the MenuManager
+    	* class, which handles all menus and gameplay. 
+    	*/
 	@Override
 	public void update(float delta) {
 		Controllers.updateButtons(); 
