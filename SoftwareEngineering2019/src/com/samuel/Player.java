@@ -12,6 +12,14 @@ import com.osreboot.ridhvl.HvlMath;
 import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
 import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
 
+/**
+ * 
+ * <p>The Player Class handles all player physics and game interactions: platforms, 
+ * weapons, and projectiles. </p>
+ * 
+ * @author Samuel Munro
+ *
+ */
 public class Player {
 	static final private float JUMP_POWER = 3100;//Instantaneous velocity the player gains when jumping
 	static final private float MOVE_SPEED = 900;//Movement speed in x-plane
@@ -32,6 +40,12 @@ public class Player {
 	public Weapon playerWeapon;
 	
 	//Player constructor that runs when a player object is created
+	/**
+	 * <p>Takes a player ID argument (used for UI), a controller index (0-3 for xbox controller, 4 for keyboard) and an animation group object.</p>
+	 * @param id
+	 * @param cont
+	 * @param animations
+	 */
 	public Player(int id, int cont, AnimatedTextureGroup animations){
 		this.id = id;
 		this.cont = cont;
@@ -205,7 +219,7 @@ public class Player {
 			}
 		}
 	}
- 	
+ 	// updates the player's weapons and how the play picks up the weapons.
 	private void updateWeapons() {
 		Weapon closeWeapon = null;
 		for(Weapon w : MenuManager.currentLevel.weapons) {
@@ -234,6 +248,7 @@ public class Player {
 		}
 	}
 	
+	//draws the player. This is used for other players for relativity purposes.
 	public void drawPlayer(Player player) {
 		hvlDrawQuadc(player.get_x() + -this.get_x() + Game.FIXED_X, player.get_y() + -this.get_y() + Game.FIXED_Y, this.get_width(), Player.PLAYER_SIZE, this.currentAnimation);
 		if(this.playerWeapon != null) {

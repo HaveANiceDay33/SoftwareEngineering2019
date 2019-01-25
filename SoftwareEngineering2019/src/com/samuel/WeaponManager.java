@@ -8,6 +8,13 @@ import com.samuel.Weapons.Rifle;
 import com.samuel.Weapons.Slingshot;
 import com.samuel.Weapons.Trumpet;
 
+/**
+ * <p>The weapon manager class spawns weapons based on a timer, similar to the word manager class. </p>
+ * 
+ * @author Samuel Munro
+ *
+ */
+
 public class WeaponManager {
 	
 	private static final float WEAP_TIME = 10f;
@@ -15,12 +22,22 @@ public class WeaponManager {
 	public static float weaponTimer;
 	public static int ranWeapon;
 	
+	
+	/**
+	 * <p>The system randomly chooses
+	 * a platform, checks the platform for a weapon, and then takes one of two actions: </p>
+	 * 
+	 * <p>If the platform has a word or weapon already on it, spawn weapon on ground.
+	 * If not, spawn the weapon on the platform that was selected. </p>
+	 * 
+	 * @param delta
+	 */
 	public static void updateWeapons(float delta) {
 		weaponTimer -= delta;
 		if(weaponTimer <= 0 && MenuManager.currentLevel.weapons.size() < 3) {
 			float x, y;
 			WorldElement spawnOn = MenuManager.currentLevel.elements.get(HvlMath.randomIntBetween(0, MenuManager.currentLevel.elements.size()));
-			if(spawnOn instanceof Platform && !spawnOn.wordOn && !spawnOn.weaponOn) {
+			if(spawnOn instanceof Platform && !spawnOn.wordOn && !spawnOn.weaponOn) { //checks platform locations and statuses.
 				x = spawnOn.get_x();
 				y = spawnOn.get_y() - 100;
 				spawnOn.weaponOn = true;
@@ -29,6 +46,8 @@ public class WeaponManager {
 				y = Game.FIXED_Y;
 			}
 			Weapon newWeap;
+			
+			//randomly chooses which weapon to spawn
 			ranWeapon = HvlMath.randomIntBetween(0, 6);
 			switch(ranWeapon) {
 			case 0:

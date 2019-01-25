@@ -4,6 +4,12 @@ import com.samuel.Level;
 import com.samuel.Main;
 import com.samuel.Platform;
 
+/**
+ * <p>This class and others like it tell the game how to draw each level.
+ * Attributes include platform type and name.</p>
+ * @author Samuel Munro
+ *
+ */
 public class Overworld extends Level{
 	private static final String NAME = "Overworld";
 	private static final int PLATFORM = Main.SPACE_CRATE_INDEX;

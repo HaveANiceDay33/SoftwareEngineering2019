@@ -6,7 +6,12 @@ import com.samuel.Level;
 import com.samuel.Main;
 import com.samuel.Platform;
 import com.samuel.WorldElement;
-
+/**
+ * <p>This class and others like it tell the game how to draw each level.
+ * Attributes include platform type and name.</p>
+ * @author Samuel Munro
+ *
+ */
 public class Battlefield extends Level{
 	private static final String NAME = "Battlefield";
 	private static final int PLATFORM = Main.CRATE_INDEX;

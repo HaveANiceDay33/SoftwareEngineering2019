@@ -44,6 +44,13 @@ import com.samuel.LevelProfiles.Omega;
 import com.samuel.LevelProfiles.Overworld;
 import com.samuel.LevelProfiles.Skyrise;
 
+/**
+ * <p>Arguably the most important class in the game, the Menu Manager handles all
+ * menu items, menu states, and anything that is not in the game itself.</p> 
+ * 
+ * @author Samuel Munro
+ *
+ */
 public class MenuManager {
 	public static final float BUTTON_WIDTH = 254f, BUTTON_HEIGHT = 78f;
 	private static final float CONTROLLER_TIME = 5f;
@@ -60,33 +67,38 @@ public class MenuManager {
 	public static Level currentLevel;
 	static int pickLevel;
 	
-	static String[] genres = {"Funk", "Jazz", "Metal", "Hip Hop", "Latin"};
+	static String[] genres = {"Funk", "Jazz", "Metal", "Hip Hop", "Latin"}; //genres saved to array
 	static String chosenGenre;
 	
-	public static File f = new File("lyricSheets");
+	public static File f = new File("lyricSheets"); //the lyric sheets folder, to be used later
 	public static File[] lyrics;
 	
 	public static HvlRenderFrame pauseFrame;
 	
-	private static void timerBar(float time) {
+	private static void timerBar(float time) { //timer bar method used in many menus
 		hvlDrawQuad(200, 620, Display.getWidth()-400, 20, Color.gray);
 		hvlDrawQuadc(200, 630, 5, 40, Color.green);
 		hvlDrawQuadc(Display.getWidth()-200, 630, 5, 40, Color.green);
 		hvlDrawQuad(200, 620, (Display.getWidth()-400)*time, 20, Color.green);
 	}
 
+	//plays the forward button noise
 	private static void playForward() {
 		if(Main.options.soundEffectsEnabled) {
 			Main.getSound(Main.FORWARD_INDEX).playAsSoundEffect(1, 10f, false);
 		}
 	}
 	
+	//plays the backward button noise
 	private static void playBack() {
 		if(Main.options.soundEffectsEnabled) {
 			Main.getSound(Main.BACK_INDEX).playAsSoundEffect(1, 10f, false);
 		}
 	}
 	
+	/**
+	 * Writes a song that the user supplies. This opens when the user clicks the "Lyric Creator" menu button
+	 */
 	private static void writeSong() {
 		String songName = "song" + HvlMath.randomIntBetween(0, 65565);
 		
@@ -118,11 +130,12 @@ public class MenuManager {
 	public static void initialize() {
 		
 		try{
-			pauseFrame = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
+			pauseFrame = new HvlRenderFrame(Display.getWidth(), Display.getHeight()); //instantiates the pause frame (used in Game class)
 		}catch(Exception e){
 			throw new RuntimeException("Render Frames not supported on this computer! Do you live in the 80's?");
 		}
 		
+		//HvlInputs are a solution to accept a keyboard or controller input only once per press. Helps to mitigate accidental menu switches.
 		pauseInput = new HvlInput(new HvlInput.InputFilter() {
 			@Override
 			public float getCurrentOutput() {
@@ -176,9 +189,10 @@ public class MenuManager {
 			}
 		});
 		
-		HvlComponentDefault.setDefault(new HvlArrangerBox(0, 0, Display.getWidth(), Display.getHeight(), ArrangementStyle.VERTICAL));
+		HvlComponentDefault.setDefault(new HvlArrangerBox(0, 0, Display.getWidth(), Display.getHeight(), ArrangementStyle.VERTICAL)); //button defaults
 		HvlComponentDefault.setDefault(HvlLabeledButton.class, new HvlLabeledButton.Builder().setWidth(BUTTON_WIDTH).setHeight(BUTTON_HEIGHT).setFont(Main.font).setTextColor(Color.white).setTextScale(0.2f).build());
 		
+		//Menu initialization
 		intro = new HvlMenu();
 		intro2 = new HvlMenu();
 		menu = new HvlMenu();
@@ -193,6 +207,7 @@ public class MenuManager {
 		voting = new HvlMenu();
 		instr = new HvlMenu();
 		
+		//THE FOLLOWING IS CREATING THE MENU ITEMS SUPPLIED BY RIDHVL. IT IS A MESS AND LONG. INSIDE EACH "RUN" METHOD OF BUTTONS IS WHAT HAPPENS WHEN A BUTTON IS PRESSED
 		menu.add(new HvlArrangerBox.Builder().setxAlign(0.1f).build());
 		menu.getFirstArrangerBox().add(new HvlLabeledButton.Builder().setOffDrawable(new ImageDrawable(Main.START_INDEX, Color.white)).
 				setOnDrawable(new ImageDrawable(Main.START_INDEX, Color.gray)).setHoverDrawable(new ImageDrawable(Main.START_INDEX, Color.gray)).setClickedCommand(new HvlAction1<HvlButton>(){
@@ -316,10 +331,10 @@ public class MenuManager {
 			}
 		}).build());
 		
-		pickLevel = HvlMath.randomIntBetween(0, 4);
+		pickLevel = HvlMath.randomIntBetween(0, 6);
 		
-		switch(pickLevel) {
-			case 0:
+		switch(pickLevel) { //picks the level randomly
+			case 0:  
 				currentLevel = new HomeBase();
 				break;
 			case 1:
@@ -342,11 +357,11 @@ public class MenuManager {
 				break;
 		}
 		
-		lyrics = f.listFiles();
-		
-		WordManager.initWords();
-		Controllers.initControllers();
-		HvlMenu.setCurrent(intro);
+		lyrics = f.listFiles(); //adds all lyric sheets to an array
+		 
+		WordManager.initWords(); //inits words
+		Controllers.initControllers(); //inits controllers
+		HvlMenu.setCurrent(intro); //starts the splash screen
 	}
 	
 	private static float introProgress = 0f;
@@ -364,12 +379,13 @@ public class MenuManager {
 	public static boolean playerSang = false;
 	public static String TTSWord = "";
 	public static int p1V = 0, p2V = 0, p3V = 0, p4V = 0;
-	public static boolean p1Voted = false, p2Voted = false, p3Voted = false, p4Voted = false;
+	public static boolean p1Voted = false, p2Voted = false, p3Voted = false, p4Voted = false; //voting variables
 	public static float voteTimer = VOTE_TIME;
 	public static float endTimer = 3f;
 	
 	public static void update(float delta){
 		
+		//checks if menu is paused
 		if(HvlMenu.getCurrent() == pause){
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), pauseFrame);
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), new Color(0f, 0f, 0f, 0.4f));
@@ -406,6 +422,7 @@ public class MenuManager {
 			hvlDrawQuadc(Display.getWidth()/2, Display.getHeight()/2, 1280, 720, Main.getTexture(Main.CVILLE_INDEX), new Color(1f, 1f, 1f, alpha));
 		}
 		else if(HvlMenu.getCurrent() == menu) {
+			//MAIN MENU
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
 			hvlDrawQuadc(800, Display.getHeight()/2, 640, 360, Main.getTexture(Main.NAME_INDEX), new Color(1f, 1f, 1f, 1f));
 			buttonWait-=delta;
@@ -423,6 +440,7 @@ public class MenuManager {
 			if(Controllers.allDown[4] == 1 && buttonWait <= 0) {playForward(); writeSong(); buttonWait = BUTTON_WAIT_TIME;}
 		}
 		else if(HvlMenu.getCurrent() == options) {
+			//OPTIONS MENU
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
 			buttonWait -= delta;
 			Main.font.drawWordc("Options", Display.getWidth()/2, 100, currentLevel.textColor, 0.3f);
@@ -440,6 +458,7 @@ public class MenuManager {
 			}
 		}
 		else if(HvlMenu.getCurrent() == credits) {
+			//CREDITS MENU
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
 			Main.font.drawWordc("Samuel Munro - Programming and Design", Display.getWidth()/2, 150, currentLevel.textColor, 0.2f);
 			Main.font.drawWordc("George Bolmida - Art and Sound Effects", Display.getWidth()/2, 250, currentLevel.textColor, 0.2f);
@@ -447,6 +466,7 @@ public class MenuManager {
 			Main.font.drawWordc("Shane Pritchard - Visual Assets and Sound Effects", Display.getWidth()/2, 450, currentLevel.textColor, 0.2f);
 		}
 		else if(HvlMenu.getCurrent() == controllerInit) {
+			//CONTROLLER INIT MENU
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
 			controllerTimer -= delta;
 			buttonWait -= delta;
@@ -498,6 +518,7 @@ public class MenuManager {
 			}
 
 		}else if(HvlMenu.getCurrent() == charSelect) {
+			//COLOR SELECTION MENU
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
 			controllerTimer -= delta;
 			buttonWait -= delta;
@@ -565,12 +586,13 @@ public class MenuManager {
 			if(p3index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p3A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
 			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S)) {p4A = Main.green; buttonWait = BUTTON_WAIT_TIME;}
 			if(controllerTimer <= 0) {
-				int gen = HvlMath.randomIntBetween(0, genres.length);
+				int gen = HvlMath.randomIntBetween(0, genres.length); //CHOOSES RANDOM GENRE
 				chosenGenre = genres[gen];
 				HvlMenu.setCurrent(genre);
 			}
 		}
 		else if (HvlMenu.getCurrent() == genre){
+			//GENRE DISPLAY SCREEN
 			genreTimer -= delta;
 			hvlDrawQuad(0, 0, Display.getWidth(), Display.getHeight(), currentLevel.menuBackground);
 			Main.font.drawWordc("Your Genre is:", Display.getWidth()/2, 100, currentLevel.textColor, 0.8f);
@@ -584,9 +606,10 @@ public class MenuManager {
 			}
 		}
 		else if(HvlMenu.getCurrent() == game) {
-			Game.updateGame(delta);
+			Game.updateGame(delta); //RUNNING THE GAME
 		}
 		else if(HvlMenu.getCurrent() == singing) {
+			//SINGING MENU. TAKES WORDS FROM TTSReader.java TO DISPLAY CURRENT WORDS ON SCREEN	
 			hvlDrawQuad((currentLevel.background == Main.level2 ? 0 : -64), (currentLevel.background == Main.level2 ? 0 : -350), (currentLevel.background == Main.level2 ? Display.getWidth() : Display.getWidth() + 128),
 					(currentLevel.background == Main.level2 ? Display.getHeight() : Display.getWidth()+128), currentLevel.background);
 			Main.font.drawWordc("Player " + (singingPlayer+1), Display.getWidth()/2, 100, currentLevel.textColor, 0.8f);
@@ -654,6 +677,7 @@ public class MenuManager {
 				}
 			}
 		} else if(HvlMenu.getCurrent() == voting) {
+			//VOTING MENU
 			buttonWait -= delta;
 			voteTimer -= delta;
 			hvlDrawQuad((currentLevel.background == Main.level2 ? 0 : -64), (currentLevel.background == Main.level2 ? 0 : -350), (currentLevel.background == Main.level2 ? Display.getWidth() : Display.getWidth() + 128),
@@ -727,6 +751,7 @@ public class MenuManager {
 			if(p4index == 4 && Keyboard.isKeyDown(Keyboard.KEY_S) && !p4Voted) {p3V++; buttonWait = BUTTON_WAIT_TIME; p4Voted = true;}
 			
 			if(voteTimer <= 0) {
+				//SORTS VOTES AND DISPLAYS A VICTOR
 				endTimer -= delta;
 				Map<String, Integer> scores = new HashMap<String, Integer>();
 				scores.put("Player 1", p1V);
@@ -771,6 +796,12 @@ public class MenuManager {
 		HvlMenu.updateMenus(delta);
 	}
 
+	/**
+	 * <p>Method that calls a new Thread to start the singing. It takes a word arraylist and a lyric sheet, which is randomly
+	 * generated when called. </p>
+	 * @param words
+	 * @param lyrics
+	 */
 	public static void sing(ArrayList<Word> words, File lyrics) {
 		float volume = 0.5f;
 		Main.getSound(Main.JAZZ_INDEX).stop();
@@ -824,6 +855,7 @@ public class MenuManager {
 			}
 		}
 		
+		//DOES REPLACEMENT FOR PLACEHOLDER WORDS INSIDE THE LYRIC SHEETS
 		for(int k = 0; k < lyricWords.length; k++) {
 			if(lyricWords[k].equals("Uhhhh") && nouns.size() > 0) {
 				newWords[k] = nouns.get(nouns.size()-1);
@@ -845,10 +877,11 @@ public class MenuManager {
 		for(int j = 0; j < newWords.length; j++) {
 			newSong += (newWords[j] + " ");
 		}
-		Runnable talk = new TTSReader(newSong);
-		new Thread(talk).start();
+		Runnable talk = new TTSReader(newSong); //INSTANTIATES NEW THREAD
+		new Thread(talk).start(); //RUNS NEW THREAD
 	}
 	
+	//THIS METHOD RESETS ALL GAME VARIABLES SO IT CAN BE PLAYED AGAIN FROM SCRATCH
 	public static void resetGame() {
 		currentLevel.elements.clear();
 		currentLevel.projs.clear();
@@ -860,7 +893,7 @@ public class MenuManager {
 		p1V = 0; p2V = 0; p3V = 0; p4V = 0;
 		p1Voted = false; p2Voted = false; p3Voted = false; p4Voted = false;
 		
-		switch(pickLevel) {
+		switch(pickLevel) { //PICKS NEW LEVEL
 			case 0:
 				currentLevel = new HomeBase();
 				break;

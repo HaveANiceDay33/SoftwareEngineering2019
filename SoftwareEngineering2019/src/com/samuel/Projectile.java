@@ -10,11 +10,33 @@ import org.newdawn.slick.opengl.Texture;
 import com.osreboot.ridhvl.HvlMath;
 import com.osreboot.ridhvl.painter.painter2d.HvlPainter2D;
 
+
+/**
+ * <p>This class handles all physics for the launched projectiles. It draws them, 
+ * handles interaction with borders and platforms, and removes them when necessary</p>
+ * 
+ * @author Samuel Munro
+ *
+ */
 public class Projectile {
 	public Texture pro;
 	public float x, y, sizeX, sizeY, actX, actY, vx, vy, xMod=0, yMod=0, rot = 0, rotSpeed;
 	public Player owner;
 	public float drag = Game.DRAG/1000;
+	
+	/**
+	 * <p>Called when a projectile is spawned. The values here onward are modified by the in-game physics. </p>
+	 * 
+	 * @param pro
+	 * @param x
+	 * @param y
+	 * @param sizeX
+	 * @param sizeY
+	 * @param initVX
+	 * @param initVY
+	 * @param owner
+	 * @param rotSpeed
+	 */
 	public Projectile(Texture pro, float x, float y, float sizeX, float sizeY, float initVX, float initVY, Player owner, float rotSpeed) {
 		this.pro = pro;
 		this.x = x;
@@ -35,6 +57,13 @@ public class Projectile {
 		this.rot += this.rotSpeed;
 	}
 	
+	/**
+	 * <p>Using the same relativity formula as platforms and weapons as a base, projectiles add on a movement variable 
+	 * to move them through the world. This is handled in the update method, along with border and platform collisions.</p>
+	 * @param xPlay
+	 * @param yPlay
+	 * @param delta
+	 */
 	public void draw(float xPlay, float yPlay, float delta) {
 		this.update(delta);
 		actX = this.x + xPlay + Game.FIXED_X + xMod;
@@ -46,10 +75,12 @@ public class Projectile {
 		hvlResetRotation();
 	}
 	
+	//checks to make sure projectiles do not fall through map
 	private void updateBorderCollisions(int bottom) {
 		if((this.y+this.yMod) > bottom) {this.yMod = 0; this.y = bottom; this.drag = Game.DRAG/100; this.vy = 0; rotSpeed = 0;} // bottom world border 
 	}
 	
+	//checks for closest platform
 	private WorldElement closestElement() {
 		WorldElement closest = null;
 		for(WorldElement e : MenuManager.currentLevel.elements) {
@@ -66,6 +97,7 @@ public class Projectile {
 		return closest;
 	}
 	
+	//uses closest platform and checks collision with it.
 	private void updateElementCollisions() {
 		WorldElement closest = closestElement();
 		//System.out.println(this.actY + "\t" + closest.actY);
@@ -89,6 +121,7 @@ public class Projectile {
 		}
 	}
 	
+	//removes item from memory
 	public void remove() {
 		MenuManager.currentLevel.projs.remove(this);
 	}
