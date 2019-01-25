@@ -13,6 +13,19 @@ import com.osreboot.ridhvl.menu.HvlMenu;
 import com.osreboot.ridhvl.painter.HvlRenderFrame;
 import com.osreboot.ridhvl.painter.HvlRenderFrame.FBOUnsupportedException;
 
+/**
+ * 
+ * @author Samuel Munro
+ * 
+ * <p>The Game Class</p>
+ * <p>The game class declares and runs most low-level game elements. This
+ * includes environmental elements such as gravity, and handles the split-screen
+ * functionality. The Game class draws the UI, world, and players, while handling 
+ * relativity throughout. It instantiates the player, and then calls their update methods.
+ * </p>
+ *
+ */
+
 public class Game {
 	static final public int BACK_X = 5500;
 	static final public int BACK_Y = 5500; 
@@ -39,6 +52,7 @@ public class Game {
 		LevelGenerator.update(delta, x, y);
 	}
 	
+	//draws UI, including player names, words collected, and ammo when applicable.
 	public static void drawUI(Player player) {
 		Main.font.drawWord("Player "+(player.id+1), 20, 20, MenuManager.currentLevel.textColor, 0.3f);
 		if(player.playerWords.size() == 1) {
@@ -57,6 +71,7 @@ public class Game {
 		Main.font.drawWordc("Time: "+ String.format("%.1f" ,gameTimer), Display.getWidth()/2, Display.getHeight()-50, MenuManager.currentLevel.textColor, 0.35f);
 	}
 
+	//Attempts to instantiate renderframes (which provide splitscreen) and initializes players
 	public static void initGame(int p1, int p2, int p3 ,int p4, 
 			AnimatedTextureGroup p1Ani, AnimatedTextureGroup p2Ani, AnimatedTextureGroup p3Ani, AnimatedTextureGroup p4Ani) {
 		
@@ -72,10 +87,10 @@ public class Game {
 			p3R = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
 			p4R = new HvlRenderFrame(Display.getWidth(), Display.getHeight());
 		}catch (FBOUnsupportedException e){
-			throw new RuntimeException("Your PC does not have Frame Buffer Support, do you live in the 80's?");
+			throw new RuntimeException("Your PC does not have Frame Buffer Support, do you live in the 80's?"); //throws sarcastic error if the PC does not support frame buffers.
 		}
 		
-		gameTimer = GAME_TIME;
+		gameTimer = GAME_TIME; //resets Game time 
 	}
 	
 	public static void updateGame(float delta) {
@@ -86,6 +101,10 @@ public class Game {
 			Main.getSound(MenuManager.songs[MenuManager.currentSong]).stop();
 			HvlMenu.setCurrent(MenuManager.singing);
 		}
+		/**
+		 * Each renderframe captures what is inside its body, and then is saved to an object. 
+		 * It is later drawn back out again at the desired location and size
+		 */
 		p1R.doCapture(new HvlAction0() { //player 1 
 			@Override
 			public void run() {
@@ -130,6 +149,10 @@ public class Game {
 				player4.update(delta);
 			}
 		});
+		/**
+		 * pauseframe is a special renderframe that captures ALL in game graphics and saves them to 1 frame. This allows the game to be paused by pausing the capture in the
+		 * MenuManager class. 
+		 */
 		MenuManager.pauseFrame.doCapture(true, new HvlAction0(){
 			@Override
 			public void run(){
@@ -142,6 +165,6 @@ public class Game {
 			}
 		});
 		
-		hvlDrawQuad(0,0, Display.getWidth(), Display.getHeight(), MenuManager.pauseFrame);
+		hvlDrawQuad(0,0, Display.getWidth(), Display.getHeight(), MenuManager.pauseFrame); //drawing the pauseframe. This is what the players see in game.
 	}
 }

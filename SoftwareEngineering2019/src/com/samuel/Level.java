@@ -6,7 +6,19 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.painter.HvlAnimatedTextureUV;
-
+/**
+ * 
+ * @author Samuel Munro
+ * 
+ * <p>Level Class</p>
+ * <p>The level class stores all world elements in game: including platforms,
+ * words, weapons, and projectiles. Once called from a class that inherits this one
+ * (found in the LevelProfiles folder) this class changes the level and menu backgrounds,
+ * as well as the in-game text in order to contrast nicely with our 2 distinct level backgrounds.</p>
+ * 
+ * @param back
+ *
+ */
 public class Level {
 	public ArrayList<WorldElement> elements;
 	public ArrayList<Word> words;

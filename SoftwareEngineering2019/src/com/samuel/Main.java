@@ -13,7 +13,7 @@ import com.osreboot.ridhvl.template.HvlTemplateInteg2D;
 /**
  * @author Samuel Munro
  *
- * The Main Class
+ * <p>The Main Class</p>
  * 
  * <p>The Main class' main function is to load in game assets and
  * initialize animations. It does this with the use of the 
