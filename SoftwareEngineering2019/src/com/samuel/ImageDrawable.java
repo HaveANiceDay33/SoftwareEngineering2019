@@ -6,6 +6,23 @@ import org.newdawn.slick.Color;
 
 import com.osreboot.ridhvl.menu.component.HvlComponentDrawable;
 
+/**
+ * @author Samuel Munro
+ * The ImageDrawable class
+ * 
+ * <p>This class is a modification of the default ways RIDHVL handles
+ * drawing buttons. My class draws images on top of buttons instead of
+ * merely text, as the engine is defaulted to. This was necessary in order
+ * to have nice looking buttons for the game.</p>\
+ * 
+ * <p>The textureIndex parameter identifies which texture to draw 
+ * on the button, and the shade parameter identifies what to shade the 
+ * button (used when hovering, clicking, etc)</p>
+ * 
+ * @param textureIndex 
+ * @param shade
+ */
+
 public class ImageDrawable extends HvlComponentDrawable{
 	
 	int textureIndex;
